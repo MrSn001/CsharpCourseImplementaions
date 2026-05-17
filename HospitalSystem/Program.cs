@@ -25,6 +25,7 @@ namespace HospitalSystem
 
             //option variables
             int option;
+            int optionUpdate;
 
 
 
@@ -167,6 +168,74 @@ namespace HospitalSystem
                             break;
                     //4. Update Patient info
                     case 4:
+                        if (countPatient == 0)
+                        {
+                            Console.WriteLine("There is no registered patients to update!!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("""
+                            ----Update page----
+                            1. Update patient email
+                            2. Update patient phone number
+                            0. Exit
+                            """);
+                            Console.WriteLine("Enter your choice: ");
+                            optionUpdate = Convert.ToInt32(Console.ReadLine());
+                            switch (optionUpdate)
+                            {
+                                case 1:
+                                    Console.WriteLine("Enter the patient name: ");
+                                    name = Console.ReadLine();
+                                    if (p1isActive && p1Name == name)
+                                    {
+                                        Console.WriteLine("Enter your new Email");
+                                        email = Console.ReadLine();
+                                        p1Email = email;
+                                        Console.WriteLine("The Patient Email has been Updated!!");
+                                    }
+                                    else if (p2isActive && p2Name == name)
+                                    {
+                                        Console.WriteLine("Enter your new Email");
+                                        email = Console.ReadLine();
+                                        p2Email = email;
+                                        Console.WriteLine("The Patient Email has been Updated!!");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Patient not found.");
+                                    }
+                                    break;
+                                case 2:
+                                    Console.WriteLine("Enter the patient name: ");
+                                    name = Console.ReadLine();
+                                    if (p1isActive && p1Name == name)
+                                    {
+                                        Console.WriteLine("Enter your new phone number");
+                                        phoneNumber = Console.ReadLine();
+                                        p1PhoneNumber = phoneNumber;
+                                        Console.WriteLine("The Patient Phone Number has been Updated!!");
+                                    }
+                                    else if (p2isActive && p2Name == name)
+                                    {
+                                        Console.WriteLine("Enter your new phone number");
+                                        phoneNumber = Console.ReadLine();
+                                        p2PhoneNumber = phoneNumber;
+                                        Console.WriteLine("The Patient Phone Number has been Updated!!");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Patient not found.");
+                                    }
+                                    break;
+                                default:
+                                    Console.WriteLine("Invalid Option");
+                                    break;
+                            }
+
+
+                        }
+                        
                         break;
                     //5. Delete Patient From the System
                     case 5:
