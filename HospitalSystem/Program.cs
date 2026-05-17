@@ -184,6 +184,7 @@ namespace HospitalSystem
                             optionUpdate = Convert.ToInt32(Console.ReadLine());
                             switch (optionUpdate)
                             {
+                                //Update patient email
                                 case 1:
                                     Console.WriteLine("Enter the patient name: ");
                                     name = Console.ReadLine();
@@ -206,6 +207,7 @@ namespace HospitalSystem
                                         Console.WriteLine("Patient not found.");
                                     }
                                     break;
+                                //Update patient phone number
                                 case 2:
                                     Console.WriteLine("Enter the patient name: ");
                                     name = Console.ReadLine();
@@ -228,6 +230,8 @@ namespace HospitalSystem
                                         Console.WriteLine("Patient not found.");
                                     }
                                     break;
+                                case 0:
+                                    break;
                                 default:
                                     Console.WriteLine("Invalid Option");
                                     break;
@@ -239,6 +243,26 @@ namespace HospitalSystem
                         break;
                     //5. Delete Patient From the System
                     case 5:
+                        Console.WriteLine("Enter the patient name to delete: ");
+                        name = Console.ReadLine();
+                        if (p1isActive && p1Name == name)
+                        {
+                            p1Name = ""; p1Age = 0; p1PhoneNumber = "";
+                            countPatient --;
+                            p1isActive = false;
+                            Console.WriteLine("Patient Deleted!!");
+                        }
+                        else if (p2isActive && p2Name == name)
+                        {
+                            p2Name = ""; p2Age = 0; p2PhoneNumber = "";
+                            countPatient--;
+                            p2isActive = false;
+                            Console.WriteLine("Patient Deleted!!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Patient not found");
+                        }
                         break;
                     case 0:
                         Console.WriteLine("Thank you for using our system");
