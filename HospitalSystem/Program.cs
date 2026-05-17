@@ -1,5 +1,4 @@
 ﻿using System.Xml.Linq;
-
 namespace HospitalSystem
 {
     internal class Program
@@ -12,8 +11,6 @@ namespace HospitalSystem
             //Patient Variables
             string p1Name = ""; int p1Age = 0; string p1Email = ""; string p1PhoneNumber = ""; bool p1isActive = false;
             string p2Name = ""; int p2Age = 0; string p2Email = ""; string p2PhoneNumber = ""; bool p2isActive = false;
-
-
             //Counter Variables
             const int MAX_PATIENT = 2;
             int countPatient = 0;
@@ -78,9 +75,14 @@ namespace HospitalSystem
                                 Console.WriteLine("Error, Name Can't be Empty!!");
                                 break;
                             }
+                            else if (name.Length > 20 || name.Length < 2)
+                            {
+                                Console.WriteLine("Error, Name Can't be more than 20 Characters and less than 3 Characters!!");
+                                break;
+                            }
                             Console.WriteLine("Enter the patient age: ");
                             age = Convert.ToInt32(Console.ReadLine());
-                            if (age < 0)
+                            if (age < 0 || age > 120)
                             {
                                 Console.WriteLine("Error, the age can't be negative");
                                 break;
@@ -92,11 +94,21 @@ namespace HospitalSystem
                                 Console.WriteLine("Error, Email Can't be Empty!!");
                                 break;
                             }
+                            else if (email.Length > 50 || email.Length < 5)
+                            {
+                                Console.WriteLine("Error, Email can't be more than 50 Characters and less than 6 Characters!!");
+                                break;
+                            }
                             Console.WriteLine("Enter the patient phone number: ");
                             phoneNumber = Console.ReadLine();
                             if (phoneNumber == "")
                             {
                                 Console.WriteLine("Error, Email Can't be Empty!!");
+                                break;
+                            }
+                            else if (phoneNumber.Length != 8)
+                            {
+                                Console.WriteLine("Error, Email can't be more than 50 Characters and less than 6 Characters!!");
                                 break;
                             }
 
@@ -192,6 +204,16 @@ namespace HospitalSystem
                                     {
                                         Console.WriteLine("Enter your new Email");
                                         email = Console.ReadLine();
+                                        if (email == "")
+                                        {
+                                            Console.WriteLine("Error, Email Can't be Empty!!");
+                                            break;
+                                        }
+                                        else if (email.Length > 50 || email.Length < 5)
+                                        {
+                                            Console.WriteLine("Error, Email can't be more than 50 Characters and less than 6 Characters!!");
+                                            break;
+                                        }
                                         p1Email = email;
                                         Console.WriteLine("The Patient Email has been Updated!!");
                                     }
@@ -199,6 +221,16 @@ namespace HospitalSystem
                                     {
                                         Console.WriteLine("Enter your new Email");
                                         email = Console.ReadLine();
+                                        if (email == "")
+                                        {
+                                            Console.WriteLine("Error, Email Can't be Empty!!");
+                                            break;
+                                        }
+                                        else if (email.Length > 50 || email.Length < 5)
+                                        {
+                                            Console.WriteLine("Error, Email can't be more than 50 Characters and less than 6 Characters!!");
+                                            break;
+                                        }
                                         p2Email = email;
                                         Console.WriteLine("The Patient Email has been Updated!!");
                                     }
@@ -215,6 +247,16 @@ namespace HospitalSystem
                                     {
                                         Console.WriteLine("Enter your new phone number");
                                         phoneNumber = Console.ReadLine();
+                                        if (phoneNumber == "")
+                                        {
+                                            Console.WriteLine("Error, Email Can't be Empty!!");
+                                            break;
+                                        }
+                                        else if (phoneNumber.Length != 8)
+                                        {
+                                            Console.WriteLine("Error, Email can't be more than 50 Characters and less than 6 Characters!!");
+                                            break;
+                                        }
                                         p1PhoneNumber = phoneNumber;
                                         Console.WriteLine("The Patient Phone Number has been Updated!!");
                                     }
@@ -222,6 +264,16 @@ namespace HospitalSystem
                                     {
                                         Console.WriteLine("Enter your new phone number");
                                         phoneNumber = Console.ReadLine();
+                                        if (phoneNumber == "")
+                                        {
+                                            Console.WriteLine("Error, Email Can't be Empty!!");
+                                            break;
+                                        }
+                                        else if (phoneNumber.Length != 8)
+                                        {
+                                            Console.WriteLine("Error, Email can't be more than 50 Characters and less than 6 Characters!!");
+                                            break;
+                                        }
                                         p2PhoneNumber = phoneNumber;
                                         Console.WriteLine("The Patient Phone Number has been Updated!!");
                                     }
