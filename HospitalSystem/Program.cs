@@ -130,19 +130,41 @@ namespace HospitalSystem
                             if (p1isActive)
                             {
                                 displayNum++;
-                                Console.WriteLine($"{displayNum}. Patient Name: {p1Name}, || Age: {p1Age} || Email: {p1Email} || Phone Number: {p1PhoneNumber}  "); 
+                                Console.WriteLine($"{displayNum}. Patient Name: {p1Name} || Age: {p1Age} || Email: {p1Email} || Phone Number: {p1PhoneNumber}  "); 
                             }
                             if (p2isActive)
                             {
                                 displayNum++;
-                                Console.WriteLine($"{displayNum}. Patient Name: {p2Name}, || Age: {p2Age} || Email: {p2Email} || Phone Number: {p2PhoneNumber}  ");
+                                Console.WriteLine($"{displayNum}. Patient Name: {p2Name} || Age: {p2Age} || Email: {p2Email} || Phone Number: {p2PhoneNumber}  ");
                             }
                         }
                         displayNum = 0;
                         break;
                     //3. Search for a Patient
                     case 3:
-                        break;
+                        if (countPatient == 0)
+                        {
+                            Console.WriteLine("There is no registered patients!!");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter the patient name: ");
+                            name = Console.ReadLine();
+                            if (p1isActive && p1Name == name)
+                            {
+                                Console.WriteLine($"Patient Name: {p1Name} || Age: {p1Age} || Email: {p1Email} || Phone Number: {p1PhoneNumber}  ");
+                            }
+                            else if(p2isActive && p2Name == name)
+                            {
+                                Console.WriteLine($"Patient Name: {p2Name} || Age: {p2Age} || Email: {p2Email} || Phone Number: {p2PhoneNumber}  ");
+                            }
+                            else
+                            {
+                                Console.WriteLine("The patient you searched for is not available!!");
+                            }
+                        }
+                            break;
                     //4. Update Patient info
                     case 4:
                         break;
