@@ -16,7 +16,7 @@
             DateTime checkInDate;   
             DateTime checkOutDate;
             int numberOfNights = 0;
-            double discountPercentage = 0.0;
+            double discountPercentage = 0;
             bool isRegistered = false;
             bool isCheckedIn = false;
 
@@ -26,7 +26,7 @@
             string addPhone;
             string addRoomType;
             double addNightlyRate;
-
+            double totalPrice;
 
 
             //Switch option variables
@@ -127,7 +127,7 @@
                         else
                         {
                             Console.WriteLine("Guest Name: " + guestName.ToUpper() + " Phone Number: " + guestPhone +
-                                              " Room Type: " + roomType + " Nightly Rate: " + Math.Round(nightlyRate) +
+                                              " Room Type: " + roomType + " Nightly Rate: " + Math.Round(nightlyRate, 3) +
                                               " Room Number: " + Convert.ToString(roomNumber));
                         }
                         
@@ -166,6 +166,30 @@
                         break;
                     //3. Check-Out & Bill
                     case 3:
+                        if (!isCheckedIn)
+                        {
+                            Console.WriteLine("You have to check-in first!!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Guest Name: " + guestName.ToUpper() + " Phone Number: " + guestPhone +
+                                              " Room Type: " + roomType + " Nightly Rate: " + Math.Round(nightlyRate, 3) +
+                                              " Room Number: " + Convert.ToString(roomNumber));
+
+                            totalPrice = nightlyRate * numberOfNights;
+                            if(discountPercentage > 0)
+                            {
+                                Console.WriteLine($"Total: {Math.Round(totalPrice - (totalPrice* discountPercentage), 3)}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Total: " +  Math.Round(totalPrice),3);
+                            }
+
+                            guestName = ""; guestPhone = ""; roomType = ""; nightlyRate = 0; roomNumber = 0;
+
+                            
+                        }
                         break;
                     //4. Apply Discount
                     case 4:
