@@ -280,6 +280,7 @@
                             roomNotes = roomNotes.Replace("[Name]", guestName);
                             roomNotes = roomNotes.Replace("[Room Number]", Convert.ToString(roomNumber));
                             roomNotes = roomNotes.Replace("[Room Type]", roomType);
+                            roomNotes = roomNotes.Trim();
                             Console.WriteLine($"{roomNotes}");
                             Console.WriteLine("Total notes length: " + roomNotes.Length);
                             
