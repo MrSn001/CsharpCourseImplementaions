@@ -13,8 +13,8 @@
             string roomType = "";
             double nightlyRate = 0; 
             string roomNotes = "";
-            DateTime checkInDate = DateTime.Now;   
-            DateTime checkOutDate = DateTime.Now;
+            DateTime checkInDate;   
+            DateTime checkOutDate;
             int numberOfNights = 0;
             double discountPercentage = 0.0;
             bool isRegistered = false;
@@ -86,7 +86,7 @@
                             }
 
                             Console.WriteLine("Enter the phone number: ");
-                            addPhone = Console.ReadLine();
+                            addPhone = Console.ReadLine().Trim();
                             if (addPhone == "")
                             {
                                 Console.WriteLine("Phone number can't be empty!!");
@@ -115,6 +115,7 @@
                             nightlyRate = addNightlyRate;
                             roomNumber = random.Next(1, 101);
                             isRegistered = true;
+                            Console.WriteLine("Guest Registered!!");
                         }
                         break;
                     //1. View Guest Information 
@@ -129,10 +130,39 @@
                                               " Room Type: " + roomType + " Nightly Rate: " + Math.Round(nightlyRate) +
                                               " Room Number: " + Convert.ToString(roomNumber));
                         }
-                        Console.WriteLine("");
+                        
                         break;
                     //2. Check-In Guest 
                     case 2:
+                        if (isCheckedIn)
+                        {
+                            Console.WriteLine("The guest already checked in!!");
+                        }
+                        else if(!isRegistered)
+                        {
+                            Console.WriteLine("There is no guest registered!!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter the number of nights to check-In");
+                            numberOfNights = Convert.ToInt32(Console.ReadLine());
+                            if(numberOfNights == 0)
+                            {
+                                Console.WriteLine("number of nights can't be 0!!");
+                                break;
+                            }
+                            else
+                            {
+                                checkInDate = DateTime.Now;
+                                checkOutDate = checkInDate.AddDays(numberOfNights);
+
+                                isCheckedIn = true;
+
+                                Console.WriteLine("Success!! you Checked-In at: " + checkInDate.ToString("dd-MM-yy") 
+                                    + " Checked-Out at: " + checkOutDate.ToString("dd-MM-yy"));
+                                
+                            }
+                        }
                         break;
                     //3. Check-Out & Bill
                     case 3:
