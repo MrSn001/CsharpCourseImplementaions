@@ -8,6 +8,7 @@
             string guestName = "";
             string guestPhone = "";
             int loyaltyPoints = 0;
+            Random random = new Random();
             int roomNumber = 0;
             string roomType = "";
             double nightlyRate = 0; 
@@ -18,6 +19,15 @@
             double discountPercentage = 0.0;
             bool isRegistered = false;
             bool isCheckedIn = false;
+
+
+            //Holder Variables 
+            string addName;
+            string addPhone;
+            string addRoomType;
+            double addNightlyRate;
+
+
 
             //Switch option variables
             int option;
@@ -56,6 +66,56 @@
                 {
                     //0. Register New Guest 
                     case 0:
+                        if (isRegistered)
+                        {
+                            Console.WriteLine("You already registered!!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter the guest name: ");
+                            addName = Console.ReadLine();
+                            if (addName == "")
+                            {
+                                Console.WriteLine("Name Can't be empty!!");
+                                break;
+                            }
+                            else if (addName.Length < 3 || addName.Length > 30)
+                            {
+                                Console.WriteLine("Name Can't be less than 3 and more than 30!!");
+                                break;
+                            }
+
+                            Console.WriteLine("Enter the phone number: ");
+                            addPhone = Console.ReadLine();
+                            if (addPhone == "")
+                            {
+                                Console.WriteLine("Phone number can't be empty!!");
+                                break;
+                            }
+                            else if (addPhone.Length != 8)
+                            {
+                                Console.WriteLine("Phone number must to be 8 digits!!");
+                                break;
+                            }
+
+                            Console.WriteLine("Enter the room type: ");
+                            addRoomType = Console.ReadLine();
+                            if (addRoomType == "")
+                            {
+                                Console.WriteLine("Room type number can't be empty!!");
+                                break;
+                            }
+
+                            Console.WriteLine("Enter the nightly rate: ");
+                            addNightlyRate = Convert.ToDouble(Console.ReadLine());
+
+                            guestName = addName;
+                            guestPhone = addPhone;
+                            roomType = addRoomType;
+                            nightlyRate = addNightlyRate;
+                            roomNumber = random.Next(1, 101);
+                            isRegistered = true;
+                        }
                         break;
                     //1. View Guest Information 
                     case 1:
