@@ -13,8 +13,8 @@
             string roomType = "";
             double nightlyRate = 0; 
             string roomNotes = "";
-            DateTime checkInDate;   
-            DateTime checkOutDate;
+            DateTime checkInDate = DateTime.Now;   
+            DateTime checkOutDate = DateTime.Now;
             int numberOfNights = 0;
             double discountPercentage = 0;
             bool isRegistered = false;
@@ -26,9 +26,10 @@
             string addPhone;
             string addRoomType;
             double addNightlyRate;
-            double totalPrice;
+            double totalPrice = 0;
             double addDiscount;
             double totalPriceAfterDiscount = 0;
+            string receipt;
 
             //Switch option variables
             int option;
@@ -186,6 +187,7 @@
                             else
                             {
                                 Console.WriteLine("Total: " +  Math.Round(totalPrice),3);
+                                totalPriceAfterDiscount = totalPrice; // To display the total price in the receipt
                             }
 
                             guestName = ""; guestPhone = ""; roomType = ""; nightlyRate = 0; 
@@ -319,6 +321,55 @@
                             break;
                     //9. Print Receipt  
                     case 9:
+                        if (!isCheckedIn)
+                        {
+                            Console.WriteLine("You have to check-in first!!");
+                            break;
+                        }
+                        else
+                        {
+
+                            receipt = """
+                            ==================================================
+                                             HOTEL RECEIPT                    
+                            ==================================================
+                             Receipt Date:   [Receipt Date]
+                             Room Number:    [Room Number]
+                             Room Type:      [Room Type]
+                             Guest Name:     [Guest Name]
+                             Contact Phone:  [Phone Number]
+                            --------------------------------------------------
+                             Stay Details:
+                               Check-In:     [Check-In]
+                               Check-Out:    [Check-Out]
+                               Total Nights: [Total Nights]
+                            --------------------------------------------------
+                             Billing Breakdowns:
+                               Nightly Rate: [Nightly Rate] OMR
+                               Base Total:   [Base Total] OMR
+                               Discount Applied: [Discount Applied]
+                            --------------------------------------------------
+                             TOTAL AMOUNT:   [TOTAL AMOUNT] OMR
+                            ==================================================
+                                    Thank you for choosing your stay!         
+                            ==================================================
+                            """;
+
+                            receipt = receipt.Replace("[Receipt Date]", DateTime.Now.ToString());
+                            receipt = receipt.Replace("[Room Number]", Convert.ToString(roomNumber));
+                            receipt = receipt.Replace("[Room Type]", roomType);
+                            receipt = receipt.Replace("[Guest Name]", guestName);
+                            receipt = receipt.Replace("[Phone Number]", guestPhone);
+                            receipt = receipt.Replace("[Check-In]", checkInDate.ToString("dd-MM-yy"));
+                            receipt = receipt.Replace("[Check-Out]", checkOutDate.ToString("dd-MM-yy"));
+                            receipt = receipt.Replace("[Total Nights]", Convert.ToString(numberOfNights));
+                            receipt = receipt.Replace("[Nightly Rate]", Convert.ToString(nightlyRate));
+                            receipt = receipt.Replace("[Base Total]", Convert.ToString(totalPrice));
+                            receipt = receipt.Replace("[Discount Applied]", Convert.ToString(discountPercentage));
+                            receipt = receipt.Replace("[TOTAL AMOUNT]", Convert.ToString(totalPriceAfterDiscount));
+
+                            Console.WriteLine(receipt);
+                        }
                         break;
                     //10.Edit Guest Name 
                     case 10:
