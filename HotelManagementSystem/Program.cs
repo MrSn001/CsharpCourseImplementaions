@@ -27,7 +27,8 @@
             string addRoomType;
             double addNightlyRate;
             double totalPrice;
-
+            double addDiscount;
+            double totalPriceAfterDiscount = 0;
 
             //Switch option variables
             int option;
@@ -179,20 +180,49 @@
                             totalPrice = nightlyRate * numberOfNights;
                             if(discountPercentage > 0)
                             {
-                                Console.WriteLine($"Total: {Math.Round(totalPrice - (totalPrice* discountPercentage), 3)}");
+                                totalPriceAfterDiscount = totalPrice - (totalPrice * discountPercentage);
+                                Console.WriteLine($"Total: {Math.Round(totalPriceAfterDiscount , 3)}");
                             }
                             else
                             {
                                 Console.WriteLine("Total: " +  Math.Round(totalPrice),3);
                             }
 
-                            guestName = ""; guestPhone = ""; roomType = ""; nightlyRate = 0; roomNumber = 0;
+                            guestName = ""; guestPhone = ""; roomType = ""; nightlyRate = 0; 
+                            roomNumber = 0; isRegistered = false; isCheckedIn = false;
 
                             
                         }
                         break;
                     //4. Apply Discount
                     case 4:
+                        if (!isCheckedIn)
+                        {
+                            Console.WriteLine("You need to check-in first!!");
+                        }
+                        else
+                        {
+                            totalPrice = nightlyRate * numberOfNights;
+                         //   Console.WriteLine("Total price before discount: " + totalPrice);
+                            Console.WriteLine("Enter the discount percentage(eg. 0.1): ");
+                            addDiscount = Convert.ToDouble(Console.ReadLine());
+                            
+                            if(addDiscount == 0)
+                            {
+                                Console.WriteLine("Discount percentage can't be 0!!");
+                                break;
+                            }
+                            else
+                            {
+                                discountPercentage = addDiscount;
+                                totalPriceAfterDiscount = totalPrice - (totalPrice * addDiscount); 
+                            }
+
+                            Console.WriteLine("Total price before discount: " + totalPrice);
+                            Console.WriteLine("Total price after discount: " + totalPriceAfterDiscount);
+                            Console.WriteLine("Amount saved: " + Math.Abs(totalPrice - totalPriceAfterDiscount));
+
+                        }
                         break;
                     //5. Upgrade Room 
                     case 5:
