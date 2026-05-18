@@ -262,6 +262,28 @@
                         break;
                     //6. Add Room Service Note 
                     case 6:
+                        if (!isCheckedIn)
+                        {
+                            Console.WriteLine("You have to check-in first!!");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter the Service Room Note: ");
+                            roomNotes = Console.ReadLine();
+                            if(roomNotes == "")
+                            {
+                                Console.WriteLine("Service Room Note Can't Be Empty!!");
+                                break;
+                            }
+
+                            roomNotes = roomNotes.Replace("[Name]", guestName);
+                            roomNotes = roomNotes.Replace("[Room Number]", Convert.ToString(roomNumber));
+                            roomNotes = roomNotes.Replace("[Room Type]", roomType);
+                            Console.WriteLine($"{roomNotes}");
+                            Console.WriteLine("Total notes length: " + roomNotes.Length);
+                            
+                        }
                         break;
                     //7. Search Guest by Name 
                     case 7:
