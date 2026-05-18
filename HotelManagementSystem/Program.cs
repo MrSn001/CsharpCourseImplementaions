@@ -288,6 +288,21 @@
                         break;
                     //7. Search Guest by Name 
                     case 7:
+                        if (!isRegistered)
+                        {
+                            Console.WriteLine("You have to register first!!");
+                            break;
+                        }
+                        Console.WriteLine("Enter the guest name to search: ");
+                        addName = Console.ReadLine();
+                        if (guestName.ToLower().Contains(addName))
+                        {
+                            Console.WriteLine("Name found!! it is " + guestName);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Couldn't find the name!!");
+                        }
                         break;
                     //8. Calculate Loyalty Points
                     case 8:
