@@ -7,12 +7,12 @@
             //Variables    
             string guestName = "";
             string guestPhone = "";
-            double loyaltyPoints = 0;
+            double loyaltyPoints;
             Random random = new Random();
             int roomNumber = 0;
             string roomType = "";
             double nightlyRate = 0; 
-            string roomNotes = "";
+            string roomNotes;
             DateTime checkInDate = DateTime.Now;   
             DateTime checkOutDate = DateTime.Now;
             int numberOfNights = 0;
@@ -33,7 +33,7 @@
 
             //Switch option variables
             int option;
-
+            char choice;
             //While loop flag
             bool flag = false;
             //////////////////////////////////////////////////////////////////
@@ -162,7 +162,10 @@
 
                                 Console.WriteLine("Success!! you Checked-In at: " + checkInDate.ToString("dd-MM-yy") 
                                     + " Checked-Out at: " + checkOutDate.ToString("dd-MM-yy"));
-                                
+
+                                totalPrice = nightlyRate * numberOfNights;
+                                totalPriceAfterDiscount = totalPrice; // To display the total price in the receipt
+
                             }
                         }
                         break;
@@ -373,6 +376,37 @@
                         break;
                     //10.Edit Guest Name 
                     case 10:
+                        if (!isRegistered)
+                        {
+                            Console.WriteLine("There is no guest registered!!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter the new name: ");
+                            addName = Console.ReadLine();
+                            if (addName.Trim().Length < 3 )
+                            {
+                                Console.WriteLine("Name can't be less than 3!!");
+                            }
+                            Console.WriteLine("This is the name in lower Case: " + addName.ToLower());
+                            Console.WriteLine("This is the name in upper Case: " + addName.ToUpper());
+                            Console.WriteLine("");
+                            Console.WriteLine("You would like to change the name? (y/n)");
+                            choice = Convert.ToChar(Console.ReadLine());
+                            if (choice == 'y')
+                            {
+                                guestName = addName;
+                                Console.WriteLine("Name has been updated successfully");
+                            }
+                            else if (choice == 'n')
+                            {
+                                Console.WriteLine("Change has been cancelled!!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid Choice!!");
+                            }
+                        }
                         break;
                     //11.Exit the system
                     case 11:
