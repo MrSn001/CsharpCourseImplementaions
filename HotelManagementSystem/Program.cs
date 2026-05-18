@@ -226,6 +226,39 @@
                         break;
                     //5. Upgrade Room 
                     case 5:
+                        if (!isCheckedIn)
+                        {
+                            Console.WriteLine("You have to check-in first!!");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter the room type: ");
+                            addRoomType = Console.ReadLine();
+                            if (addRoomType == "")
+                            {
+                                Console.WriteLine("Room type number can't be empty!!");
+                                break;
+                            }
+
+                            Console.WriteLine("Enter the nightly rate: ");
+                            addNightlyRate = Convert.ToDouble(Console.ReadLine());
+                            if(addNightlyRate == 0)
+                            {
+                                Console.WriteLine("Nightly rate can't be 0!!");
+                                break;
+                            }
+
+
+                            Console.WriteLine("The higher nightly rate: " + Math.Max(nightlyRate,addNightlyRate));
+                            Console.WriteLine("The lower nightly rate: " + Math.Min(nightlyRate, addNightlyRate));
+                            Console.WriteLine("The difference per night: " + Math.Abs(nightlyRate - addNightlyRate));
+
+                            roomType = addRoomType;
+                            nightlyRate = addNightlyRate;
+                            roomNumber = random.Next(1, 101);
+
+                        }
                         break;
                     //6. Add Room Service Note 
                     case 6:
