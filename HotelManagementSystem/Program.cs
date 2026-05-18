@@ -7,7 +7,7 @@
             //Variables    
             string guestName = "";
             string guestPhone = "";
-            int loyaltyPoints = 0;
+            double loyaltyPoints = 0;
             Random random = new Random();
             int roomNumber = 0;
             string roomType = "";
@@ -306,7 +306,17 @@
                         break;
                     //8. Calculate Loyalty Points
                     case 8:
-                        break;
+                        if (!isCheckedIn)
+                        {
+                            Console.WriteLine("You have to check-in first!!");
+                            break;
+                        }
+                        else
+                        {
+                            loyaltyPoints = Math.Round(Math.Pow(numberOfNights,2));
+                            Console.WriteLine("Your loyalty points = " + loyaltyPoints);
+                        }
+                            break;
                     //9. Print Receipt  
                     case 9:
                         break;
