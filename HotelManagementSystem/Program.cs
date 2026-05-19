@@ -478,6 +478,8 @@
                     //11.Exit the system
                     case 11:
                         flag = true;
+                        Console.WriteLine("Thank you for your stay");
+                        Console.WriteLine("Date: " + DateTime.Now.ToString("dd-MM-yyyy hh:m:ss"));
                         break;
                     default: 
                         Console.WriteLine("Invalid option, please enter agein!!");
@@ -490,7 +492,6 @@
                 Console.Clear();
 
             }
-
         }
     }
 }
