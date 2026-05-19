@@ -36,6 +36,11 @@
             char choice;
             //While loop flag
             bool flag = false;
+
+            //Bouns Variables
+            int dashes = 1;
+            string dashStore = "-";
+
             //////////////////////////////////////////////////////////////////
 
             //Process
@@ -332,7 +337,15 @@
                         else
                         {
 
-                            receipt = """
+                            while (dashes < 50)
+                            {
+
+                                dashes++;
+                                dashStore = dashStore + "-";
+
+                            }
+
+                            receipt = $"""
                             ==================================================
                                              HOTEL RECEIPT                    
                             ==================================================
@@ -341,22 +354,25 @@
                              Room Type:      [Room Type]
                              Guest Name:     [Guest Name]
                              Contact Phone:  [Phone Number]
-                            --------------------------------------------------
+                            {dashStore}
                              Stay Details:
                                Check-In:     [Check-In]
                                Check-Out:    [Check-Out]
                                Total Nights: [Total Nights]
-                            --------------------------------------------------
+                            {dashStore}
                              Billing Breakdowns:
                                Nightly Rate: [Nightly Rate] OMR
                                Base Total:   [Base Total] OMR
                                Discount Applied: [Discount Applied]
-                            --------------------------------------------------
+                            {dashStore}
                              TOTAL AMOUNT:   [TOTAL AMOUNT] OMR
                             ==================================================
                                     Thank you for choosing your stay!         
                             ==================================================
                             """;
+
+                           
+                           
 
                             receipt = receipt.Replace("[Receipt Date]", DateTime.Now.ToString());
                             receipt = receipt.Replace("[Room Number]", Convert.ToString(roomNumber));
