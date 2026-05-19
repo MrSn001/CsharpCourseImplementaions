@@ -36,10 +36,11 @@
             char choice;
             //While loop flag
             bool flag = false;
-
+            bool loyaltyFlag = false; // well be used to not overwrite the discount percentage
             //Bouns Variables
             int dashes = 1;
             string dashStore = "-";
+
 
             //////////////////////////////////////////////////////////////////
 
@@ -199,7 +200,7 @@
                             }
 
                             guestName = ""; guestPhone = ""; roomType = ""; nightlyRate = 0; 
-                            roomNumber = 0; isRegistered = false; isCheckedIn = false;
+                            roomNumber = 0; isRegistered = false; isCheckedIn = false; loyaltyFlag = false;
 
                             
                         }
@@ -210,7 +211,7 @@
                         {
                             Console.WriteLine("You need to check-in first!!");
                         }
-                        else
+                        else if (!loyaltyFlag)
                         {
                             totalPrice = nightlyRate * numberOfNights;
                          //   Console.WriteLine("Total price before discount: " + totalPrice);
@@ -231,7 +232,12 @@
                             Console.WriteLine("Total price before discount: " + totalPrice);
                             Console.WriteLine("Total price after discount: " + totalPriceAfterDiscount);
                             Console.WriteLine("Amount saved: " + Math.Abs(totalPrice - totalPriceAfterDiscount));
+                            loyaltyFlag = true;
 
+                        }
+                        else
+                        {
+                            Console.WriteLine("Discount already applied!!");
                         }
                         break;
                     //5. Upgrade Room 
@@ -325,6 +331,51 @@
                         {
                             loyaltyPoints = Math.Round(Math.Pow(numberOfNights,2));
                             Console.WriteLine("Your loyalty points = " + loyaltyPoints);
+                            Console.WriteLine("Would you like to use the loyalty points? (y/n): ");
+                            choice = Convert.ToChar(Console.ReadLine());
+                            if(choice == 'y')
+                            {
+                                if (loyaltyFlag)
+                                {
+                                    Console.WriteLine("There is already a discount has been applied!!");
+                                }
+                                else
+                                {
+
+                                    if (loyaltyPoints >= 50 && loyaltyPoints < 100)
+                                    {
+                                        discountPercentage = 0.05;   
+                                        loyaltyFlag = true;
+                                        loyaltyPoints -= 50;
+                                        Console.WriteLine("Congrats!! you got " + discountPercentage + " Discount, your remaining points: " + Math.Abs(loyaltyPoints));
+                                    }
+                                    else if (loyaltyPoints >= 100)
+                                    {
+                                        discountPercentage = 0.1;
+                                        loyaltyFlag = true;
+                                        loyaltyPoints -= 100; 
+                                        Console.WriteLine("Congrats!! you got " + discountPercentage + " Discount, your remaining points: " + Math.Abs(loyaltyPoints));
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("You don't have enough loyalty points!!");
+                                    }
+
+                                }
+                            }
+                            else if(choice == 'n')
+                            {
+                                Console.WriteLine("You Cancelled the process!!");
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid Choice!!");
+                                break;
+                            }
+                            
+                            
+
                         }
                             break;
                     //9. Print Receipt  
@@ -376,9 +427,9 @@
 
                             receipt = receipt.Replace("[Receipt Date]", DateTime.Now.ToString());
                             receipt = receipt.Replace("[Room Number]", Convert.ToString(roomNumber));
-                            receipt = receipt.Replace("[Room Type]", roomType);
-                            receipt = receipt.Replace("[Guest Name]", guestName);
-                            receipt = receipt.Replace("[Phone Number]", guestPhone);
+                            receipt = receipt.Replace("[Room Type]", roomType.ToUpper());
+                            receipt = receipt.Replace("[Guest Name]", guestName.ToUpper());
+                            receipt = receipt.Replace("[Phone Number]", guestPhone.Trim());
                             receipt = receipt.Replace("[Check-In]", checkInDate.ToString("dd-MM-yy"));
                             receipt = receipt.Replace("[Check-Out]", checkOutDate.ToString("dd-MM-yy"));
                             receipt = receipt.Replace("[Total Nights]", Convert.ToString(numberOfNights));
