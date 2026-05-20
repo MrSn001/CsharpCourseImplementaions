@@ -197,7 +197,10 @@ namespace LibraryManagementSystem
             bookGenre = genre;
         }
 
-        
+        public static void BorrowBook(ref int numberOfAvailableCopies)
+        {
+            numberOfAvailableCopies--;
+        }
 
         static void Main(string[] args)
         {
@@ -254,6 +257,22 @@ namespace LibraryManagementSystem
 
                     //Borrow a Book
                     case 3:
+                        if (!bookIsRegistered)
+                        {
+                            Console.WriteLine("There is no book to borrow!!");
+                            break;
+                        }
+                        Console.WriteLine("Enter the book name to borrow: ");
+                        bookTitle = Console.ReadLine();
+                        if (CheckBookAvailability(bookTitle))
+                        {
+                            BorrowBook(ref numberOfAvailableCopies);
+                            Console.WriteLine("Book Borrowed!!");
+                            break;
+                        }
+                        Console.WriteLine("Book is not found!!");
+
+
                         break;
 
                     //Return a Book
@@ -274,6 +293,11 @@ namespace LibraryManagementSystem
 
                     //Register Book 
                     case 8:
+                        if(!memberIsRegistered)
+                        {
+                            Console.WriteLine("There is no member registered!!");
+                            break;
+                        }
                         if (bookIsRegistered == true)
                         {
                             Console.WriteLine("There is already a book registered!!");
@@ -326,10 +350,12 @@ namespace LibraryManagementSystem
                                     break;
                                 }
                                 RegisterBook(title, author, numberOfAvailableCopies, genre);
+                                bookIsRegistered = true;
                             }
                             else
                             {
                                 RegisterBook(title, author, numberOfAvailableCopies);
+                                bookIsRegistered= true;
                             }
                         }
 
