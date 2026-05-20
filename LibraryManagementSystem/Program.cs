@@ -40,7 +40,28 @@ namespace LibraryManagementSystem
         static DateTime dateHolder;
 
 
-        
+        public static void MainMenu()
+        {
+            Console.WriteLine("===== Welcome to the City Public Library =====");
+            Console.WriteLine("""
+
+                    0. Register Member
+                    1. Display Member Profile
+                    2. Search Book by Title
+                    3. Borrow a Book
+                    4. Return a Book
+                    5. Calculate Late Fine
+                    6. Apply Member Discount
+                    7. Check Borrowing Eligibility
+                    8. Register Book 
+                    9. Generate Member ID 
+                    10.Display Book Details 
+                    11.Calculate Renewal Fee  
+                    12.Update Member Email
+                    13.Session Summary 
+                    """);
+
+        }
 
         public static void MemberDetailsPrint()
         {
@@ -125,25 +146,8 @@ namespace LibraryManagementSystem
             while (loopFlag)
             {
 
-                Console.WriteLine("===== Welcome to the City Public Library =====");
-                Console.WriteLine("""
-
-                    0. Register Member
-                    1. Display Member Profile
-                    2. Search Book by Title
-                    3. Borrow a Book
-                    4. Return a Book
-                    5. Calculate Late Fine
-                    6. Apply Member Discount
-                    7. Check Borrowing Eligibility
-                    8. Register Book 
-                    9. Generate Member ID 
-                    10.Display Book Details 
-                    11.Calculate Renewal Fee  
-                    12.Update Member Email
-                    13.Session Summary 
-                    """);
-
+                MainMenu();
+                
                 Console.WriteLine("Enter your choice: ");
                 option = Convert.ToInt32(Console.ReadLine());
                 switch (option)
