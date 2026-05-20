@@ -64,7 +64,7 @@ namespace LibraryManagementSystem
 
         public static bool CheckLengthMoreThan(string value, int num, ref bool checkFlag)
         {
-            if (value.Trim().Length > num)
+            if (value.Trim().Length < num)
             {
 
                 Console.WriteLine("It have to be more than " + num);
@@ -75,7 +75,7 @@ namespace LibraryManagementSystem
 
         public static bool CheckLengthLessThan(string value, int num, ref bool checkFlag)
         {
-            if (value.Trim().Length < num)
+            if (value.Trim().Length > num)
             {
 
                 Console.WriteLine("It have to be less than " + num);
@@ -141,37 +141,14 @@ namespace LibraryManagementSystem
         public static void MemberDetailsRegister()
         {
 
-            //Enter Name
-            Console.WriteLine("Enter member name: ");
-            name = Console.ReadLine();
-            CheckIfEmpty(name,ref checkFlag);
-            CheckLengthMoreThan(name, 3,ref checkFlag);
-
-            //Enter Email
-            Console.WriteLine("Enter member email: ");
-            email = Console.ReadLine();
-            CheckIfEmpty(email, ref checkFlag);
-            CheckLengthMoreThan(email, 12,ref checkFlag);
-
-            //Enter Tier
-            Console.WriteLine("Enter member tier (resident/visitor/student/child/senior/corporate): ");
-            tier = Console.ReadLine();
-            CheckIfEmpty(tier , ref checkFlag);
-            if (tier.ToLower() != "resident" && tier.ToLower() != "visitor" &&
-                tier.ToLower() != "student" && tier.ToLower() != "child" &&
-                tier.ToLower() != "senior" && tier.ToLower() != "corporate")
-            {
-                Console.WriteLine("you have to select one of these tiers: (resident/visitor/student/child/senior/corporate)");
-                return;
-            }
-
+          
             //Signing values
             memberID = random.Next(1, 101);
             memberIsRegistered = true;
             dateHolder = DateTime.Now.AddDays(365);
             membershipExpireDate = dateHolder.ToString("dd - MM - yyyy");
             memberName = name;
-            memberEmail = email.Substring(email.Length - 14);
+            memberEmail = email.Substring(Math.Abs(email.Length - 14));
             memberTier = tier;
 
             Console.WriteLine("Member Registered Successfully");
@@ -251,8 +228,57 @@ namespace LibraryManagementSystem
                             Console.WriteLine("Member is already registered!!");
                             break;
                         }
-                        MemberDetailsRegister();
-                        MemberDetailsPrint();
+
+                        //Enter Name
+                        Console.WriteLine("Enter member name: ");
+                        name = Console.ReadLine();
+                        CheckIfEmpty(name, ref checkFlag);
+                        CheckLengthMoreThan(name, 3, ref checkFlag);
+                        if (checkFlag)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            //Enter Email
+                            Console.WriteLine("Enter member email: ");
+                            email = Console.ReadLine();
+                            CheckIfEmpty(email, ref checkFlag);
+                            CheckLengthMoreThan(email, 12, ref checkFlag);
+                            if (checkFlag)
+                            {
+                                break;
+                            }
+                            else
+                            {
+
+                                //Enter Tier
+                                Console.WriteLine("Enter member tier (resident/visitor/student/child/senior/corporate): ");
+                                tier = Console.ReadLine();
+                                CheckIfEmpty(tier, ref checkFlag);
+                                if (tier.ToLower() != "resident" && tier.ToLower() != "visitor" &&
+                                    tier.ToLower() != "student" && tier.ToLower() != "child" &&
+                                    tier.ToLower() != "senior" && tier.ToLower() != "corporate")
+                                {
+                                    Console.WriteLine("you have to select one of these tiers: (resident/visitor/student/child/senior/corporate)");
+                                    break;
+                                }
+                                else if (checkFlag)
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    MemberDetailsRegister();
+                                    MemberDetailsPrint();
+                                }
+                                
+
+                            }
+                        }
+
+                       
+
 
                         break;
 
@@ -293,7 +319,7 @@ namespace LibraryManagementSystem
 
                     //Borrow a Book
                     case 3:
-                        if (!bookIsRegistered)
+                        if (!bookIsRegistered || numberOfAvailableCopies == 0)
                         {
                             Console.WriteLine("There is no book to borrow!!");
                             break;
@@ -302,9 +328,11 @@ namespace LibraryManagementSystem
                         bookTitle = Console.ReadLine();
                         if (CheckBookAvailability(bookTitle))
                         {
-                            BorrowBook(ref numberOfAvailableCopies);
-                            Console.WriteLine("Book Borrowed!!");
-                            break;
+                           
+                                BorrowBook(ref numberOfAvailableCopies);
+                                Console.WriteLine("Book Borrowed!!");
+                                break;   
+                            
                         }
                         Console.WriteLine("Book is not found!!");
 
@@ -375,54 +403,61 @@ namespace LibraryManagementSystem
                             Console.WriteLine("Enter the book title: ");
                             title = Console.ReadLine();
                             CheckIfEmpty(title , ref checkFlag);
-                            CheckLengthLessThan(title, 3, ref checkFlag);
-                            CheckLengthMoreThan(title, 20, ref checkFlag);
+                            CheckLengthLessThan(title, 20, ref checkFlag);
+                            CheckLengthMoreThan(title, 3, ref checkFlag);
                             if (checkFlag)
                             { 
                                 break;
                             }
-
-                            //Enter book author
-                            Console.WriteLine("Enter the book author name: ");
-                            author = Console.ReadLine();
-                            CheckIfEmpty(author, ref checkFlag);
-                            CheckLengthLessThan(author, 3, ref checkFlag);
-                            CheckLengthMoreThan(author, 20, ref checkFlag);
-                            if (checkFlag)
+                            else
                             {
-                                break;
-                            }
 
-                            //Enter number of copies
-                            Console.WriteLine("Enter the number of copies: ");
-                            numberOfAvailableCopies = Convert.ToInt32(Console.ReadLine());
-                            CheckIfZero(numberOfAvailableCopies, ref checkFlag);
-                            if (checkFlag)
-                            {
-                                break;
-                            }
-
-                            Console.WriteLine("Do you want to enter a genre?(Y/N): ");
-                            choice = Convert.ToChar(Console.ReadLine());
-
-                            if(choice == 'y')
-                            {
-                                Console.WriteLine("Enter the book genre: ");
-                                genre = Console.ReadLine();
-                                CheckIfEmpty(genre, ref checkFlag);
-                                CheckLengthLessThan(genre, 3, ref checkFlag);
-                                CheckLengthMoreThan(genre, 20, ref checkFlag);
+                                //Enter book author
+                                Console.WriteLine("Enter the book author name: ");
+                                author = Console.ReadLine();
+                                CheckIfEmpty(author, ref checkFlag);
+                                CheckLengthLessThan(author, 20, ref checkFlag);
+                                CheckLengthMoreThan(author, 3, ref checkFlag);
                                 if (checkFlag)
                                 {
                                     break;
                                 }
-                                RegisterBook(title, author, numberOfAvailableCopies, genre);
-                                bookIsRegistered = true;
-                            }
-                            else
-                            {
-                                RegisterBook(title, author, numberOfAvailableCopies);
-                                bookIsRegistered= true;
+                                else
+                                {
+                                    //Enter number of copies
+                                    Console.WriteLine("Enter the number of copies: ");
+                                    numberOfAvailableCopies = Convert.ToInt32(Console.ReadLine());
+                                    CheckIfZero(numberOfAvailableCopies, ref checkFlag);
+                                    if (checkFlag)
+                                    {
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Do you want to enter a genre?(Y/N): ");
+                                        choice = Convert.ToChar(Console.ReadLine());
+
+                                        if (choice == 'y')
+                                        {
+                                            Console.WriteLine("Enter the book genre: ");
+                                            genre = Console.ReadLine();
+                                            CheckIfEmpty(genre, ref checkFlag);
+                                            CheckLengthLessThan(genre, 20, ref checkFlag);
+                                            CheckLengthMoreThan(genre, 3, ref checkFlag);
+                                            if (checkFlag)
+                                            {
+                                                break;
+                                            }
+                                            RegisterBook(title, author, numberOfAvailableCopies, genre);
+                                            bookIsRegistered = true;
+                                        }
+                                        else
+                                        {
+                                            RegisterBook(title, author, numberOfAvailableCopies);
+                                            bookIsRegistered = true;
+                                        }
+                                    }
+                                }
                             }
                         }
 
