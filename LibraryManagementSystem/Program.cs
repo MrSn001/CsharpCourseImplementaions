@@ -21,7 +21,7 @@ namespace LibraryManagementSystem
         static string bookGenre = "";
         static int numberOfAvailableCopies = 0;
         static bool bookIsRegistered = false;
-
+        static int numberOfDays;
 
         //Library session Variables:
         static int totalBookBorrowed = 0;
@@ -206,6 +206,11 @@ namespace LibraryManagementSystem
             numberOfAvailableCopies++;
         }
 
+        public static double CalculateLateFine(int numberOfDays)
+        {
+            return 3 * Math.Round(Math.Sqrt(numberOfDays));
+        }
+
         static void Main(string[] args)
         {
             while (loopFlag)
@@ -283,7 +288,7 @@ namespace LibraryManagementSystem
                     case 4:
                         if (!bookIsRegistered)
                         {
-                            Console.WriteLine("There is no book with that title!!");
+                            Console.WriteLine("There is no book registered!!");
                             break;
                         }
                         Console.WriteLine("Enter the book name you want to return: ");
@@ -299,6 +304,14 @@ namespace LibraryManagementSystem
 
                     //Calculate Late Fine
                     case 5:
+                        if (!bookIsRegistered)
+                        {
+                            Console.WriteLine("There is no book registered!!");
+                            break;
+                        }
+                        Console.WriteLine("Enter the number of days you want to borrow the book to calculate: ");
+                        numberOfDays = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("The Late Fine = " + CalculateLateFine(numberOfDays));
                         break;
 
                     //Apply Member Discount
