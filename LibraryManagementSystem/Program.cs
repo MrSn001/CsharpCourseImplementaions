@@ -29,9 +29,11 @@ namespace LibraryManagementSystem
 
         //flags Variables
         static bool loopFlag = true;
+        static bool checkFlag = false;
 
         //Choice Variables
         static int option;
+        static char choice;
 
         //Member Variables Holders
         static string name;
@@ -40,11 +42,63 @@ namespace LibraryManagementSystem
         static DateTime dateHolder;
         static string searchBookTitle;
 
+        //Book Variables Holders
+        static string title;
+        static string author;
+        static int numCopies;
+        static string genre;
+
+        ////////////////////////////////////////////////////////////////
+
+        //Validation Methods
+        public static bool CheckIfEmpty(string value, ref bool flag)
+        {
+            if (value == "")
+            {
+                Console.WriteLine("Filed can't be empty");
+                return flag = true;
+            }
+            return flag = false;
+
+        }
+
+        public static bool CheckLengthMoreThan(string value, int num, ref bool flag)
+        {
+            if (value.Trim().Length < num)
+            {
+
+                Console.WriteLine("It have to be more than " + num);
+                return flag = true;
+            }
+            return flag = false;
+        }
+
+        public static bool CheckLengthLessThan(string value, int num, ref bool flag)
+        {
+            if (value.Trim().Length > num)
+            {
+
+                Console.WriteLine("It have to be more than " + num);
+                return flag = true;
+            }
+            return flag = false;
+        }
+
+        public static bool CheckIfZero( int num, ref bool flag)
+        {
+            if (num <= 0)
+            {
+
+                Console.WriteLine("Number can't be zero or less!!");
+                return flag = true;
+            }
+            return flag = false;
+        }
+
+        ////////////////////////////////////////////////////////////////
 
 
-
-
-
+        //Display Methods
         public static void MainMenu()
         {
             Console.WriteLine("===== Welcome to the City Public Library =====");
@@ -80,47 +134,30 @@ namespace LibraryManagementSystem
         }
 
 
+        ////////////////////////////////////////////////////////////////
+
+        //Tasks Methods
+
         public static void MemberDetailsRegister()
         {
 
-
+            //Enter Name
             Console.WriteLine("Enter member name: ");
             name = Console.ReadLine();
+            CheckIfEmpty(name,ref checkFlag);
+            CheckLengthMoreThan(name, 3,ref checkFlag);
 
-            if (name == "") 
-            { 
-                Console.WriteLine("Name Can't be Empty!!");
-                return;
-            }
-            else if (name.Length < 3) 
-            {
-                Console.WriteLine("Name Can't be less than 3!!");
-                return;
-            }
-
+            //Enter Email
             Console.WriteLine("Enter member email: ");
             email = Console.ReadLine();
+            CheckIfEmpty(email, ref checkFlag);
+            CheckLengthMoreThan(email, 12,ref checkFlag);
 
-            if (email == "")
-            {
-                Console.WriteLine("email Can't be Empty!!");
-                return;
-            }
-            else if (email.Length < 12)
-            {
-                Console.WriteLine("email Can't be less than 20!!");
-                return;
-            }
-
+            //Enter Tier
             Console.WriteLine("Enter member tier (resident/visitor/student/child/senior/corporate): ");
             tier = Console.ReadLine();
-
-            if (tier == "")
-            {
-                Console.WriteLine("tier Can't be Empty!!");
-                return;
-            }
-            else if (tier.ToLower() != "resident" && tier.ToLower() != "visitor" &&
+            CheckIfEmpty(tier , ref checkFlag);
+            if (tier.ToLower() != "resident" && tier.ToLower() != "visitor" &&
                 tier.ToLower() != "student" && tier.ToLower() != "child" &&
                 tier.ToLower() != "senior" && tier.ToLower() != "corporate")
             {
@@ -128,9 +165,7 @@ namespace LibraryManagementSystem
                 return;
             }
 
-
-
-
+            //Signing values
             memberID = random.Next(1, 101);
             memberIsRegistered = true;
             dateHolder = DateTime.Now.AddDays(365);
@@ -142,7 +177,7 @@ namespace LibraryManagementSystem
             Console.WriteLine("Member Registered Successfully");
         }
 
-
+        
         public static bool CheckBookAvailability(string searchBookTitle)
         {
             if (bookTitle.ToLower().Contains(searchBookTitle.ToLower().Substring(3)))
@@ -153,6 +188,16 @@ namespace LibraryManagementSystem
             return false;
         }
 
+    
+        public static void RegisterBook(string title,string author, int numberOfCopies,string genre = "No Genre")
+        {
+            bookTitle = title;
+            bookAuthor = author;
+            numberOfAvailableCopies = numberOfCopies;
+            bookGenre = genre;
+        }
+
+        
 
         static void Main(string[] args)
         {
@@ -229,7 +274,64 @@ namespace LibraryManagementSystem
 
                     //Register Book 
                     case 8:
+                        if (bookIsRegistered == true)
+                        {
+                            Console.WriteLine("There is already a book registered!!");
+                        }
+                        else
+                        {
+                            //Enter book title
+                            Console.WriteLine("Enter the book title: ");
+                            title = Console.ReadLine();
+                            CheckIfEmpty(title , ref checkFlag);
+                            CheckLengthLessThan(title, 3, ref checkFlag);
+                            CheckLengthMoreThan(title, 20, ref checkFlag);
+                            if (checkFlag)
+                            { 
+                                break;
+                            }
 
+                            //Enter book author
+                            Console.WriteLine("Enter the book author name: ");
+                            author = Console.ReadLine();
+                            CheckIfEmpty(author, ref checkFlag);
+                            CheckLengthLessThan(author, 3, ref checkFlag);
+                            CheckLengthMoreThan(author, 20, ref checkFlag);
+                            if (checkFlag)
+                            {
+                                break;
+                            }
+
+                            //Enter number of copies
+                            Console.WriteLine("Enter the number of copies: ");
+                            numberOfAvailableCopies = Convert.ToInt32(Console.ReadLine());
+                            CheckIfZero(numberOfAvailableCopies, ref checkFlag);
+                            if (checkFlag)
+                            {
+                                break;
+                            }
+
+                            Console.WriteLine("Do you want to enter a genre?(Y/N): ");
+                            choice = Convert.ToChar(Console.ReadLine());
+
+                            if(choice == 'y')
+                            {
+                                Console.WriteLine("Enter the book genre: ");
+                                genre = Console.ReadLine();
+                                CheckIfEmpty(genre, ref checkFlag);
+                                CheckLengthLessThan(genre, 3, ref checkFlag);
+                                CheckLengthMoreThan(genre, 20, ref checkFlag);
+                                if (checkFlag)
+                                {
+                                    break;
+                                }
+                                RegisterBook(title, author, numberOfAvailableCopies, genre);
+                            }
+                            else
+                            {
+                                RegisterBook(title, author, numberOfAvailableCopies);
+                            }
+                        }
 
                         break;
 
