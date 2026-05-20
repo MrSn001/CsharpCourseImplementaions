@@ -208,6 +208,11 @@ namespace LibraryManagementSystem
             }
             return CalculateDiscount(price);
         }
+
+
+
+
+
         static void Main(string[] args)
         {
             while (loopFlag)
@@ -302,9 +307,9 @@ namespace LibraryManagementSystem
                         Console.WriteLine("Enter the book title you want to find: ");
                         searchBookTitle = Console.ReadLine();
 
-                        if(searchBookTitle == "")
+                        CheckIfEmpty(searchBookTitle, ref checkFlag);
+                        if (checkFlag)
                         {
-                            Console.WriteLine("Book title can't be empty!!");
                             break;
                         }
                         else if (CheckBookAvailability(searchBookTitle))
@@ -366,8 +371,17 @@ namespace LibraryManagementSystem
                         }
                         Console.WriteLine("Enter the number of days you want to borrow the book to calculate: ");
                         numberOfDays = Convert.ToInt32(Console.ReadLine());
-                        totalFines = CalculateLateFine(numberOfDays);
-                        Console.WriteLine("The Late Fine = " + totalFines);
+                        CheckIfZero(numberOfDays, ref checkFlag);
+                        if (checkFlag)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            totalFines = CalculateLateFine(numberOfDays);
+                            Console.WriteLine("The Late Fine = " + totalFines);
+                        }
+                        
                         break;
 
                     //Apply Member Discount
