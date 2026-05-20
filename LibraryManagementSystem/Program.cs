@@ -29,7 +29,7 @@ namespace LibraryManagementSystem
 
         //flags Variables
         static bool loopFlag = true;
-        static bool checkFlag = false;
+        static bool checkFlag = true;
 
         //Choice Variables
         static int option;
@@ -46,52 +46,53 @@ namespace LibraryManagementSystem
         static string title;
         static string author;
         static string genre;
+        
 
         ////////////////////////////////////////////////////////////////
 
         //Validation Methods
-        public static bool CheckIfEmpty(string value, ref bool flag)
+        public static bool CheckIfEmpty(string value, ref bool checkFlag)
         {
             if (value == "")
             {
                 Console.WriteLine("Filed can't be empty");
-                return flag = true;
+                return checkFlag = true;
             }
-            return flag = false;
+            return checkFlag = false;
 
         }
 
-        public static bool CheckLengthMoreThan(string value, int num, ref bool flag)
-        {
-            if (value.Trim().Length < num)
-            {
-
-                Console.WriteLine("It have to be more than " + num);
-                return flag = true;
-            }
-            return flag = false;
-        }
-
-        public static bool CheckLengthLessThan(string value, int num, ref bool flag)
+        public static bool CheckLengthMoreThan(string value, int num, ref bool checkFlag)
         {
             if (value.Trim().Length > num)
             {
 
                 Console.WriteLine("It have to be more than " + num);
-                return flag = true;
+                return checkFlag = true;
             }
-            return flag = false;
+            return checkFlag = false;
         }
 
-        public static bool CheckIfZero( int num, ref bool flag)
+        public static bool CheckLengthLessThan(string value, int num, ref bool checkFlag)
+        {
+            if (value.Trim().Length < num)
+            {
+
+                Console.WriteLine("It have to be less than " + num);
+                return checkFlag = true;
+            }
+            return checkFlag = false;
+        }
+
+        public static bool CheckIfZero( int num, ref bool checkFlag)
         {
             if (num <= 0)
             {
 
                 Console.WriteLine("Number can't be zero or less!!");
-                return flag = true;
+                return checkFlag = true;
             }
-            return flag = false;
+            return checkFlag = false;
         }
 
         ////////////////////////////////////////////////////////////////
@@ -211,6 +212,25 @@ namespace LibraryManagementSystem
             return 3 * Math.Round(Math.Sqrt(numberOfDays));
         }
 
+        public static double CalculateDiscount(double price)
+        {
+            return price * 0.1;
+        }
+
+        public static double CalculateDiscount(double price,string tier)
+        {
+            if (tier.ToLower() == "student")
+            {
+                Console.WriteLine("Your have a student discount 20%: ");
+                return price * 0.2;
+            }
+            else if(tier.ToLower() == "senior")
+            {
+                Console.WriteLine("There is no discount applied!!");
+                return 0;
+            }
+            return CalculateDiscount(price);
+        }
         static void Main(string[] args)
         {
             while (loopFlag)
@@ -219,6 +239,8 @@ namespace LibraryManagementSystem
                 MainMenu();
                 
                 Console.WriteLine("Enter your choice: ");
+                
+                
                 option = Convert.ToInt32(Console.ReadLine());
                 switch (option)
                 {
@@ -236,9 +258,9 @@ namespace LibraryManagementSystem
 
                     //Display Member Profile
                     case 1:
-                        if (memberIsRegistered)
+                        if (!memberIsRegistered)
                         {
-                            Console.WriteLine("Member is already registered!!");
+                            Console.WriteLine("There is no member registered!!");
                             break;
                         }
                         MemberDetailsPrint();
@@ -246,6 +268,11 @@ namespace LibraryManagementSystem
 
                     //Search Book by Title
                     case 2:
+                        if (!bookIsRegistered) 
+                        {
+                            Console.WriteLine("There is no book registered!!");
+                            break;
+                        }
                         Console.WriteLine("Enter the book title you want to find: ");
                         searchBookTitle = Console.ReadLine();
 
@@ -311,11 +338,20 @@ namespace LibraryManagementSystem
                         }
                         Console.WriteLine("Enter the number of days you want to borrow the book to calculate: ");
                         numberOfDays = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("The Late Fine = " + CalculateLateFine(numberOfDays));
+                        totalFines = CalculateLateFine(numberOfDays);
+                        Console.WriteLine("The Late Fine = " + totalFines);
                         break;
 
                     //Apply Member Discount
                     case 6:
+                        if (!bookIsRegistered)
+                        {
+                            Console.WriteLine("There is no book borrowed!!");
+                            break;
+                        }
+                        
+                           CalculateDiscount(totalFines,memberTier);
+                     
                         break;
 
                     //Check Borrowing Eligibility
