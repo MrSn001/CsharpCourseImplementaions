@@ -110,8 +110,10 @@ namespace LibraryManagementSystem
             dateHolder = DateTime.Now.AddDays(365);
             membershipExpireDate = dateHolder.ToString("dd - MM - yyyy");
             memberName = name;
-            memberEmail = email.Substring(3);
+            memberEmail = email.Substring(email.Length - 14);
             memberTier = tier;
+
+            Console.WriteLine("Member Registered Successfully");
         }
 
 
@@ -160,6 +162,12 @@ namespace LibraryManagementSystem
 
                     //Display Member Profile
                     case 1:
+                        if (memberIsRegistered)
+                        {
+                            Console.WriteLine("Member is already registered!!");
+                            break;
+                        }
+                        MemberDetailsPrint();
                         break;
 
                     //Search Book by Title
