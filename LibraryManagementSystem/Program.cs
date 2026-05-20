@@ -148,9 +148,9 @@ namespace LibraryManagementSystem
             if (bookTitle.ToLower().Contains(searchBookTitle.ToLower().Substring(3)))
             {
 
-                return bookIsRegistered = true;
+                return true;
             }
-            return bookIsRegistered = false;
+            return false;
         }
 
 
@@ -191,6 +191,7 @@ namespace LibraryManagementSystem
                     case 2:
                         Console.WriteLine("Enter the book title you want to find: ");
                         searchBookTitle = Console.ReadLine();
+
                         if(searchBookTitle == "")
                         {
                             Console.WriteLine("Book title can't be empty!!");
@@ -228,6 +229,8 @@ namespace LibraryManagementSystem
 
                     //Register Book 
                     case 8:
+
+
                         break;
 
                     //Generate Member ID 
