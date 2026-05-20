@@ -33,21 +33,89 @@ namespace LibraryManagementSystem
         //Choice Variables
         static int option;
 
+        //Member Variables Holders
+        static string name;
+        static string email;
+        static string tier;
+        static DateTime dateHolder;
+
+
+        
 
         public static void MemberDetailsPrint()
         {
             Console.WriteLine($"""
                 Member ID: {memberID}
                 Member Name: {memberName}
-                Member Email: {memberEmail}
+                Member Email starts with: {memberEmail.PadLeft(memberEmail.Length,'*')}
                 Membership Expire Date: {membershipExpireDate}
                 Member Tier: {memberTier}
                 """);
         }
 
-      
 
-        
+        public static void MemberDetailsRegister()
+        {
+
+
+            Console.WriteLine("Enter member name: ");
+            name = Console.ReadLine();
+
+            if (name == "") 
+            { 
+                Console.WriteLine("Name Can't be Empty!!");
+                return;
+            }
+            else if (name.Length < 3) 
+            {
+                Console.WriteLine("Name Can't be less than 3!!");
+                return;
+            }
+
+            Console.WriteLine("Enter member email: ");
+            email = Console.ReadLine();
+
+            if (email == "")
+            {
+                Console.WriteLine("email Can't be Empty!!");
+                return;
+            }
+            else if (email.Length < 12)
+            {
+                Console.WriteLine("email Can't be less than 20!!");
+                return;
+            }
+
+            Console.WriteLine("Enter member tier (resident/visitor/student/child/senior/corporate): ");
+            tier = Console.ReadLine();
+
+            if (tier == "")
+            {
+                Console.WriteLine("tier Can't be Empty!!");
+                return;
+            }
+            else if (tier.ToLower() != "resident" && tier.ToLower() != "visitor" &&
+                tier.ToLower() != "student" && tier.ToLower() != "child" &&
+                tier.ToLower() != "senior" && tier.ToLower() != "corporate")
+            {
+                Console.WriteLine("you have to select one of these tiers: (resident/visitor/student/child/senior/corporate)");
+                return;
+            }
+
+
+
+
+            memberID = random.Next(1, 101);
+            memberIsRegistered = true;
+            dateHolder = DateTime.Now.AddDays(365);
+            membershipExpireDate = dateHolder.ToString("dd - MM - yyyy");
+            memberName = name;
+            memberEmail = email.Substring(3);
+            memberTier = tier;
+        }
+
+
+
 
 
         static void Main(string[] args)
@@ -85,7 +153,7 @@ namespace LibraryManagementSystem
                             Console.WriteLine("Member is already registered!!");
                             break;
                         }
-                        //MemberDetailsRegister();
+                        MemberDetailsRegister();
                         MemberDetailsPrint();
 
                         break;
