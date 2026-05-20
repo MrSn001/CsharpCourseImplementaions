@@ -38,6 +38,11 @@ namespace LibraryManagementSystem
         static string email;
         static string tier;
         static DateTime dateHolder;
+        static string searchBookTitle;
+
+
+
+
 
 
         public static void MainMenu()
@@ -138,7 +143,15 @@ namespace LibraryManagementSystem
         }
 
 
+        public static bool CheckBookAvailability(string searchBookTitle)
+        {
+            if (bookTitle.ToLower().Contains(searchBookTitle.ToLower().Substring(3)))
+            {
 
+                return bookIsRegistered = true;
+            }
+            return bookIsRegistered = false;
+        }
 
 
         static void Main(string[] args)
@@ -176,6 +189,21 @@ namespace LibraryManagementSystem
 
                     //Search Book by Title
                     case 2:
+                        Console.WriteLine("Enter the book title you want to find: ");
+                        searchBookTitle = Console.ReadLine();
+                        if(searchBookTitle == "")
+                        {
+                            Console.WriteLine("Book title can't be empty!!");
+                            break;
+                        }
+                        else if (CheckBookAvailability(searchBookTitle))
+                        {
+                            Console.WriteLine("The book you are look for: " + bookTitle);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Couldn't find the book!!");
+                        }
                         break;
 
                     //Borrow a Book
