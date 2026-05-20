@@ -45,7 +45,6 @@ namespace LibraryManagementSystem
         //Book Variables Holders
         static string title;
         static string author;
-        static int numCopies;
         static string genre;
 
         ////////////////////////////////////////////////////////////////
@@ -202,6 +201,11 @@ namespace LibraryManagementSystem
             numberOfAvailableCopies--;
         }
 
+        public static void ReturnBook(ref int numberOfAvailableCopies)
+        {
+            numberOfAvailableCopies++;
+        }
+
         static void Main(string[] args)
         {
             while (loopFlag)
@@ -277,6 +281,20 @@ namespace LibraryManagementSystem
 
                     //Return a Book
                     case 4:
+                        if (!bookIsRegistered)
+                        {
+                            Console.WriteLine("There is no book with that title!!");
+                            break;
+                        }
+                        Console.WriteLine("Enter the book name you want to return: ");
+                        bookTitle = Console.ReadLine();
+                        if (CheckBookAvailability(bookTitle))
+                        {
+                            ReturnBook(ref numberOfAvailableCopies);
+                            Console.WriteLine("Book Returned!!");
+                            break;
+                        }
+                        Console.WriteLine("Book is not found!!");
                         break;
 
                     //Calculate Late Fine
