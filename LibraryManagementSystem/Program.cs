@@ -23,6 +23,7 @@ namespace LibraryManagementSystem
         static int numberOfAvailableCopies = 0;
         static bool bookIsRegistered = false;
         static int numberOfDays;
+        static int renewalNumberOfDays;
 
         //Library session Variables:
         static int totalBookBorrowed = 0;
@@ -31,6 +32,7 @@ namespace LibraryManagementSystem
         //flags Variables
         static bool loopFlag = true;
         static bool checkFlag = true;
+        static bool teirCheckFlag = false;
 
         //Choice Variables
         static int option;
@@ -195,11 +197,13 @@ namespace LibraryManagementSystem
         public static void BorrowBook(ref int numberOfAvailableCopies)
         {
             numberOfAvailableCopies--;
+            totalBookBorrowed++;
         }
 
         public static void ReturnBook(ref int numberOfAvailableCopies)
         {
             numberOfAvailableCopies++;
+            totalBookBorrowed--;
         }
 
         public static double CalculateLateFine(int numberOfDays)
@@ -214,15 +218,9 @@ namespace LibraryManagementSystem
 
         public static double CalculateDiscount(double price,string tier)
         {
-            if (tier.ToLower() == "student")
+            if (tier.ToLower() == "premium")
             {
-                Console.WriteLine("Your have a student discount 20%: ");
-                return price * 0.2;
-            }
-            else if(tier.ToLower() == "senior")
-            {
-                Console.WriteLine("There is no discount applied!!");
-                return 0;
+                return price * 0.5;
             }
             return CalculateDiscount(price);
         }
@@ -249,8 +247,22 @@ namespace LibraryManagementSystem
             return memberID;
         }
 
-        
+        public static decimal CalculateRenewalFee(int number)
+        {
+            totalFines = totalFines - Math.Sqrt(number) * 3.0;
+            return Math.Ceiling((decimal)totalFines);
+        }
 
+
+        public static decimal CalculateRenewalFee(int number, bool flag)
+        {
+            if (flag)
+            {
+                totalFines = totalFines - Math.Sqrt(number) * 3.0/2;
+                return Math.Round((decimal)totalFines);
+            }
+            return CalculateRenewalFee(number);
+        }
 
         static void Main(string[] args)
         {
@@ -297,14 +309,12 @@ namespace LibraryManagementSystem
                             {
 
                                 //Enter Tier
-                                Console.WriteLine("Enter member tier (resident/visitor/student/child/senior/corporate): ");
+                                Console.WriteLine("Enter member tier (standard/premium): ");
                                 tier = Console.ReadLine();
                                 CheckIfEmpty(tier, ref checkFlag);
-                                if (tier.ToLower() != "resident" && tier.ToLower() != "visitor" &&
-                                    tier.ToLower() != "student" && tier.ToLower() != "child" &&
-                                    tier.ToLower() != "senior" && tier.ToLower() != "corporate")
+                                if (tier.ToLower() != "standard" && tier.ToLower() != "premium")
                                 {
-                                    Console.WriteLine("you have to select one of these tiers: (resident/visitor/student/child/senior/corporate)");
+                                    Console.WriteLine("you have to select one of these tiers: (standard/premium)");
                                     break;
                                 }
                                 else if (checkFlag)
@@ -427,11 +437,12 @@ namespace LibraryManagementSystem
                     case 6:
                         if (!bookIsRegistered)
                         {
-                            Console.WriteLine("There is no book borrowed!!");
+                            Console.WriteLine("There is no book to borrow!!");
                             break;
                         }
+
+                        Console.WriteLine($"Your have a {memberTier} discount, the discount: " + CalculateDiscount(totalFines, memberTier));
                         
-                           CalculateDiscount(totalFines,memberTier);
                      
                         break;
 
@@ -548,6 +559,26 @@ namespace LibraryManagementSystem
 
                     //Calculate Renewal Fee
                     case 11:
+                        if (!bookIsRegistered)
+                        {
+                            Console.WriteLine("There is no Book registered!!");
+                            break;
+                        }
+                        else if(totalBookBorrowed == 0)
+                        {
+                            Console.WriteLine("There is no borrowed book!!");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter the number of days you wnat to add: ");
+                            renewalNumberOfDays = Convert.ToInt32(Console.ReadLine());
+                            if(memberTier == "premium")
+                            {
+                                teirCheckFlag = true;
+                            }
+                            Console.WriteLine("it will cost: " + CalculateRenewalFee(renewalNumberOfDays, teirCheckFlag));
+                        }
                         break;
 
                     //Update Member Email
