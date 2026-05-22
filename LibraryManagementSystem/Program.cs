@@ -1,4 +1,5 @@
 ﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Globalization;
 
 namespace LibraryManagementSystem
 {
@@ -209,6 +210,17 @@ namespace LibraryManagementSystem
             return CalculateDiscount(price);
         }
 
+        public static bool CheckBorrowingEligibility(string date)
+        {
+
+            
+            if (DateTime.ParseExact(date,"dd - MM - yyyy", CultureInfo.InvariantCulture) > DateTime.Now)
+            {
+                return true;
+               
+            }
+            return false;
+        }
 
 
 
@@ -398,6 +410,16 @@ namespace LibraryManagementSystem
 
                     //Check Borrowing Eligibility
                     case 7:
+                        if (!memberIsRegistered)
+                        {
+                            Console.WriteLine("There is no member registered!!");
+                            break;
+                        }
+                        if (CheckBorrowingEligibility(membershipExpireDate))
+                        {
+                            Console.WriteLine("You have the eligibility to borrow the book");
+                        }
+                        Console.WriteLine("You don't have the eligibility to borrow the book!!");
                         break;
 
                     //Register Book 
