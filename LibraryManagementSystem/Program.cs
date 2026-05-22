@@ -136,6 +136,22 @@ namespace LibraryManagementSystem
                 """);
         }
 
+        public static void DisplayBookDetails(string title,string author,int numOfCopies,string genre)
+        {
+            title = bookTitle;
+            author = bookAuthor;
+            numOfCopies = numberOfAvailableCopies;
+            genre = bookGenre;
+
+
+            Console.WriteLine($"""
+                Book Title: {title}
+                Book Author: {author}
+                Number Of Copies: {numOfCopies}
+                Book Genre: {genre}
+                """);
+        }
+
 
         ////////////////////////////////////////////////////////////////
 
@@ -233,7 +249,7 @@ namespace LibraryManagementSystem
             return memberID;
         }
 
-
+        
 
 
         static void Main(string[] args)
@@ -522,6 +538,12 @@ namespace LibraryManagementSystem
 
                     //Display Book Details 
                     case 10:
+                        if (!bookIsRegistered)
+                        {
+                            Console.WriteLine("There is no Book registered!!");
+                            break;
+                        }
+                        DisplayBookDetails(genre: bookGenre, author : bookAuthor, numOfCopies: numberOfAvailableCopies, title: bookTitle);
                         break;
 
                     //Calculate Renewal Fee
