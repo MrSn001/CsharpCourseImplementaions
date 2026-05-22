@@ -9,7 +9,7 @@ namespace LibraryManagementSystem
 
         //Member Variables Storage:
         static string memberName = "";
-        static int memberID = 0;
+        static string memberID = "";
         static string memberEmail = "";
         static string membershipExpireDate = "";
         static string memberTier = "";
@@ -47,7 +47,10 @@ namespace LibraryManagementSystem
         static string title;
         static string author;
         static string genre;
-        
+        static string idMathHolder;
+        static double sqrtResult;
+        static string idNameHolder;
+
 
         ////////////////////////////////////////////////////////////////
 
@@ -126,7 +129,6 @@ namespace LibraryManagementSystem
         public static void MemberDetailsPrint()
         {
             Console.WriteLine($"""
-                Member ID: {memberID}
                 Member Name: {memberName}
                 Member Email starts with: {memberEmail.PadLeft(memberEmail.Length,'*')}
                 Membership Expire Date: {membershipExpireDate}
@@ -144,7 +146,6 @@ namespace LibraryManagementSystem
 
           
             //Signing values
-            memberID = random.Next(1, 101);
             memberIsRegistered = true;
             dateHolder = DateTime.Now.AddDays(365);
             membershipExpireDate = dateHolder.ToString("dd - MM - yyyy");
@@ -220,6 +221,16 @@ namespace LibraryManagementSystem
                
             }
             return false;
+        }
+
+        public static string GenerateMemberID()
+        {
+            
+            sqrtResult = Math.Sqrt(DateTime.Now.Ticks);
+            idMathHolder = sqrtResult.ToString("F0");
+            idNameHolder = memberName.Substring(0,3).ToUpper();
+            memberID = idMathHolder + idNameHolder;
+            return memberID;
         }
 
 
@@ -501,6 +512,12 @@ namespace LibraryManagementSystem
 
                     //Generate Member ID 
                     case 9:
+                        if (!memberIsRegistered)
+                        {
+                            Console.WriteLine("There is no member registered!!");
+                            break;
+                        }
+                        Console.WriteLine("Your member ID: " + GenerateMemberID());
                         break;
 
                     //Display Book Details 
