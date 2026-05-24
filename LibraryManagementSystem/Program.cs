@@ -154,6 +154,15 @@ namespace LibraryManagementSystem
                 """);
         }
 
+        public static void SessionSummary()
+        {
+            Console.WriteLine($"""
+                Member Name: {memberName}
+                Total Books Borrowed: {totalBookBorrowed}
+                Total Fines Paid: {totalFines}
+                Print Date and Time: {DateTime.Now}
+                """);
+        }
 
         ////////////////////////////////////////////////////////////////
 
