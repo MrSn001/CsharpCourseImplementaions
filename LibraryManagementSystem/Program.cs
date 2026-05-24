@@ -253,6 +253,23 @@ namespace LibraryManagementSystem
             return Math.Ceiling((decimal)totalFines);
         }
 
+        public static bool UpdateEmailValidation(out string result,int num,ref bool checkFlag)
+        {
+            Console.WriteLine("Enter your new Email: ");
+            string email = Console.ReadLine();
+
+            if (email.Trim().Length < num)
+            {
+
+                Console.WriteLine("It have to be more than " + num);
+                result = string.Empty;
+                return checkFlag = true;
+            }
+            result = email.Trim();
+            Console.WriteLine("Email Updated!!");
+            return checkFlag = false;
+        }
+
 
         public static decimal CalculateRenewalFee(int number, bool flag)
         {
@@ -583,6 +600,18 @@ namespace LibraryManagementSystem
 
                     //Update Member Email
                     case 12:
+                        if (!memberIsRegistered)
+                        {
+                            Console.WriteLine("There is no member registered!!");
+                            break;
+                        }
+                        else
+                        {
+                            do
+                            {
+                                UpdateEmailValidation(out memberEmail, 12, ref checkFlag);
+                            } while (checkFlag);
+                        }
                         break;
 
                     //Session Summary
