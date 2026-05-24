@@ -159,8 +159,8 @@ namespace LibraryManagementSystem
             Console.WriteLine($"""
                 Member Name: {memberName}
                 Total Books Borrowed: {totalBookBorrowed}
-                Total Fines Paid: {totalFines}
-                Print Date and Time: {DateTime.Now}
+                Total Fines Paid: {Math.Round(totalFines)}
+                Print Date and Time: {DateTime.Now.ToString("dd - MM - yyyy")}
                 """);
         }
 
@@ -625,6 +625,12 @@ namespace LibraryManagementSystem
 
                     //Session Summary
                     case 13:
+                        if (totalBookBorrowed == 0)
+                        {
+                            Console.WriteLine("There is no borrowed book");
+                        }
+                        SessionSummary();
+                        loopFlag = false;
                         break;
                     //temporary
                     case 14:
