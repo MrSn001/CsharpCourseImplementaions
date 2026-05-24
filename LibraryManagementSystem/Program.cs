@@ -33,6 +33,7 @@ namespace LibraryManagementSystem
         static bool loopFlag = true;
         static bool checkFlag = true;
         static bool teirCheckFlag = false;
+        static bool detailedFlag = false;
 
         //Choice Variables
         static int option;
@@ -279,7 +280,6 @@ namespace LibraryManagementSystem
             return checkFlag = false;
         }
 
-
         public static decimal CalculateRenewalFee(int number, bool flag)
         {
             if (flag)
@@ -290,6 +290,26 @@ namespace LibraryManagementSystem
             return CalculateRenewalFee(number);
         }
 
+        public static void MemberStatisics()
+        {
+            Console.WriteLine($"""
+                              --- Member Statistics Summary ---
+                              Member Name: {memberName}
+                              Member Tier: {memberTier} 
+                              """);
+        }
+
+        public static void MemberStatisics(bool detailedFlag)
+        {
+            MemberStatisics();
+            if (detailedFlag) 
+            { 
+                Console.WriteLine($"""
+                    Member ID: {memberID}
+                    Expiry Date: {membershipExpireDate}
+                    """);
+            }
+        }
         static void Main(string[] args)
         {
             while (loopFlag)
@@ -632,9 +652,28 @@ namespace LibraryManagementSystem
                         SessionSummary();
                         loopFlag = false;
                         break;
-                    //temporary
+                    //Member Statistics
                     case 14:
-                        loopFlag = false;
+                        if (!memberIsRegistered)
+                        {
+                            Console.WriteLine("There is no member Registered!!");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Do you want a detailed info? (Y/N): ");
+                            choice = Convert.ToChar(Console.ReadLine());
+                            if (choice == 'y')
+                            {
+                                detailedFlag = true;
+                                MemberStatisics(detailedFlag);
+                                break;
+                            }
+                            else 
+                            { 
+                                MemberStatisics(detailedFlag); 
+                            }
+                        }
                         break;
                 }
 
