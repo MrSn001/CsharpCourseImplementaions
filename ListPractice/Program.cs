@@ -107,7 +107,20 @@
         //Task 4
         static void RaceFinishTimes()
         {
-           
+            finishTimes = [23, 35, 33, 32, 27, 31, 24, 20];
+            foreach (int finishtime in finishTimes)
+            {
+                Console.WriteLine("Finish time: " + finishtime);
+            }
+            finishTimes.Sort();
+            Console.WriteLine("============= Sorted finish time =============");
+            for (int i = 0; i < finishTimes.Count; i++)
+            {
+                Console.WriteLine((i + 1) + " Place: " + finishTimes[i]);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Number of the participants: " + finishTimes.Count);
         }
 
         //Task 5
