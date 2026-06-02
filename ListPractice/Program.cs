@@ -172,7 +172,26 @@
         //Task 7
         static void LibraryBookShelfScanner()
         {
-           
+            copies = [0, 3, 5, 8, 0, 10, 3, 4, 1];
+
+            foreach (int copy in copies)
+            {
+                Console.WriteLine("Number of copies: " + copy);
+            }
+
+            copies.Sort();
+            lastIndex = copies.Count - 1;
+            Console.WriteLine("");
+            Console.WriteLine("The book with the most copies: " + copies[lastIndex]);
+
+            for (int i = 0; i < copies.Count; i++)
+            {
+                if (copies[i] == 0)
+                {
+                    Console.WriteLine("Found a 0 Number of copies in Index: " + i);
+
+                }
+            }
         }
 
         //Task 8 
