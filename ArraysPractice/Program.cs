@@ -14,6 +14,11 @@ namespace ArraysPractice
         static int lastIndex;
         static double revenueSum;
         static int seatSearch;
+        static double middleIndex1;
+        static double middleIndex2;
+        static double median;
+        static int counter;
+        static int severitySearch;
 
         //Arrays Decleration
         static double[] temperatures;
@@ -27,6 +32,8 @@ namespace ArraysPractice
         static double[] sortedCopy;
         static int[] seats;
         static int[] reverse;
+        static int[] severity;
+        static int[] sortedSeverity;
 
         static void MainMenu()
         {
@@ -194,13 +201,14 @@ namespace ArraysPractice
             {
                 Console.WriteLine("Month " + (i + 1) + ": " + revenue[i]);
             }
-            Array.Sort (revenue);
+            
             sortedCopy = new double[revenue.Length];
             for (int i = 0;i < revenue.Length; i++)
             {
                 sortedCopy[i] = revenue[i]; 
             }
 
+            Array.Sort(sortedCopy);
             Console.WriteLine("=========== The sorted Copy ===========");
 
             for (int i = 0; i < sortedCopy.Length; i++)
@@ -258,6 +266,58 @@ namespace ArraysPractice
             Console.WriteLine("");
             Console.WriteLine("Total number of seats: " + reverse.Length);
         }
+
+        //Task 10
+        static void HospitalPatientPriorityQueue()
+        {
+            severity = [2,3,2,4,5,6,6,9,2,1,4,5,7,8,9,8,5,10,10,2];
+            sortedSeverity = new int[severity.Length];
+
+            for (int i = 0; i < sortedSeverity.Length; i++) 
+            {
+                sortedSeverity[i] = severity[i];
+            }
+
+            Array.Sort(sortedSeverity);
+            Array.Reverse(sortedSeverity);
+            
+            for(int i = 0;i < sortedSeverity.Length; i++)
+            {
+                Console.WriteLine("Rank " + (i + 1) + ": " + sortedSeverity[i]);
+            }
+            Array.Reverse(sortedSeverity);
+            middleIndex1 = sortedSeverity.Length / 2;
+            middleIndex2 = middleIndex1 + 1;
+            median = (middleIndex1 + middleIndex2) / 2;
+            Console.WriteLine("");
+            Console.WriteLine("The median = " + median);
+
+            counter = 0;
+            for (int i = 0; i < sortedSeverity.Length; i++)
+            {
+                if (sortedSeverity[i] <= 3) 
+                {
+                    counter++;
+                }
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("Total of critical cases: " + counter);
+
+            Console.WriteLine("");
+            Console.WriteLine("Please enter the severity you want to find its index: ");
+            severitySearch = Convert.ToInt32(Console.ReadLine());
+            index = Array.IndexOf(sortedSeverity, severitySearch);
+            if (index == -1)
+            {
+                Console.WriteLine("severity not found in the array.");
+            }
+            else
+            {
+                Console.WriteLine("severity found at index: " + index);
+            }
+            
+        }
         static void Main(string[] args)
         {
             while (flag) {
@@ -312,6 +372,7 @@ namespace ArraysPractice
 
                     //Hospital Patient Priority Queue
                     case 10:
+                        HospitalPatientPriorityQueue();
                         break;
 
                     //Stop the system
