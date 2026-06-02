@@ -1,11 +1,9 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace LibraryManagementSystem
 {
     internal class Program
     {
-        static Random random = new Random();// storing the Random() function in the random variable
 
         //Member Variables Storage:
         static string memberName = "";
