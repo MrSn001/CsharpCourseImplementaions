@@ -19,19 +19,19 @@
         static int severitySearch;
 
         //List Decleration
-        static List<double> temperatures;
-        static List<int> scores;
-        static List<double> prices;
-        static List<int> finishTimes;
-        static List<int> grades;
-        static List<int> quantities;
-        static List<int> copies;
-        static List<double> revenue;
-        static List<double> sortedCopy;
-        static List<int> seats;
-        static List<int> reverse;
-        static List<int> severity;
-        static List<int> sortedSeverity;
+        static List<double> temperatures = new List<double>();
+        static List<int> scores = new List<int>();
+        static List<double> prices = new List<double>();
+        static List<int> finishTimes = new List<int>();
+        static List<int> grades = new List<int>();
+        static List<int> quantities = new List<int>();
+        static List<int> copies = new List<int>();
+        static List<double> revenue = new List<double>();
+        static List<double> sortedCopy = new List<double>();
+        static List<int> seats = new List<int>();
+        static List<int> reverse = new List<int>();
+        static List<int> severity = new List<int>();
+        static List<int> sortedSeverity = new List<int>();
 
 
         static void MainMenu()
@@ -55,7 +55,14 @@
         //Task 1
         static void TemperatureLog()
         {
-            
+            temperatures.AddRange(45.6, 46.3, 48.9, 48.4, 50.1, 51.2, 47.5);
+            //temperatures = [45.6, 46.3, 48.9, 48.4, 50.1, 51.2, 47.5];
+            for (int i = 0; i < temperatures.Count; i++)
+            {
+                Console.WriteLine("Day " + (i + 1) + ": " + temperatures[i] + " C");
+            }
+
+            Console.WriteLine("There is total of " + temperatures.Count + " temperature logs have been recorded.");
         }
 
         //Task 2
