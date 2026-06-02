@@ -4,10 +4,13 @@ namespace ArraysPractice
 {
     internal class Program
     {
+        static int index;
+        static double priceSearch;
         static int choice;
         static bool flag = true;
-        static double[] temperatureLogs;
-        static int[] quizScores;
+        static double[] temperatures;
+        static int[] scores;
+        static double[] prices;
         static void MainMenu()
         {
             Console.WriteLine("""
@@ -28,27 +31,48 @@ namespace ArraysPractice
 
         static void TemperatureLog()
         {
-            temperatureLogs = [45.6,46.3,48.9,48.4,50.1,51.2,47.5];
-            for (int i = 0; i < temperatureLogs.Length; i++)
+            temperatures = [45.6,46.3,48.9,48.4,50.1,51.2,47.5];
+            for (int i = 0; i < temperatures.Length; i++)
             { 
-                Console.WriteLine("Day " + (i + 1) + ": " + temperatureLogs[i] + " C" );
+                Console.WriteLine("Day " + (i + 1) + ": " + temperatures[i] + " C" );
             }
 
-            Console.WriteLine("There is total of " + temperatureLogs.Length + " temperature logs have been recorded.");
+            Console.WriteLine("There is total of " + temperatures.Length + " temperature logs have been recorded.");
         }
 
         static void QuizScore()
         {
-            quizScores = [40, 50, 45, 30, 43, 39];
-            foreach (int quizScore in quizScores)
+            scores = [40, 50, 45, 30, 43, 39];
+            foreach (int score in scores)
             {
-                Console.WriteLine("Quiz score: " + quizScore);
+                Console.WriteLine("Quiz score: " + score);
             }
             Console.WriteLine("The Reveresed Score Print: ");
-            Array.Reverse( quizScores );
-            for (int i = 0; i < quizScores.Length; i++) 
+            Array.Reverse(scores);
+            for (int i = 0; i < scores.Length; i++) 
             {
-                Console.WriteLine("Score number " + i + " is: " + quizScores[i]);
+                Console.WriteLine("Score number " + i + " is: " + scores[i]);
+            }
+        }
+
+        static void ProductPriceFinder()
+        {
+            prices = [5.4, 19.3, 30.2, 24.0, 4.99];
+
+            for (int i = 0; i < prices.Length; i++) 
+            { 
+                Console.WriteLine("Product " + (i + 1) + ": " + prices[i]);
+            }
+            Console.WriteLine("Please enter the value you want to find its index: ");
+            priceSearch = Convert.ToDouble(Console.ReadLine());
+            index = Array.IndexOf(prices, priceSearch);
+            if (index == -1)
+            {
+                Console.WriteLine("Product price not found in the array.");
+            }
+            else
+            {
+                Console.WriteLine("Product price found at index: " + index);
             }
         }
 
@@ -71,6 +95,7 @@ namespace ArraysPractice
 
                     //Product Price Finder 
                     case 3:
+                        ProductPriceFinder();
                         break;
 
                     //Race Finish Times
