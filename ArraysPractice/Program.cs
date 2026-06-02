@@ -4,19 +4,24 @@ namespace ArraysPractice
 {
     internal class Program
     {
+        //Variables Decleration
         static int index;
         static double priceSearch;
         static int quantitySum;
         static int quantitiySearch;
-
         static int choice;
         static bool flag = true;
+        static int lastIndex;
+
+
+        //Arrays Decleration
         static double[] temperatures;
         static int[] scores;
         static double[] prices;
         static int[] finishTimes;
         static int[] grades;
         static int[] quantities;
+        static int[] copies;
 
         static void MainMenu()
         {
@@ -145,6 +150,30 @@ namespace ArraysPractice
             }
         }
 
+        static void LibraryBookShelfScanner()
+        {
+            copies = [0,3,5,8,0,10,3,4,1];
+
+            foreach(int copy in copies)
+            {
+                Console.WriteLine("Number of copies: " + copy);
+            }
+
+            Array.Sort(copies);
+            lastIndex = copies.Length - 1;
+            Console.WriteLine("");
+            Console.WriteLine("The book with the most copies: " + copies[lastIndex]);
+
+            for (int i = 0; i < copies.Length; i++) 
+            {
+                if (copies[i] == 0) 
+                {
+                    Console.WriteLine("Found a 0 Number of copies in Index: " + i);
+                   
+                }
+            }
+        }
+
         static void Main(string[] args)
         {
             while (flag) {
@@ -176,6 +205,7 @@ namespace ArraysPractice
                     case 5:
                         ClassroomGradeReport();
                         break;
+
                     //Warehouse Inventory Check
                     case 6:
                         WarehouseInventoryCheck();
@@ -183,6 +213,7 @@ namespace ArraysPractice
 
                     //Library Book Shelf Scanner
                     case 7:
+                        LibraryBookShelfScanner();
                         break;
 
                     //Sales Performance Analyzer
