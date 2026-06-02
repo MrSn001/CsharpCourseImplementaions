@@ -198,13 +198,46 @@
         static void SalesPerformanceAnalyzer()
         {
            
-
         }
 
         //Task 9 
         static void FlightSeatAllocationDisplay()
         {
+            seats = [7, 3, 4, 6, 9, 44, 2, 43, 5, 10, 22, 49, 30, 21, 99];
+            foreach (int seat in seats)
+            {
+                Console.WriteLine("Seat number: " + seat);
+            }
+            Console.WriteLine("");
+            seats.Sort();
+
+            Console.WriteLine("Please enter the seat number you want to find its index: ");
+            seatSearch = Convert.ToInt32(Console.ReadLine());
+            index = seats.IndexOf(seatSearch);
+            if (index == -1)
+            {
+                Console.WriteLine("Seat not found in the array.");
+            }
+            else
+            {
+                Console.WriteLine("Seat found at index: " + index);
+            }
+
+            Console.WriteLine("");
             
+            for (int i = 0; i < seats.Count; i++)
+            {
+                reverse.Add(seats[i]);
+            }
+            reverse.Reverse();
+
+            for (int i = 0; i < reverse.Count; i++)
+            {
+                Console.WriteLine("Sorted: " + seats[i] + " Reversed: " + reverse[i]);
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("Total number of seats: " + reverse.Count);
         }
 
         //Task 10
