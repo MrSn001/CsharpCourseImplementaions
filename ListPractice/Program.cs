@@ -197,7 +197,34 @@
         //Task 8 
         static void SalesPerformanceAnalyzer()
         {
-           
+            //revenue = [4030.400, 7203.900, 5390.500, 4600.300, 3500.400, 3248.800, 3700.700, 6390.700, 5000, 3900.300, 8000, 6800.300];
+            //for (int i = 0; i < revenue.Count; i++)
+            //{
+            //    Console.WriteLine("Month " + (i + 1) + ": " + revenue[i]);
+            //}
+
+            //for (int i = 0; i < revenue.Count; i++)
+            //{
+            //    sortedCopy.Add(revenue[i]);
+            //}
+
+            //sortedCopy.Sort();
+            //Console.WriteLine("=========== The sorted Copy ===========");
+
+            //for (int i = 0; i < sortedCopy.Count; i++)
+            //{
+            //    Console.WriteLine("revenue " + (i + 1) + ": " + sortedCopy[i]);
+            //}
+
+            //lastIndex = sortedCopy.Count - 1;
+            //Console.WriteLine("The best Revenue: " + sortedCopy[lastIndex]);
+            //Console.WriteLine("The worst Revenue: " + sortedCopy[0]);
+            //revenueSum = 0;
+            //for (int i = 1; i < sortedCopy.Count; i++)
+            //{
+            //    revenueSum += sortedCopy[i];
+            //}
+            //Console.WriteLine("The Average: " + revenueSum / sortedCopy.Count);
         }
 
         //Task 9 
@@ -238,12 +265,61 @@
 
             Console.WriteLine("");
             Console.WriteLine("Total number of seats: " + reverse.Count);
+
+            reverse.Clear();
         }
 
         //Task 10
         static void HospitalPatientPriorityQueue()
         {
+            severity = [2, 3, 2, 4, 5, 6, 6, 9, 2, 1, 4, 5, 7, 8, 9, 8, 5, 10, 10, 2];
             
+
+            for (int i = 0; i < severity.Count; i++)
+            {
+                sortedSeverity.Add(severity[i]);
+            }
+
+            sortedSeverity.Sort();
+            sortedSeverity.Reverse();
+
+            for (int i = 0; i < sortedSeverity.Count; i++)
+            {
+                Console.WriteLine("Rank " + (i + 1) + ": " + sortedSeverity[i]);
+            }
+            sortedSeverity.Reverse();
+            middleIndex1 = sortedSeverity.Count / 2;
+            middleIndex2 = middleIndex1 + 1;
+            median = (middleIndex1 + middleIndex2) / 2;
+            Console.WriteLine("");
+            Console.WriteLine("The median = " + median);
+
+            counter = 0;
+            for (int i = 0; i < severity.Count; i++)
+            {
+                if (sortedSeverity[i] <= 3)
+                {
+                    counter++;
+                }
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("Total of critical cases: " + counter);
+
+            Console.WriteLine("");
+            Console.WriteLine("Please enter the severity you want to find its index: ");
+            severitySearch = Convert.ToInt32(Console.ReadLine());
+            index = sortedSeverity.IndexOf(severitySearch);
+            if (index == -1)
+            {
+                Console.WriteLine("severity not found in the array.");
+            }
+            else
+            {
+                Console.WriteLine("severity found at index: " + index);
+            }
+
+            sortedSeverity.Clear();
         }
         static void Main(string[] args)
         {
