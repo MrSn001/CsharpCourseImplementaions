@@ -68,7 +68,18 @@
         //Task 2
         static void QuizScore()
         {
-            
+            scores = [40, 50, 45, 30, 43, 39];
+            foreach (int score in scores)
+            {
+                Console.WriteLine("Quiz score: " + score);
+            }
+            Console.WriteLine("The Reveresed Score Print: ");
+            scores.Reverse();
+            for (int i = 0; i < scores.Count; i++)
+            {
+                Console.WriteLine("Score number " + i + " is: " + scores[i]);
+            }
+
         }
 
         //Task 3
