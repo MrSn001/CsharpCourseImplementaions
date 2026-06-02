@@ -7,6 +7,7 @@ namespace ArraysPractice
         static int choice;
         static bool flag = true;
         static double[] temperatureLogs;
+        static int[] quizScores;
         static void MainMenu()
         {
             Console.WriteLine("""
@@ -24,6 +25,7 @@ namespace ArraysPractice
 
                 """);
         }
+
         static void TemperatureLog()
         {
             temperatureLogs = [45.6,46.3,48.9,48.4,50.1,51.2,47.5];
@@ -33,6 +35,21 @@ namespace ArraysPractice
             }
 
             Console.WriteLine("There is total of " + temperatureLogs.Length + " temperature logs have been recorded.");
+        }
+
+        static void QuizScore()
+        {
+            quizScores = [40, 50, 45, 30, 43, 39];
+            foreach (int quizScore in quizScores)
+            {
+                Console.WriteLine("Quiz score: " + quizScore);
+            }
+            Console.WriteLine("The Reveresed Score Print: ");
+            Array.Reverse( quizScores );
+            for (int i = 0; i < quizScores.Length; i++) 
+            {
+                Console.WriteLine("Score number " + i + " is: " + quizScores[i]);
+            }
         }
 
         static void Main(string[] args)
@@ -49,6 +66,7 @@ namespace ArraysPractice
 
                     //Student Score Board
                     case 2:
+                        QuizScore();
                         break;
 
                     //Product Price Finder 
