@@ -85,7 +85,23 @@
         //Task 3
         static void ProductPriceFinder()
         {
-           
+            prices = [5.4, 19.3, 30.2, 24.0, 4.99];
+
+            for (int i = 0; i < prices.Count; i++)
+            {
+                Console.WriteLine("Product " + (i + 1) + ": " + prices[i]);
+            }
+            Console.WriteLine("Please enter the value you want to find its index: ");
+            priceSearch = Convert.ToDouble(Console.ReadLine());
+            index = prices.IndexOf(priceSearch);
+            if (index == -1)
+            {
+                Console.WriteLine("Product price not found in the array.");
+            }
+            else
+            {
+                Console.WriteLine("Product price found at index: " + index);
+            }
         }
 
         //Task 4
