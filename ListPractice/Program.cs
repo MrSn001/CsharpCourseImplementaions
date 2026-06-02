@@ -138,7 +138,35 @@
         //Task 6
         static void WarehouseInventoryCheck()
         {
-           
+            quantities = [3, 10, 12, 29, 4, 25, 14, 13];
+
+            for (int i = 0; i < quantities.Count; i++)
+            {
+                Console.WriteLine("Product " + (i + 1) + " quantity: " + quantities[i]);
+            }
+
+            quantitySum = 0;
+            for (int i = 0; i < quantities.Count; i++)
+            {
+                quantitySum += quantities[i];
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("The total stock for all the items are: " + quantitySum);
+            Console.WriteLine("The average stock: " + quantitySum / quantities.Count);
+            Console.WriteLine();
+
+            Console.WriteLine("Please enter the Product quantity you want to find its index: ");
+            quantitiySearch = Convert.ToInt32(Console.ReadLine());
+            index = quantities.IndexOf( quantitiySearch);
+            if (index == -1)
+            {
+                Console.WriteLine("Product quantity not found in the array.");
+            }
+            else
+            {
+                Console.WriteLine("Product quantity found at index: " + index);
+            }
         }
 
         //Task 7
