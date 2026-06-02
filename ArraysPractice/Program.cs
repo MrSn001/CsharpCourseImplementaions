@@ -12,7 +12,7 @@ namespace ArraysPractice
         static int choice;
         static bool flag = true;
         static int lastIndex;
-
+        static double revenueSum;
 
         //Arrays Decleration
         static double[] temperatures;
@@ -22,6 +22,8 @@ namespace ArraysPractice
         static int[] grades;
         static int[] quantities;
         static int[] copies;
+        static double[] revenue;
+        static double[] sortedCopy;
 
         static void MainMenu()
         {
@@ -41,6 +43,7 @@ namespace ArraysPractice
                 """);
         }
 
+        //Task 1
         static void TemperatureLog()
         {
             temperatures = [45.6,46.3,48.9,48.4,50.1,51.2,47.5];
@@ -52,6 +55,7 @@ namespace ArraysPractice
             Console.WriteLine("There is total of " + temperatures.Length + " temperature logs have been recorded.");
         }
 
+        //Task 2
         static void QuizScore()
         {
             scores = [40, 50, 45, 30, 43, 39];
@@ -67,6 +71,7 @@ namespace ArraysPractice
             }
         }
 
+        //Task 3
         static void ProductPriceFinder()
         {
             prices = [5.4, 19.3, 30.2, 24.0, 4.99];
@@ -88,6 +93,7 @@ namespace ArraysPractice
             }
         }
 
+        //Task 4
         static void RaceFinishTimes()
         {
             finishTimes = [23, 35, 33, 32, 27, 31, 24, 20];
@@ -106,6 +112,7 @@ namespace ArraysPractice
             Console.WriteLine("Number of the participants: " + finishTimes.Length);
         }
 
+        //Task 5
         static void ClassroomGradeReport()
         {
             grades = [73,93,65,50,90,76,99,100,68,98];
@@ -117,6 +124,7 @@ namespace ArraysPractice
             }
         }
 
+        //Task 6
         static void WarehouseInventoryCheck()
         {
             quantities = [3,10,12,29,4,25,14,13];
@@ -150,6 +158,7 @@ namespace ArraysPractice
             }
         }
 
+        //Task 7
         static void LibraryBookShelfScanner()
         {
             copies = [0,3,5,8,0,10,3,4,1];
@@ -172,6 +181,40 @@ namespace ArraysPractice
                    
                 }
             }
+        }
+
+        //Task 8 
+        static void SalesPerformanceAnalyzer()
+        {
+            revenue = [4030.400,7203.900,5390.500,4600.300,3500.400,3248.800,3700.700,6390.700,5000,3900.300,8000,6800.300];
+            for (int i = 0; i < revenue.Length; i++)
+            {
+                Console.WriteLine("Month " + (i + 1) + ": " + revenue[i]);
+            }
+            Array.Sort (revenue);
+            sortedCopy = new double[revenue.Length];
+            for (int i = 0;i < revenue.Length; i++)
+            {
+                sortedCopy[i] = revenue[i]; 
+            }
+
+            Console.WriteLine("=========== The sorted Copy ===========");
+
+            for (int i = 0; i < sortedCopy.Length; i++)
+            {
+                Console.WriteLine("revenue " + (i + 1) + ": " + sortedCopy[i]);
+            }
+
+            lastIndex = sortedCopy.Length - 1;
+            Console.WriteLine("The best Revenue: " + sortedCopy[lastIndex]);
+            Console.WriteLine("The worst Revenue: " + sortedCopy[0]);
+            revenueSum = 0;
+            for (int i = 1; i < sortedCopy.Length; i++)
+            {
+                revenueSum += sortedCopy[i];
+            }
+            Console.WriteLine("The Average: " + revenueSum / sortedCopy.Length);
+
         }
 
         static void Main(string[] args)
@@ -218,6 +261,7 @@ namespace ArraysPractice
 
                     //Sales Performance Analyzer
                     case 8:
+                        SalesPerformanceAnalyzer();
                         break;
 
                     //Flight Seat Allocation Display
