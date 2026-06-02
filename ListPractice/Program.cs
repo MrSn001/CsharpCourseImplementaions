@@ -197,34 +197,36 @@
         //Task 8 
         static void SalesPerformanceAnalyzer()
         {
-            //revenue = [4030.400, 7203.900, 5390.500, 4600.300, 3500.400, 3248.800, 3700.700, 6390.700, 5000, 3900.300, 8000, 6800.300];
-            //for (int i = 0; i < revenue.Count; i++)
-            //{
-            //    Console.WriteLine("Month " + (i + 1) + ": " + revenue[i]);
-            //}
+            revenue = [4030.400, 7203.900, 5390.500, 4600.300, 3500.400, 3248.800, 3700.700, 6390.700, 5000, 3900.300, 8000, 6800.300];
+            for (int i = 0; i < revenue.Count; i++)
+            {
+                Console.WriteLine("Month " + (i + 1) + ": " + revenue[i]);
+            }
 
-            //for (int i = 0; i < revenue.Count; i++)
-            //{
-            //    sortedCopy.Add(revenue[i]);
-            //}
+            for (int i = 0; i < revenue.Count; i++)
+            {
+                sortedCopy.Add(revenue[i]);
+            }
 
-            //sortedCopy.Sort();
-            //Console.WriteLine("=========== The sorted Copy ===========");
+            sortedCopy.Sort();
+            Console.WriteLine("=========== The sorted Copy ===========");
 
-            //for (int i = 0; i < sortedCopy.Count; i++)
-            //{
-            //    Console.WriteLine("revenue " + (i + 1) + ": " + sortedCopy[i]);
-            //}
+            for (int i = 0; i < sortedCopy.Count; i++)
+            {
+                Console.WriteLine("revenue " + (i + 1) + ": " + sortedCopy[i]);
+            }
 
-            //lastIndex = sortedCopy.Count - 1;
-            //Console.WriteLine("The best Revenue: " + sortedCopy[lastIndex]);
-            //Console.WriteLine("The worst Revenue: " + sortedCopy[0]);
-            //revenueSum = 0;
-            //for (int i = 1; i < sortedCopy.Count; i++)
-            //{
-            //    revenueSum += sortedCopy[i];
-            //}
-            //Console.WriteLine("The Average: " + revenueSum / sortedCopy.Count);
+            lastIndex = sortedCopy.Count - 1;
+            Console.WriteLine("The best Revenue: " + sortedCopy[lastIndex]);
+            Console.WriteLine("The worst Revenue: " + sortedCopy[0]);
+            revenueSum = 0;
+            for (int i = 1; i < sortedCopy.Count; i++)
+            {
+                revenueSum += sortedCopy[i];
+            }
+            Console.WriteLine("The Average: " + revenueSum / sortedCopy.Count);
+
+            sortedCopy.Clear();
         }
 
         //Task 9 
