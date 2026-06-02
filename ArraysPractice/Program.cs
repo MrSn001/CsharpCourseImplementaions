@@ -12,7 +12,7 @@ namespace ArraysPractice
         static int[] scores;
         static double[] prices;
         static int[] finishTimes;
-
+        static int[] grades;
 
         static void MainMenu()
         {
@@ -97,6 +97,17 @@ namespace ArraysPractice
             Console.WriteLine("Number of the participants: " + finishTimes.Length);
         }
 
+        static void ClassroomGradeReport()
+        {
+            grades = [73,93,65,50,90,76,99,100,68,98];
+            Array.Sort(grades);
+            Array.Reverse(grades);
+            for (int i = 0;i < grades.Length; i++)
+            {
+                Console.WriteLine("Rank " + (i + 1) + ": " + grades[i]);
+            }
+        }
+
         static void Main(string[] args)
         {
             while (flag) {
@@ -126,6 +137,7 @@ namespace ArraysPractice
 
                     //Classroom Grade Report
                     case 5:
+                        ClassroomGradeReport();
                         break;
                     //Warehouse Inventory Check
                     case 6:
