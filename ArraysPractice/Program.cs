@@ -6,6 +6,9 @@ namespace ArraysPractice
     {
         static int index;
         static double priceSearch;
+        static int quantitySum;
+        static int quantitiySearch;
+
         static int choice;
         static bool flag = true;
         static double[] temperatures;
@@ -13,6 +16,7 @@ namespace ArraysPractice
         static double[] prices;
         static int[] finishTimes;
         static int[] grades;
+        static int[] quantities;
 
         static void MainMenu()
         {
@@ -108,6 +112,39 @@ namespace ArraysPractice
             }
         }
 
+        static void WarehouseInventoryCheck()
+        {
+            quantities = [3,10,12,29,4,25,14,13];
+
+            for (int i = 0; i < quantities.Length; i++)
+            {
+                Console.WriteLine("Product " + (i + 1) + " quantity: " + quantities[i]);
+            }
+
+            quantitySum = 0;
+            for (int i = 0; i < quantities.Length; i++) 
+            {
+                quantitySum += quantities[i];
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("The total stock for all the items are: " + quantitySum);
+            Console.WriteLine("The average stock: " + quantitySum / quantities.Length);
+            Console.WriteLine();
+
+            Console.WriteLine("Please enter the Product quantity you want to find its index: ");
+            quantitiySearch = Convert.ToInt32(Console.ReadLine());
+            index = Array.IndexOf(quantities, quantitiySearch);
+            if (index == -1)
+            {
+                Console.WriteLine("Product quantity not found in the array.");
+            }
+            else
+            {
+                Console.WriteLine("Product quantity found at index: " + index);
+            }
+        }
+
         static void Main(string[] args)
         {
             while (flag) {
@@ -141,6 +178,7 @@ namespace ArraysPractice
                         break;
                     //Warehouse Inventory Check
                     case 6:
+                        WarehouseInventoryCheck();
                         break;
 
                     //Library Book Shelf Scanner
