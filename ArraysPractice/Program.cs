@@ -1,7 +1,11 @@
-﻿namespace ArraysPractice
+﻿using System.Diagnostics;
+
+namespace ArraysPractice
 {
     internal class Program
     {
+        static int choice;
+        static bool flag = true;
         static void MainMenu()
         {
             Console.WriteLine("""
@@ -16,12 +20,50 @@
                 9. Flight Seat Allocation Display
                 10. Hospital Patient Priority Queue
                 11. Exit
+
                 """);
         }
 
         static void Main(string[] args)
         {
+            while (flag) {
+                MainMenu();
+                Console.WriteLine("Please Enter your Choice: ");
+                choice = Convert.ToInt32(Console.ReadLine());
+                switch(choice){
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        break;
+                    case 9:
+                        break;
+                    case 10:
+                        break;
+                    case 11:
+                        flag = false;
+                        break;
+                    default: 
+                        Console.WriteLine("Invalid Option Please Enter New Option");
+                        break;
+                }
+
+                Console.WriteLine("Please Enter any key to continue....");
+                Console.ReadKey();
+                Console.Clear();
             
+            }
         }
     }
 }
