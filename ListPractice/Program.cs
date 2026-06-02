@@ -68,7 +68,7 @@
         //Task 2
         static void QuizScore()
         {
-            scores = [40, 50, 45, 30, 43, 39];
+            scores.AddRange([40, 50, 45, 30, 43, 39]);
             foreach (int score in scores)
             {
                 Console.WriteLine("Quiz score: " + score);
@@ -85,7 +85,7 @@
         //Task 3
         static void ProductPriceFinder()
         {
-            prices = [5.4, 19.3, 30.2, 24.0, 4.99];
+            prices.AddRange([5.4, 19.3, 30.2, 24.0, 4.99]);
 
             for (int i = 0; i < prices.Count; i++)
             {
@@ -107,7 +107,7 @@
         //Task 4
         static void RaceFinishTimes()
         {
-            finishTimes = [23, 35, 33, 32, 27, 31, 24, 20];
+            finishTimes.AddRange([23, 35, 33, 32, 27, 31, 24, 20]);
             foreach (int finishtime in finishTimes)
             {
                 Console.WriteLine("Finish time: " + finishtime);
@@ -126,7 +126,13 @@
         //Task 5
         static void ClassroomGradeReport()
         {
-           
+            grades.AddRange([73, 93, 65, 50, 90, 76, 99, 100, 68, 98]);
+            grades.Sort();
+            grades.Reverse();
+            for (int i = 0; i < grades.Count; i++)
+            {
+                Console.WriteLine("Rank " + (i + 1) + ": " + grades[i]);
+            }
         }
 
         //Task 6
