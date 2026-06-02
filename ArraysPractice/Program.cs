@@ -11,6 +11,9 @@ namespace ArraysPractice
         static double[] temperatures;
         static int[] scores;
         static double[] prices;
+        static int[] finishTimes;
+
+
         static void MainMenu()
         {
             Console.WriteLine("""
@@ -76,6 +79,24 @@ namespace ArraysPractice
             }
         }
 
+        static void RaceFinishTimes()
+        {
+            finishTimes = [23, 35, 33, 32, 27, 31, 24, 20];
+            foreach(int finishtime in finishTimes)
+            {
+                Console.WriteLine("Finish time: " + finishtime);
+            }
+            Array.Sort(finishTimes);
+            Console.WriteLine("============= Sorted finish time =============");
+            for (int i = 0; i < finishTimes.Length; i++)
+            {
+                Console.WriteLine((i + 1) + " Place: " + finishTimes[i]);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Number of the participants: " + finishTimes.Length);
+        }
+
         static void Main(string[] args)
         {
             while (flag) {
@@ -100,6 +121,7 @@ namespace ArraysPractice
 
                     //Race Finish Times
                     case 4:
+                        RaceFinishTimes();
                         break;
 
                     //Classroom Grade Report
