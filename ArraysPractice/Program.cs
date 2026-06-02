@@ -13,6 +13,7 @@ namespace ArraysPractice
         static bool flag = true;
         static int lastIndex;
         static double revenueSum;
+        static int seatSearch;
 
         //Arrays Decleration
         static double[] temperatures;
@@ -24,6 +25,8 @@ namespace ArraysPractice
         static int[] copies;
         static double[] revenue;
         static double[] sortedCopy;
+        static int[] seats;
+        static int[] reverse;
 
         static void MainMenu()
         {
@@ -217,6 +220,44 @@ namespace ArraysPractice
 
         }
 
+        //Task 9 
+        static void FlightSeatAllocationDisplay()
+        {
+            seats = [7,3,4,6,9,44,2,43,5,10,22,49,30,21,99];
+            foreach (int seat in seats) {
+                Console.WriteLine("Seat number: " + seat);
+            }
+            Console.WriteLine("");
+            Array.Sort(seats);
+
+            Console.WriteLine("Please enter the seat number you want to find its index: ");
+            seatSearch = Convert.ToInt32(Console.ReadLine());
+            index = Array.IndexOf(seats, seatSearch);
+            if (index == -1)
+            {
+                Console.WriteLine("Seat not found in the array.");
+            }
+            else
+            {
+                Console.WriteLine("Seat found at index: " + index);
+            }
+
+            Console.WriteLine("");
+            reverse = new int[seats.Length];
+            for (int i = 0; i < reverse.Length; i++) 
+            {
+                reverse[i] = seats[i];
+            }
+            Array.Reverse(reverse);
+
+            for (int i = 0; i < reverse.Length; i++) 
+            {
+                Console.WriteLine("Sorted: " + seats[i] + " Reversed: " + reverse[i]);
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("Total number of seats: " + reverse.Length);
+        }
         static void Main(string[] args)
         {
             while (flag) {
@@ -266,6 +307,7 @@ namespace ArraysPractice
 
                     //Flight Seat Allocation Display
                     case 9:
+                        FlightSeatAllocationDisplay();
                         break;
 
                     //Hospital Patient Priority Queue
