@@ -22,6 +22,8 @@
         static bool checkGuest;
         static string guestNameSearch;
         static int roomNumSearch;
+        static int idNumSearch;
+        static bool checkID;
 
         //List Decleration
         static List<double> temperatures = new List<double>();
@@ -40,6 +42,9 @@
         static List<string> menuItem = new List<string>();
         static List<string> checkInQueue = new List<string>();
         static List<int> assignedRooms = new List<int>();
+        static List<int> standardBookings = new List<int>();
+        static List<int> suiteBookings = new List<int>();
+        static List<int> masterBookings = new List<int>();
 
         static void MainMenu()
         {
@@ -449,7 +454,7 @@
             }
 
             Console.WriteLine("");
-            Console.WriteLine("Please Enter the room number you look the ");
+            Console.WriteLine("Please Enter the room number you look for ");
             roomNumSearch = Convert.ToInt32(Console.ReadLine());
             index = assignedRooms.IndexOf(roomNumSearch);
 
@@ -479,6 +484,96 @@
         //Task 14
         static void HotelBookingConflictResolver()
         {
+            standardBookings = [2,1,4,3,5,6];
+            suiteBookings = [2,1,4,7,8];
+            Console.WriteLine(""); 
+            Console.WriteLine("---- Standard Booking ----");
+            for (int i = 0; i < standardBookings.Count; i++) 
+            {
+                Console.WriteLine($"Standard {i+1}: {standardBookings[i]}" );
+            }
+            
+            Console.WriteLine("");
+            Console.WriteLine("---- Suite Booking ----");
+            for (int i = 0; i < suiteBookings.Count; i++)
+            {
+                Console.WriteLine($"Suite {i + 1}: {suiteBookings[i]}");
+            }
+
+            masterBookings.AddRange( standardBookings );
+            masterBookings.AddRange(suiteBookings);
+
+
+            for (int i = 0; i < masterBookings.Count; i++)
+            {
+                for (int j = masterBookings.Count - 1; j > i; j--)
+                {
+                    if (masterBookings[i] == masterBookings[j])
+                    {
+                        masterBookings.RemoveAt(j);
+                    }
+                }
+
+            }
+
+            masterBookings.Sort();
+
+            Console.WriteLine("");
+            Console.WriteLine("---- Master Booking ----");
+            for (int i = 0; i < masterBookings.Count; i++)
+            {
+                Console.WriteLine($"Master {i + 1}: {masterBookings[i]}");
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("Please Enter the first ID number you want to search for: ");
+            idNumSearch = Convert.ToInt32(Console.ReadLine());
+            checkID = masterBookings.Contains(idNumSearch);
+            if (checkID)
+            {
+                Console.WriteLine("The " + idNumSearch + " is found in the list");
+            }
+            else
+            {
+                Console.WriteLine("The " + idNumSearch + " Not found. ");
+            }
+
+            Console.WriteLine("Please Enter the second ID number you want to search for: ");
+            idNumSearch = Convert.ToInt32(Console.ReadLine());
+            checkID = masterBookings.Contains(idNumSearch);
+            if (checkID)
+            {
+                Console.WriteLine("The " + idNumSearch + " is found in the list");
+            }
+            else
+            {
+                Console.WriteLine("The " + idNumSearch + " Not found. ");
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("Please Enter the ID number you look for ");
+            idNumSearch = Convert.ToInt32(Console.ReadLine());
+            index = masterBookings.IndexOf(idNumSearch);
+
+            if (index == -1)
+            {
+                Console.WriteLine("ID number not found in the List.");
+            }
+            else
+            {
+                Console.WriteLine("ID number found at index: " + (index + 1));
+            }
+
+            masterBookings.RemoveRange(1, 3);
+
+            Console.WriteLine("");
+            Console.WriteLine("---- The final master list result ----");
+            for (int i = 0; i < masterBookings.Count; i++)
+            {
+                Console.WriteLine($"Master {i + 1}: {masterBookings[i]}");
+            }
+            Console.WriteLine("The total number off booking count: " + masterBookings.Count);
+
 
         }
         static void Main(string[] args)
