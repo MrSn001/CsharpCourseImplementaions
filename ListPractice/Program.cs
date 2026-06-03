@@ -47,7 +47,11 @@
                 8. Sales Performance Analyzer
                 9. Flight Seat Allocation Display
                 10. Hospital Patient Priority Queue
-                11. Exit
+                11. Room Service Menu
+                12. Guest Check-In Queue
+                13. Housekeeping Floor Assignment 
+                14. Hotel Booking Conflict Resolver
+                15. Exit
 
                 """);
         }
@@ -323,6 +327,30 @@
 
             sortedSeverity.Clear();
         }
+
+        //Task 11
+        static void RoomServiceMenu()
+        {
+
+        }
+
+        //Task 12
+        static void GuestCheckInQueue()
+        {
+
+        }
+
+        //Task 13
+        static void HousekeepingFloorAssignment()
+        {
+
+        }
+
+        //Task 14
+        static void HotelBookingConflictResolver()
+        {
+
+        }
         static void Main(string[] args)
         {
 
@@ -384,8 +412,28 @@
                             HospitalPatientPriorityQueue();
                             break;
 
-                        //Stop the system
+                        //Room Service Menu
                         case 11:
+                            RoomServiceMenu();
+                            break;
+
+                        //Guest Check-In Queue
+                        case 12:
+                            GuestCheckInQueue();
+                            break;
+
+                        //Housekeeping Floor Assignment 
+                        case 13:
+                            HousekeepingFloorAssignment();
+                            break;
+
+                        //Hotel Booking Conflict Resolver
+                        case 14:
+                            HotelBookingConflictResolver();
+                            break;
+
+                        //Stop the system
+                        case 15:
                             flag = false;
                             break;
                         default:
