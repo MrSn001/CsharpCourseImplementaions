@@ -17,6 +17,8 @@
         static double median;
         static int counter;
         static int severitySearch;
+        static bool checkItem;
+        static string itemNameSearch;
 
         //List Decleration
         static List<double> temperatures = new List<double>();
@@ -32,7 +34,7 @@
         static List<int> reverse = new List<int>();
         static List<int> severity = new List<int>();
         static List<int> sortedSeverity = new List<int>();
-
+        static List<string> menuItem = new List<string>();
 
         static void MainMenu()
         {
@@ -331,7 +333,40 @@
         //Task 11
         static void RoomServiceMenu()
         {
+            menuItem = ["Rice With Chicken", "Rice With Meat", "Chicken Pizza", "Paparoni Pizza"];
+            for (int i = 0; i < menuItem.Count; i++)
+            {
+                Console.WriteLine("Meal " + (i + 1) + ": " + menuItem[i]);
+            }
+            menuItem.AddRange(["BBQ Chicken", "Chicken Shawarma Plate"]);
+            Console.WriteLine("");
+            Console.WriteLine("----- Updated Menu -----");
+            for (int i = 0; i < menuItem.Count; i++)
+            {
+                Console.WriteLine("Meal " + (i + 1) + ": " + menuItem[i]);
+            }
 
+            menuItem.Remove("Chicken Shawarma Plate");
+            Console.WriteLine("");
+            Console.WriteLine("----- Updated Menu Removed 1 Meal -----");
+            for (int i = 0; i < menuItem.Count; i++)
+            {
+                Console.WriteLine("Meal " + (i + 1) + ": " + menuItem[i]);
+            }
+
+            Console.WriteLine("Please Enter the item name you want to search for: ");
+            itemNameSearch = Console.ReadLine();
+            checkItem = menuItem.Contains(itemNameSearch);
+            if (checkItem) 
+            { 
+                Console.WriteLine("The " + itemNameSearch + " Was found on index: " + menuItem.IndexOf(itemNameSearch));
+            }else
+            {
+                Console.WriteLine("The " + itemNameSearch + " Was Not found. ");
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("The total number of the available meals: " + menuItem.Count);
         }
 
         //Task 12
