@@ -21,6 +21,7 @@
         static string itemNameSearch;
         static bool checkGuest;
         static string guestNameSearch;
+        static int roomNumSearch;
 
         //List Decleration
         static List<double> temperatures = new List<double>();
@@ -38,6 +39,7 @@
         static List<int> sortedSeverity = new List<int>();
         static List<string> menuItem = new List<string>();
         static List<string> checkInQueue = new List<string>();
+        static List<int> assignedRooms = new List<int>();
 
         static void MainMenu()
         {
@@ -428,6 +430,49 @@
         //Task 13
         static void HousekeepingFloorAssignment()
         {
+            assignedRooms = [10, 2, 8, 3, 4, 12];
+            Console.WriteLine("");
+            for (int i = 0; i < assignedRooms.Count; i++)
+            {
+                Console.WriteLine((1 + i) + ". Room Number: " + assignedRooms[i]);
+            }
+
+            assignedRooms.AddRange([23,24]);
+            assignedRooms.Remove(2);
+            assignedRooms.Sort();
+
+            Console.WriteLine("");
+            Console.WriteLine("---- Updated Sorted Assigned Room Number ----");
+            for (int i = 0; i < assignedRooms.Count; i++)
+            {
+                Console.WriteLine((1 + i) + ". Room Number: " + assignedRooms[i]);
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("Please Enter the room number you look the ");
+            roomNumSearch = Convert.ToInt32(Console.ReadLine());
+            index = assignedRooms.IndexOf(roomNumSearch);
+
+            if (index == -1)
+            {
+                Console.WriteLine("Room number not found in the List.");
+            }
+            else
+            {
+                Console.WriteLine("Room number found at index: " + (index + 1));
+            }
+
+            assignedRooms.Insert(2, 15);
+
+            Console.WriteLine("");
+            Console.WriteLine("----- Final assignment list ----- ");
+            for (int i = 0; i < assignedRooms.Count; i++)
+            {
+                Console.WriteLine((1 + i) + ". Room Number: " + assignedRooms[i]);
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("Final Total room count: " + assignedRooms.Count);
 
         }
 
