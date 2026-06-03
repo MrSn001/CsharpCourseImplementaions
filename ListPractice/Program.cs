@@ -19,6 +19,8 @@
         static int severitySearch;
         static bool checkItem;
         static string itemNameSearch;
+        static bool checkGuest;
+        static string guestNameSearch;
 
         //List Decleration
         static List<double> temperatures = new List<double>();
@@ -35,6 +37,7 @@
         static List<int> severity = new List<int>();
         static List<int> sortedSeverity = new List<int>();
         static List<string> menuItem = new List<string>();
+        static List<string> checkInQueue = new List<string>();
 
         static void MainMenu()
         {
@@ -372,7 +375,54 @@
         //Task 12
         static void GuestCheckInQueue()
         {
+            checkInQueue = ["Shaheen", "Shakir", "Shihab", "Ahmed", "Mohammed"];
+            for (int i = 0; i < checkInQueue.Count; i++)
+            {
+                Console.WriteLine("Guest " + (i + 1) + ": " + checkInQueue[i]);
+            }
+            checkInQueue.RemoveAt(0);
 
+            Console.WriteLine("");
+            Console.WriteLine("---- Removed one Guest ----");
+            for (int i = 0; i < checkInQueue.Count; i++)
+            {
+                Console.WriteLine("Guest " + (i + 1) + ": " + checkInQueue[i]);
+            }
+
+            checkInQueue.RemoveAt(0);
+
+            Console.WriteLine("");
+            Console.WriteLine("---- Removed the Next Guest ----");
+            for (int i = 0; i < checkInQueue.Count; i++)
+            {
+                Console.WriteLine("Guest " + (i + 1) + ": " + checkInQueue[i]);
+            }
+
+            checkInQueue.AddRange(["Said", "Ali", "Sara"]);
+
+            Console.WriteLine("");
+            Console.WriteLine("---- Added New Guests ----");
+
+            for (int i = 0; i < checkInQueue.Count; i++)
+            {
+                Console.WriteLine("Guest " + (i + 1) + ": " + checkInQueue[i]);
+            }
+
+
+            Console.WriteLine("Please Enter the guest name you want to search for: ");
+            guestNameSearch = Console.ReadLine();
+            checkGuest = checkInQueue.Contains(guestNameSearch);
+            if (checkGuest)
+            {
+                Console.WriteLine("The " + guestNameSearch + " your queue number is: " + (checkInQueue.IndexOf(guestNameSearch) + 1));
+            }
+            else
+            {
+                Console.WriteLine("The " + guestNameSearch + " Was Not found. ");
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("The total number of guests currently in the queue: " + checkInQueue.Count);
         }
 
         //Task 13
