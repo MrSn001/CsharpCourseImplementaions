@@ -4,16 +4,24 @@ namespace StackQueuePracticeTask
 {
     internal class Program
     {
+
+        //Array Decleration
+        static string[] splitString;
+
         //Variables Decleration
         static int choice;
         static bool flag = true;
         static bool check;
         static int lableNum;
+        static string fullyBalanced = "(,),{,],[";
+        //static string mismatchedType = "{,]";
+        //static string unclosed = "[";
 
         //Stack Decleration
         static Stack<string> browserHistory = new();
         static Stack<string> undoStack = new();
         static Stack<string> tempStack = new();
+        static Stack<char> bracketStack = new();
 
         //Queue Decleration
         static Queue<string> checkInQueue = new();
@@ -258,7 +266,8 @@ namespace StackQueuePracticeTask
         //Task 5 - Parenthesis Validator
         static void ParenthesisValidator()
         {
-            
+            splitString = fullyBalanced.Split(',');
+            foreach (string t in splitString) { Console.WriteLine(t); }
         }
 
         //Task 6 - Print Spooler with Priority Re-Insertion
