@@ -1,4 +1,6 @@
-﻿namespace StackQueuePracticeTask
+﻿using System.Diagnostics.Metrics;
+
+namespace StackQueuePracticeTask
 {
     internal class Program
     {
@@ -10,6 +12,8 @@
 
         //Stack Decleration
         static Stack<string> browserHistory = new();
+        static Stack<string> undoStack = new();
+        static Stack<string> tempStack = new();
 
         //Queue Decleration
         static Queue<string> checkInQueue = new();
@@ -69,7 +73,7 @@
             Console.WriteLine("The total number of the remaining url: " + browserHistory.Count);
         }
 
-        //Task 2 -  Hotel Check-In Queue
+        //Task 2 - Hotel Check-In Queue
         static void HotelCheckInQueue()
         {
             Console.WriteLine("");
@@ -121,7 +125,62 @@
             Console.WriteLine("Total number of guests waiting: " + checkInQueue.Count);
         }
 
+        //Task 3 - Text Editor Undo System
+        static void TextEditorUndoSystem()
+        {
+            undoStack.Push("Task 1");
+            undoStack.Push("Task 2");
+            undoStack.Push("Task 3");
+            undoStack.Push("Task 4");
+            undoStack.Push("Task 5");
+            undoStack.Push("Task 6");
+            undoStack.Push("Task 7");
 
+            foreach (string task in undoStack) 
+            {
+                Console.WriteLine($"{task}");
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("The action will be undone next: " + undoStack.Peek());
+
+            Console.WriteLine("");
+            Console.WriteLine("Press any key to go undo....");
+            Console.ReadKey();
+            Console.WriteLine(undoStack.Pop() + " Was removed from the stack");
+
+            Console.WriteLine("");
+            Console.WriteLine("Press any key to go undo....");
+            Console.ReadKey();
+            Console.WriteLine(undoStack.Pop() + " Was removed from the stack");
+
+            Console.WriteLine("");
+            Console.WriteLine("---- After undoing twice ----");
+            foreach (string task in undoStack)
+            {
+                Console.WriteLine($"{task}");
+            }
+
+            Console.WriteLine("");            
+            Console.WriteLine("Plese enter any key to remove Task 3 from the stack....");
+            Console.ReadKey();
+
+            tempStack.Push(undoStack.Pop());
+            tempStack.Push(undoStack.Pop());
+            undoStack.Pop();
+            undoStack.Push(tempStack.Pop());
+            undoStack.Push(tempStack.Pop());
+
+            Console.WriteLine("");
+            Console.WriteLine("---- After undoing task 3 ----");
+            foreach (string task in undoStack)
+            {
+                Console.WriteLine($"{task}");
+            }
+
+            Console.WriteLine("The total remaining Tasks in the stack: " + undoStack.Count);
+
+        }
 
         //Task 4 - Hospital Emergency Room Triage
         static void HospitalEmergencyRoomTriage()
@@ -196,10 +255,41 @@
             Console.WriteLine("there are " + triageQueue.Count + " still in queue");
         }
 
+        //Task 5 - Parenthesis Validator
+        static void ParenthesisValidator()
+        {
+            
+        }
 
+        //Task 6 - Print Spooler with Priority Re-Insertion
+        static void PrintSpoolerWithPriorityReInsertion()
+        {
 
+        }
 
+        //Task 7 -  Reverse a Sentence Word by Word
+        static void ReverseSentenceWordbyWord()
+        {
 
+        }
+
+        //Task 8 - Multi-Level Undo with Redo
+        static void MultiLevelUndoWithRedo()
+        {
+
+        }
+
+        //Task 9 - Ticket Counter Simulation
+        static void TicketCounterSimulation()
+        {
+
+        }
+
+        //Task 10 - Order Processing Pipeline with Statistics
+        static void OrderProcessingPipelineWithStatistics()
+        {
+
+        }
         static void Main(string[] args)
         {
             while (flag) 
@@ -235,7 +325,7 @@
 
                     //Text Editor Undo System
                     case 3:
-                        
+                        TextEditorUndoSystem();
                         break;
 
                     //Hospital Emergency Room Triage
@@ -245,26 +335,32 @@
 
                     //Parenthesis Validator
                     case 5:
+                        ParenthesisValidator();
                         break;
 
                     //Print Spooler with Priority Re-Insertion
                     case 6:
+                        PrintSpoolerWithPriorityReInsertion();
                         break;
 
                     //Reverse a Sentence Word by Word
                     case 7:
+                        ReverseSentenceWordbyWord();
                         break;
 
                     //Multi-Level Undo with Redo
                     case 8:
+                        MultiLevelUndoWithRedo();
                         break;
 
                     //Ticket Counter Simulation
                     case 9:
+                        TicketCounterSimulation();
                         break;
 
                     //Order Processing Pipeline with Statistics
                     case 10:
+                        OrderProcessingPipelineWithStatistics();
                         break;
 
                     //Exit
