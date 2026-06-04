@@ -6,14 +6,18 @@
         static int choice;
         static bool flag = true;
         static bool check;
-
+        static int lableNum;
 
         //Stack Decleration
         static Stack<string> browserHistory = new();
 
         //Queue Decleration
-
         static Queue<string> checkInQueue = new();
+        static Queue<string> triageQueue = new();
+        static Queue<string> tempQueue = new();
+
+        //Methods
+
         //Task 1 - Browser History Tracker
         static void BrowserHistoryTracker()
         {
@@ -85,12 +89,12 @@
             Console.WriteLine("Next person In Queue: " + checkInQueue.Peek());
 
             Console.WriteLine("");
-            Console.WriteLine("Press any key to go dequeue....");
+            Console.WriteLine("Press any key to call the next person....");
             Console.ReadKey();
             Console.WriteLine(checkInQueue.Dequeue() + " Turns please go to the counter number: 2");
 
             Console.WriteLine("");
-            Console.WriteLine("Press any key to go dequeue....");
+            Console.WriteLine("Press any key to call the next person....");
             Console.ReadKey();
             Console.WriteLine(checkInQueue.Dequeue() + " Turns please go to the counter number: 3");
 
@@ -116,6 +120,84 @@
             Console.WriteLine("");
             Console.WriteLine("Total number of guests waiting: " + checkInQueue.Count);
         }
+
+
+
+        //Task 4 - Hospital Emergency Room Triage
+        static void HospitalEmergencyRoomTriage()
+        {
+            triageQueue.Enqueue("Shaheen");
+            triageQueue.Enqueue("Shakir");
+            triageQueue.Enqueue("Shihab");
+            triageQueue.Enqueue("Ahmed");
+            triageQueue.Enqueue("Ali");
+            triageQueue.Enqueue("Said");
+            triageQueue.Enqueue("Mohammed");
+            triageQueue.Enqueue("Hussain");
+
+            lableNum = 1;
+            foreach(string t in triageQueue)
+            {
+                Console.WriteLine($"Patient {lableNum}: {t}");
+                lableNum++;
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("Next Patient: " + triageQueue.Peek());
+
+
+            Console.WriteLine("");
+            Console.WriteLine("Press any key to call the next person....");
+            Console.ReadKey();
+            Console.WriteLine(triageQueue.Dequeue() + " Turns please go to the bed number: 2");
+
+            Console.WriteLine("");
+            Console.WriteLine("Press any key to call the next person....");
+            Console.ReadKey();
+            Console.WriteLine(triageQueue.Dequeue() + " Turns please go to the bed number: 3");
+
+            Console.WriteLine("");
+            Console.WriteLine("Press any key to call the next person....");
+            Console.ReadKey();
+            Console.WriteLine(triageQueue.Dequeue() + " Turns please go to the bed number: 4");
+
+            Console.WriteLine("");
+            Console.WriteLine("Patients still in queue:");
+            lableNum = 1;
+            foreach (string t in triageQueue)
+            {
+                Console.WriteLine($"Patient {lableNum}: {t}");
+                lableNum++;
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("Plese enter any key to remove Said from the queue....");
+            Console.ReadKey();
+            tempQueue.Enqueue(triageQueue.Dequeue());
+            tempQueue.Enqueue(triageQueue.Dequeue());
+            triageQueue.Dequeue();
+            tempQueue.Enqueue(triageQueue.Dequeue());
+            tempQueue.Enqueue(triageQueue.Dequeue());
+            triageQueue.Enqueue(tempQueue.Dequeue());
+            triageQueue.Enqueue(tempQueue.Dequeue());
+            triageQueue.Enqueue(tempQueue.Dequeue());
+            triageQueue.Enqueue(tempQueue.Dequeue());
+
+            Console.WriteLine("");
+            Console.WriteLine("Patients still in queue (After removing Said):");
+            lableNum = 1;
+            foreach (string t in triageQueue)
+            {
+                Console.WriteLine($"Patient {lableNum}: {t}");
+                lableNum++;
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("there are " + triageQueue.Count + " still in queue");
+        }
+
+
+
 
 
         static void Main(string[] args)
@@ -153,10 +235,12 @@
 
                     //Text Editor Undo System
                     case 3:
+                        
                         break;
 
                     //Hospital Emergency Room Triage
                     case 4:
+                        HospitalEmergencyRoomTriage();
                         break;
 
                     //Parenthesis Validator
