@@ -4,4 +4,5 @@
   <Project Path="HotelManagementSystem/HotelManagementSystem.csproj" Id="4d572c63-962d-4d97-8d90-32cf0ef29e9f" />
   <Project Path="LibraryManagementSystem/LibraryManagementSystem.csproj" Id="8e698cda-0c32-453a-a694-83d53520be3e" />
   <Project Path="ListPractice/ListPractice.csproj" Id="6460dd35-51ca-4a78-adf2-64cf9cdaf5b4" />
+  <Project Path="StackQueuePracticeTask/StackQueuePracticeTask.csproj" Id="4afd703d-3fff-49cd-98a1-6ace459ae081" />
 </Solution>
