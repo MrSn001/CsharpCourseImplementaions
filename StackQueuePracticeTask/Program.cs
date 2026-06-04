@@ -13,9 +13,8 @@
 
         //Queue Decleration
 
-
-
-        //Method Decleration
+        static Queue<string> checkInQueue = new();
+        //Task 1 - Browser History Tracker
         static void BrowserHistoryTracker()
         {
             browserHistory.Push("google.com");
@@ -66,6 +65,58 @@
             Console.WriteLine("The total number of the remaining url: " + browserHistory.Count);
         }
 
+        //Task 2 -  Hotel Check-In Queue
+        static void HotelCheckInQueue()
+        {
+            Console.WriteLine("");
+            checkInQueue.Enqueue("Shaheen");
+            checkInQueue.Enqueue("Shakir");
+            checkInQueue.Enqueue("Shihab");
+            checkInQueue.Enqueue("Said");
+            checkInQueue.Enqueue("Ali");
+            foreach (string c in checkInQueue)
+            {
+                Console.WriteLine(c);
+            }
+
+
+
+            Console.WriteLine("");
+            Console.WriteLine("Next person In Queue: " + checkInQueue.Peek());
+
+            Console.WriteLine("");
+            Console.WriteLine("Press any key to go dequeue....");
+            Console.ReadKey();
+            Console.WriteLine(checkInQueue.Dequeue() + " Turns please go to the counter number: 2");
+
+            Console.WriteLine("");
+            Console.WriteLine("Press any key to go dequeue....");
+            Console.ReadKey();
+            Console.WriteLine(checkInQueue.Dequeue() + " Turns please go to the counter number: 3");
+
+            Console.WriteLine("");
+            Console.WriteLine("---- Remaining guest on the queue ----");
+            foreach (string c in checkInQueue)
+            {
+                Console.WriteLine(c);
+            }
+
+            Console.WriteLine("");
+            check = checkInQueue.Contains("Ali");
+
+            if (check)
+            {
+                Console.WriteLine("Ali still in the queue!!");
+            }
+            else
+            {
+                Console.WriteLine("Ali not in the queue!!");
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("Total number of guests waiting: " + checkInQueue.Count);
+        }
+
 
         static void Main(string[] args)
         {
@@ -97,6 +148,7 @@
 
                     //Hotel Check-In Queue
                     case 2:
+                        HotelCheckInQueue();
                         break;
 
                     //Text Editor Undo System
