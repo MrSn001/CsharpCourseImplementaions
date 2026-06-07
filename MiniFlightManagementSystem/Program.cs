@@ -4,11 +4,11 @@
     {
 
         //Collection Declaration
-        static List<string> passengerNames = new List<string>() {"Shaheen Al-Amri", "Shakir Al-Amri", "Shihab Al-Amri", "Said Mohammed", "Rashid Ali"};
+        static List<string> passengerNames = new List<string>() { "Shaheen Al-Amri", "Shakir Al-Amri", "Shihab Al-Amri", "Said Mohammed", "Rashid Ali" };
         static List<string> ticketNumbers = new List<string>() {"TKT-001", "TKT-002", "TKT-003", "TKT-004", "TKT-005"};
         static string[] flightNumbers = new string[6] { "OA101", "OA102", "OA103", "OA104", "OA105","OA106"};
         static List<DateOnly> availableDates = [new DateOnly(2026,06,10), new DateOnly(2026, 06, 15), new DateOnly(2026, 06, 16), new DateOnly(2026, 06, 20)];
-        static Dictionary<string,DateTime> bookingRecord = new Dictionary<string, DateTime>();
+        static Dictionary<string,string> bookingRecord = new Dictionary<string, string>();
         static Queue<string> checkedInQueue = new Queue<string>();
         static Stack<string> boardingStack = new Stack<string>();
         static List<string> cancelledTickets = new List<string>();
@@ -23,7 +23,11 @@
         static int nextNum;
         static string ticketID;
         static bool validationFlag = false;
-        static string status = "not signed";
+        static string status;
+        static bool check = false;
+        static string flight;
+        static DateOnly date;
+
         //Method Declaration
         static void MainMenu()
         {
@@ -112,6 +116,7 @@
         }
         static void ViewAllPassengers()
         {
+
             Console.WriteLine($"{"No.",-4} | {"Passenger Name",-20} | {"Ticket ID",-9} | Status");
             for (int i = 0; i < passengerNames.Count; i++)
             {
@@ -125,6 +130,93 @@
 
             Console.WriteLine($"There is {passengerNames.Count} passengers registered");
         }
+        //Case 3 Methods:
+        static void CheckTicketAvailability(ref bool validationFlag)
+        {
+            Console.Write("Please Enter The Ticket Number: ");
+            ticketID = Console.ReadLine();
+            foreach (string ticket in ticketNumbers)
+            {
+                if (ticketID == ticket)
+                {
+                    check = true; 
+                    break;
+                }
+                check = false;
+            }
+            if (!check) 
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Invalid Ticket Number!!");
+                Console.ResetColor();
+                validationFlag = true;
+
+            }
+        }
+        static void CheckTicketFromBookingRecord(ref bool validationFlag)
+        {
+            if (bookingRecord.Keys.Contains(ticketID))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("This ticket ID Already has a booking!!");
+                Console.ResetColor();
+                validationFlag = true;
+                return;
+            }
+            validationFlag = false;
+        }
+        static void DisplayAndChooseFlightNumber()
+        {
+            for (int i = 0; i < flightNumbers.Length; i++)
+            {
+                Console.WriteLine($"Flight: {(i + 1)}  | Flight Number: {flightNumbers[i]}");
+            }
+            Console.Write("Enter a number from 1 to 6: " );
+            choice = Convert.ToInt32( Console.ReadLine() );
+            if( choice <= 0 || choice > flightNumbers.Length)
+            {
+                Console.ForegroundColor= ConsoleColor.Red;
+                Console.WriteLine("You have to choose one of the above flights");
+                validationFlag = true;
+                Console.ResetColor();
+                return;
+            }
+            else
+            {
+                Console.ForegroundColor= ConsoleColor.Green;
+                Console.WriteLine("You have select " + flightNumbers[choice - 1] + "!!");
+                flight = flightNumbers[choice - 1];
+                Console.ResetColor();
+            }
+
+        }
+        static void DisplayAndChooseDate()
+        {
+            for (int i = 0; i < availableDates.Count; i++)
+            {
+                Console.WriteLine($"{(i + 1)}. {availableDates[i].ToString("dd-MMM-yyyy")}");
+            }
+
+            Console.Write($"Enter a number from 1 to {availableDates.Count}: ");
+            choice = Convert.ToInt32(Console.ReadLine());
+            if (choice <= 0 || choice > availableDates.Count)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("You have to choose one of the above dates");
+                validationFlag = true;
+                Console.ResetColor();
+                return;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("You have select " + availableDates[choice - 1].ToString("dd-MMM-yyyy") + "!!");
+                date = availableDates[choice - 1];
+                Console.ResetColor();
+            }
+        }
+
+
         static void Main(string[] args)
         {
             while (flag) 
@@ -139,6 +231,7 @@
                         AddingPassengerName(ref validationFlag);
                         if (validationFlag)
                         {
+                            validationFlag = false;
                             break;
                         }
                         AutoGenerateTicketID();
@@ -153,6 +246,36 @@
                         break;
                     //Task 3 - Book a Flight Ticket
                     case 3:
+                        CheckTicketAvailability(ref validationFlag);
+                        if (validationFlag)
+                        {
+                            validationFlag = false;
+                            break;
+                        }
+                        CheckTicketFromBookingRecord(ref validationFlag);
+                        if (validationFlag)
+                        {
+                            validationFlag = false;
+                            break;
+                        }
+                        DisplayAndChooseFlightNumber();
+                        if (validationFlag)
+                        {
+                            validationFlag = false;
+                            break;
+                        }
+                        DisplayAndChooseDate();
+                        if (validationFlag)
+                        {
+                            validationFlag = false;
+                            break;
+                        }
+
+                        bookingRecord.Add(ticketID,flight + "|" + date.ToString("dd-MMM-yyyy"));
+                        Console.WriteLine("");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"Ticket ID : {ticketID} | Passenger Name {passengerNames[ticketNumbers.IndexOf(ticketID)]} | Flight Number: {flight} | Date: {date.ToString("dd-MMM-yyyy")}" );
+                        Console.ResetColor();
                         break;
                     //Task 4 - View Booking Details
                     case 4:
