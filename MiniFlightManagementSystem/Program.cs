@@ -1,4 +1,6 @@
-﻿namespace MiniFlightManagementSystem
+﻿using System.Net.Sockets;
+
+namespace MiniFlightManagementSystem
 {
     internal class Program
     {
@@ -11,7 +13,7 @@
         static Dictionary<string,string> bookingRecord = new Dictionary<string, string>();
         static Queue<string> checkedInQueue = new Queue<string>();
         static Stack<string> boardingStack = new Stack<string>();
-        static List<string> cancelledTickets = new List<string>();
+        static List<string> cancelledTickets = new List<string>() { "TKT-005" };
         static Dictionary<string,string> passengerSeatMap = new Dictionary<string,string>();
         static Queue<string> waitlistQueue = new Queue<string>();
 
@@ -120,7 +122,7 @@
             Console.WriteLine($"{"No.",-4} | {"Passenger Name",-20} | {"Ticket ID",-9} | Status");
             for (int i = 0; i < passengerNames.Count; i++)
             {
-                string status = "Active";
+                status = "Active";
                 if (cancelledTickets.Contains(ticketNumbers[i]))
                 {
                     status = "CANCELLED";
@@ -216,6 +218,35 @@
             }
         }
 
+        //Case 4 Methods: 
+        static void CheckTicketCancellation(string ticket)
+        {
+            foreach (string t in cancelledTickets)
+            {
+                if (t.Contains(ticket))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("This ticket has been cancelled.");
+                    Console.ResetColor();
+                    validationFlag = true;
+                    return;
+                }
+
+            }
+        }
+        static void CheckBooking(string ticket)
+        {
+            if (!bookingRecord.Keys.Contains(ticket))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("No booking found for this ticket.");
+                Console.ResetColor();
+                validationFlag = true;
+                return;
+            }
+        }
+
+
 
         static void Main(string[] args)
         {
@@ -279,6 +310,30 @@
                         break;
                     //Task 4 - View Booking Details
                     case 4:
+                        CheckTicketAvailability(ref validationFlag);
+                        if (validationFlag)
+                        {
+                            validationFlag = false;
+                            break;
+                        }
+                        passengerName = passengerNames[ticketNumbers.IndexOf(ticketID)];
+                        CheckTicketCancellation(ticketID);
+                        if (validationFlag)
+                        {
+                            validationFlag = false;
+                            break;
+                        }
+                        CheckBooking(ticketID);
+                        if (validationFlag)
+                        {
+                            validationFlag = false;
+                            break;
+                        }
+                        Console.WriteLine("");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"Ticket ID : {ticketID} | Passenger Name {passengerName} | Flight Number: {bookingRecord[ticketID].Split('|')[0]} | Date: {bookingRecord[ticketID].Split('|')[1]}");
+                        Console.ResetColor();
+
                         break;
                     //Task 5 - Update a Booking 
                     case 5:
