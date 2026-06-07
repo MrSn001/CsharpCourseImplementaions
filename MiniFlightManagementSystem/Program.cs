@@ -19,8 +19,37 @@
         //Variables Declaration
         static int choice;
         static bool flag = true;
-
+        static string passengerName;
+        static int nextNum;
+        static string ticketID;
+        static bool validationFlag = false;
         //Method Declaration
+        static void AddingPassengerName(ref bool validationFlag)
+        {
+            passengerName = Console.ReadLine();
+            if(passengerName == null)
+            {
+                Console.WriteLine("The name can't be empty!!");
+                validationFlag = true;
+                return;
+            }
+            foreach (string name in passengerNames) {
+                if (passengerName.ToLower() == name.ToLower())
+                {
+                    Console.WriteLine($"There is already a passenger with the name {passengerName} Registered!!");
+                    validationFlag = true;
+                    return;
+                }
+            }
+            passengerNames.Add(passengerName);
+
+        }
+        static void AutoGenerateTicketID()
+        {
+            nextNum = ticketNumbers.Count + 1;
+            ticketID = $"TKT-{nextNum:D3}";
+            ticketNumbers.Add(ticketID);
+        }
 
         static void Main(string[] args)
         {
@@ -64,13 +93,23 @@
 
                     Enter your choice: 
                     """);
-                choice = Convert.ToInt32(Console.ReadLine());
-
                 Console.ResetColor();
+                choice = Convert.ToInt32(Console.ReadLine());
+     
                 switch (choice) 
                 {
                     //Task 1 - Register New Passenger
                     case 1:
+                        Console.Write("Please enter the full passenger name: ");
+                        AddingPassengerName(ref validationFlag);
+                        if (validationFlag)
+                        {
+                            break;
+                        }
+                        AutoGenerateTicketID();
+                        Console.ForegroundColor= ConsoleColor.Green;
+                        Console.WriteLine($"Passenger {passengerName} Added Successfully, Ticket ID: {ticketID}!!");
+                        Console.ResetColor();
                         break;
                     //Task 2 - View All Passengers
                     case 2: 
