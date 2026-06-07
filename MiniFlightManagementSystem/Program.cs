@@ -23,21 +23,71 @@
         static int nextNum;
         static string ticketID;
         static bool validationFlag = false;
+        static string status = "not signed";
         //Method Declaration
+        static void MainMenu()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("""
+                    ========================================
+                    SKY WINGS FLIGHT MANAGEMENT SYSTEM
+                    ========================================
+                    """);
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("""
+                    1. Register New Passenger
+                    2. View All Passengers
+                    3. Book a Flight Ticket
+                    4. View Booking Details   
+                    """);
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("""
+                    5. Update a Booking
+                    6. Cancel a Ticket
+                    7. Passenger Check-In
+                    8. Board Passengers (Boarding Stack)
+                    """);
+
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("""
+                    9. Generate Flight Manifest
+                    10. Manage Waitlist & Seat Assignment
+                    """);
+
+            Console.ResetColor();
+            Console.WriteLine("0. Exit");
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("""
+                    ========================================
+
+                    Enter your choice: 
+                    """);
+            Console.ResetColor();
+            choice = Convert.ToInt32(Console.ReadLine());
+        }
+
+        //Case 1 Methods
         static void AddingPassengerName(ref bool validationFlag)
         {
             passengerName = Console.ReadLine();
             if(passengerName == null)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("The name can't be empty!!");
                 validationFlag = true;
+                Console.ResetColor();
                 return;
             }
             foreach (string name in passengerNames) {
                 if (passengerName.ToLower() == name.ToLower())
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"There is already a passenger with the name {passengerName} Registered!!");
                     validationFlag = true;
+                    Console.ResetColor();
                     return;
                 }
             }
@@ -50,52 +100,37 @@
             ticketID = $"TKT-{nextNum:D3}";
             ticketNumbers.Add(ticketID);
         }
+        //Case 2 Methods:
+        static void CheckPassengerAvailability()
+        {
+            if(passengerNames.Count == 0)
+            {
+                Console.ForegroundColor= ConsoleColor.Red;
+                Console.WriteLine("There is no Passenger Registered!!");
+                Console.ResetColor();
+            }
+        }
+        static void ViewAllPassengers()
+        {
+            Console.WriteLine($"{"No.",-4} | {"Passenger Name",-20} | {"Ticket ID",-9} | Status");
+            for (int i = 0; i < passengerNames.Count; i++)
+            {
+                string status = "Active";
+                if (cancelledTickets.Contains(ticketNumbers[i]))
+                {
+                    status = "CANCELLED";
+                }
+                Console.WriteLine($"{(i + 1), -4} | {passengerNames[i], -20} | {ticketNumbers[i],-9} | {status}");
+            }
 
+            Console.WriteLine($"There is {passengerNames.Count} passengers registered");
+        }
         static void Main(string[] args)
         {
             while (flag) 
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("""
-                    ========================================
-                    SKY WINGS FLIGHT MANAGEMENT SYSTEM
-                    ========================================
-                    """);
+                MainMenu();
 
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("""
-                    1. Register New Passenger
-                    2. View All Passengers
-                    3. Book a Flight Ticket
-                    4. View Booking Details   
-                    """);
-
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("""
-                    5. Update a Booking
-                    6. Cancel a Ticket
-                    7. Passenger Check-In
-                    8. Board Passengers (Boarding Stack)
-                    """);
-
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("""
-                    9. Generate Flight Manifest
-                    10. Manage Waitlist & Seat Assignment
-                    """);
-
-                Console.ResetColor();
-                Console.WriteLine("0. Exit");
-
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("""
-                    ========================================
-
-                    Enter your choice: 
-                    """);
-                Console.ResetColor();
-                choice = Convert.ToInt32(Console.ReadLine());
-     
                 switch (choice) 
                 {
                     //Task 1 - Register New Passenger
@@ -112,7 +147,9 @@
                         Console.ResetColor();
                         break;
                     //Task 2 - View All Passengers
-                    case 2: 
+                    case 2:
+                        CheckPassengerAvailability();
+                        ViewAllPassengers();
                         break;
                     //Task 3 - Book a Flight Ticket
                     case 3:
