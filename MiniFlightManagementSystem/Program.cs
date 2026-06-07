@@ -4,10 +4,10 @@
     {
 
         //Collection Declaration
-        static List<string> passengerNames = new List<string>();
-        static List<string> ticketNumbers = new List<string>();
-        static string[] flightNumbers = new string[6];
-        static List<DateTime> availableDates = new List<DateTime>();
+        static List<string> passengerNames = new List<string>() {"Shaheen Al-Amri", "Shakir Al-Amri", "Shihab Al-Amri", "Said Mohammed", "Rashid Ali"};
+        static List<string> ticketNumbers = new List<string>() {"TKT-001", "TKT-002", "TKT-003", "TKT-004", "TKT-005"};
+        static string[] flightNumbers = new string[6] { "OA101", "OA102", "OA103", "OA104", "OA105","OA106"};
+        static List<DateOnly> availableDates = [new DateOnly(2026,06,10), new DateOnly(2026, 06, 15), new DateOnly(2026, 06, 16), new DateOnly(2026, 06, 20)];
         static Dictionary<string,DateTime> bookingRecord = new Dictionary<string, DateTime>();
         static Queue<string> checkedInQueue = new Queue<string>();
         static Stack<string> boardingStack = new Stack<string>();
@@ -16,9 +16,11 @@
         static Queue<string> waitlistQueue = new Queue<string>();
 
 
-        // Variables Declaration
+        //Variables Declaration
         static int choice;
         static bool flag = true;
+
+        //Method Declaration
 
         static void Main(string[] args)
         {
