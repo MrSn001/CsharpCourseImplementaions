@@ -13,10 +13,12 @@ namespace MiniFlightManagementSystem
         static Dictionary<string,string> bookingRecord = new Dictionary<string, string>();
         static Queue<string> checkedInQueue = new Queue<string>();
         static Stack<string> boardingStack = new Stack<string>();
-        static List<string> cancelledTickets = new List<string>() { "TKT-005" };
+        static List<string> cancelledTickets = new List<string>();
         static Dictionary<string,string> passengerSeatMap = new Dictionary<string,string>();
         static Queue<string> waitlistQueue = new Queue<string>();
-
+        static Queue<string> tempQueue = new Queue<string>();
+        static Stack<string> tempStack = new Stack<string>();
+        static Stack<string> reOrderStack = new Stack<string>();
 
         //Variables Declaration
         static int choice;
@@ -32,6 +34,11 @@ namespace MiniFlightManagementSystem
         static DateOnly date;
         static string bookingBeforeUpdate;
         static string bookingAfterUpdate;
+        static string booking;
+        static string checkIn;
+        static string boarding;
+        static bool queueCheck = false;
+        static bool stackCheck = false;
 
         //Method Declaration
         static void MainMenu()
@@ -78,7 +85,7 @@ namespace MiniFlightManagementSystem
             choice = Convert.ToInt32(Console.ReadLine());
         }
 
-        //Case 1 Methods
+        
         static void AddingPassengerName()
         {
             passengerName = Console.ReadLine();
@@ -109,7 +116,7 @@ namespace MiniFlightManagementSystem
             ticketID = $"TKT-{nextNum:D3}";
             ticketNumbers.Add(ticketID);
         }
-        //Case 2 Methods:
+        
         static void CheckPassengerAvailability()
         {
             if(passengerNames.Count == 0)
@@ -135,7 +142,7 @@ namespace MiniFlightManagementSystem
 
             Console.WriteLine($"There is {passengerNames.Count} passengers registered");
         }
-        //Case 3 Methods:
+        
         static void CheckTicketAvailability(string ticketNum)
         {
             foreach (string ticket in ticketNumbers)
@@ -219,7 +226,7 @@ namespace MiniFlightManagementSystem
             }
         }
 
-        //Case 4 Methods: 
+        
         static void CheckTicketCancellation(string ticket)
         {
             foreach (string t in cancelledTickets)
@@ -247,11 +254,92 @@ namespace MiniFlightManagementSystem
             }
         }
 
-        //Case 5 Methods: 
+        
         static void DisplayBookingDetails(string ticket)
         {
             Console.WriteLine($"Booking details for {ticket} Number:");
             Console.WriteLine($"Flight Number: {bookingRecord[ticket].Split('|')[0]} Date: {bookingRecord[ticket].Split('|')[1]}");
+        }
+        
+        static void CancellingBooking(string ticket)
+        {
+            booking = bookingRecord[ticket];
+            validationFlag = bookingRecord.Remove(ticket);
+            if (validationFlag)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("The booking " + booking + " Was Deleted!!");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("This ticket has no booking!!");
+                Console.ResetColor();
+            }
+        }
+        static void CheckedInQueueRebuild(string passenger)
+        {
+            if (!checkedInQueue.Contains(passenger)) 
+            {
+                return;
+            }
+
+            while (checkedInQueue.Count > 0)
+            {
+                checkIn = checkedInQueue.Dequeue();
+                if(checkIn != passenger)
+                {
+                    
+                    tempQueue.Enqueue(checkIn);
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"{checkIn} Passenger was removed from the check-In queue");
+                    Console.ResetColor();
+                    queueCheck = true;
+                }
+            }
+
+            while (tempQueue.Count > 0)
+            {
+                
+                checkedInQueue.Enqueue(tempQueue.Dequeue());
+            }
+           
+        }
+        static void BoardingStackRebuild(string passenger) 
+        {
+            if (!boardingStack.Contains(passenger))
+            {
+                return;
+            }
+
+            while (boardingStack.Count > 0)
+            {
+                boarding = boardingStack.Pop();
+                if (boarding != passenger) 
+                { 
+                    tempStack.Push(boarding);
+                }
+                else
+                {
+                    Console.ForegroundColor= ConsoleColor.Red;
+                    Console.WriteLine($"{boarding} Passenger was removed from the boarding Stack.");
+                    Console.ResetColor();
+                    stackCheck = true;
+                }
+            }
+
+            while(tempStack.Count > 0)
+            {
+                reOrderStack.Push(tempStack.Pop());
+            }
+
+            while (reOrderStack.Count > 0) { 
+                boardingStack.Push(reOrderStack.Pop());
+            }
         }
 
         static void Main(string[] args)
@@ -458,14 +546,50 @@ namespace MiniFlightManagementSystem
                                     Console.ResetColor();
                                     break;
                             }
-                            Console.WriteLine("Please Enter any key to continue.... ");
-                            Console.ReadKey();
-                            Console.Clear();
                         }
 
                         break;
                     //Task 6 - Cancel a Ticket
                     case 6:
+                        Console.Write("Please Enter The Ticket Number You Want To Cancel: ");
+                        ticketID = Console.ReadLine();
+                        CheckTicketAvailability(ticketID);
+                        if (validationFlag)
+                        {
+                            validationFlag = false;
+                            break;
+                        }
+                        CheckTicketCancellation(ticketID);
+                        if (validationFlag)
+                        {
+                            validationFlag = false;
+                            break;
+                        }
+                        CheckBooking(ticketID);
+                        if (validationFlag)
+                        {
+                            validationFlag = false;
+                            break;
+                        }
+                        passengerName = passengerNames[ticketNumbers.IndexOf(ticketID)];
+                        CancellingBooking(ticketID);
+                        if (!validationFlag)
+                        {
+                            validationFlag = false;
+                            break;
+                        }
+                        cancelledTickets.Add(ticketID);
+                        CheckedInQueueRebuild(passengerName);
+                        BoardingStackRebuild(passengerName);
+                        Console.WriteLine($"""
+                            ========================================
+                                      CANCELLATION SUMMARY
+                            ========================================
+                            Passenger Name: {passengerName}
+                            Removed from Queue: {(queueCheck ? "Yes" : "No")}
+                            Removed from Stack: {(stackCheck ? "Yes" : "No")}
+                            """);
+
                         break;
                     //Task 7 - Passenger Check-In 
                     case 7:
