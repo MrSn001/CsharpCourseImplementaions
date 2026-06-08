@@ -40,8 +40,9 @@ namespace MiniFlightManagementSystem
         static string boarding;
         static bool queueCheck = false;
         static bool stackCheck = false;
-        static bool checkInFlag = false;
+        static bool checkInFlag;
         static int counter;
+        static bool boardFlag;
 
         //Method Declaration
         static void MainMenu()
@@ -409,6 +410,36 @@ namespace MiniFlightManagementSystem
                 }
             }
         }
+        static void LoadBoardingStack()
+        {
+            if(checkedInQueue.Count == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("There is no passenger in the checke in queue!!");
+                Console.ResetColor();
+                return;
+            }
+            counter = 0;
+            while (checkedInQueue.Count>0)
+            {
+                counter++;
+                boardingStack.Push(checkedInQueue.Dequeue());
+            }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Loaded {counter} Passenger Successfully!!");
+            Console.ResetColor();
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("");
+            Console.WriteLine("Warning!! all the passengers in the check-in queue were removed and added to the for the board");
+            Console.ResetColor();
+
+        }
+        static void BoardNextPassenger()
+        {
+
+        }
         static void Main(string[] args)
         {
             while (flag) 
@@ -732,6 +763,46 @@ namespace MiniFlightManagementSystem
                         break;
                     //Task 8 - Board Passengers (Boarding Stack) 
                     case 8:
+                        boardFlag = true;
+                        while (boardFlag)
+                        {
+                            Console.WriteLine("""
+                                ========================================
+                                           Board Passengers
+                                ========================================
+                                1.Load boarding stack from check-in queue
+                                2.Board next passenger
+                                3.View boarding stack
+                                4.View boarding log
+                                0.Back
+                                ========================================
+                                Enter your choice:
+                                """);
+                            choice = Convert.ToInt32(Console.ReadLine());
+
+                            switch (choice) 
+                            {
+                                case 1:
+                                    LoadBoardingStack();
+                                    break;
+
+                                case 2:
+                                    break;
+
+                                case 3:
+                                    break;
+
+                                case 4:
+                                    break;
+
+                                case 0:
+                                    boardFlag = false;
+                                    break;
+                                default: 
+                                    Console.WriteLine("Invalid Option!!");
+                                    break;
+                            }
+                        }
                         break;
                     //Task 9 - Generate Flight Manifest 
                     case 9:
