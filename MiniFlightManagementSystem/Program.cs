@@ -1,4 +1,5 @@
 ﻿using System.Net.Sockets;
+using System.Text;
 
 namespace MiniFlightManagementSystem
 {
@@ -39,6 +40,8 @@ namespace MiniFlightManagementSystem
         static string boarding;
         static bool queueCheck = false;
         static bool stackCheck = false;
+        static bool checkInFlag = false;
+        static int counter;
 
         //Method Declaration
         static void MainMenu()
@@ -342,6 +345,70 @@ namespace MiniFlightManagementSystem
             }
         }
 
+        static bool CheckPassengerAvailabilityInQueue(string passenger) 
+        {
+            if (checkedInQueue.Contains(passenger))
+            {
+                return true;
+            }
+            return false;
+        }
+        static void CheckInProcess(string passenger)
+        {
+            if(checkedInQueue.Count < 10)
+            {
+                checkedInQueue.Enqueue(passenger);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"{passenger} Added to the check-In Queue");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"{passenger} Added to the Wait List Queue!!");
+                waitlistQueue.Enqueue(passenger);
+                Console.ResetColor();
+            }
+        }
+        static void DisplayCheckedInQueuePassengers()
+        {
+            Console.WriteLine("Checked In Queue:");
+            counter = 1;
+            foreach(string passenger in checkedInQueue)
+            {
+                Console.WriteLine($"{counter}. {passenger}");
+                counter++;
+            }
+        }
+        static void DisplayWaitingListQueuePassengers()
+        {
+            Console.WriteLine("Waiting List Queue:");
+            counter = 1;
+            foreach (string passenger in waitlistQueue)
+            {
+                Console.WriteLine($"{counter}. {passenger}");
+                counter++;
+            }
+        }
+        static void ProcessNextPassenger()
+        {
+            if(checkedInQueue.Count == 0)
+            {
+                Console.ForegroundColor= ConsoleColor.Red;
+                Console.WriteLine("There is no Passenger in the Queue!!");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(checkedInQueue.Dequeue() + "Turn");
+                Console.ResetColor();
+                if (waitlistQueue.Count != 0)
+                {
+                    checkedInQueue.Enqueue(waitlistQueue.Dequeue());
+                }
+            }
+        }
         static void Main(string[] args)
         {
             while (flag) 
@@ -593,6 +660,75 @@ namespace MiniFlightManagementSystem
                         break;
                     //Task 7 - Passenger Check-In 
                     case 7:
+                        checkInFlag = true;
+                        while (checkInFlag)
+                        {
+                            Console.WriteLine("""
+                                ========================================
+                                         Passenger Check-In
+                                ========================================
+                                1.Check in a passenger
+                                2.View check-in queue
+                                3.Process next passenger
+                                0.Back
+                                ========================================
+                                Enter your choice:
+                                """);
+                            choice = Convert.ToInt32(Console.ReadLine());
+
+                            switch (choice) 
+                            {
+                                //Check in a passenger
+                                case 1:
+                                    Console.Write("Please Enter The Ticket Number: ");
+                                    ticketID = Console.ReadLine();
+                                    CheckTicketAvailability(ticketID);
+                                    if (validationFlag)
+                                    {
+                                        validationFlag = false;
+                                        break;
+                                    }
+                                    CheckTicketCancellation(ticketID);
+                                    if (validationFlag)
+                                    {
+                                        validationFlag = false;
+                                        break;
+                                    }
+                                    CheckBooking(ticketID);
+                                    if (validationFlag)
+                                    {
+                                        validationFlag = false;
+                                        break;
+                                    }
+                                    passengerName = passengerNames[ticketNumbers.IndexOf(ticketID)];
+                                    if (!CheckPassengerAvailabilityInQueue(passengerName))
+                                    {
+                                        Console.WriteLine($"Passenger Name: {passengerName} Is not in the Queue");
+                                        break;
+                                    }
+                                    CheckInProcess(passengerName);
+
+                                    break;
+                                //View check-in queue
+                                case 2:
+                                    DisplayCheckedInQueuePassengers();
+                                    DisplayWaitingListQueuePassengers();
+
+                                    break;
+                                //Process next passenger
+                                case 3:
+                                    ProcessNextPassenger();
+                                    break;
+                                //Back
+                                case 0:
+                                    checkInFlag = false;
+                                    break;
+                                default:
+                                    Console.WriteLine("Invalid Option!!");
+                                    break;
+                            }
+                        }
+
                         break;
                     //Task 8 - Board Passengers (Boarding Stack) 
                     case 8:
