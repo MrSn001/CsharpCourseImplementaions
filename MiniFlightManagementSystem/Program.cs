@@ -21,6 +21,7 @@ namespace MiniFlightManagementSystem
         //Variables Declaration
         static int choice;
         static bool flag = true;
+        static bool updateFlag;
         static string passengerName;
         static int nextNum;
         static string ticketID;
@@ -29,6 +30,8 @@ namespace MiniFlightManagementSystem
         static bool check = false;
         static string flight;
         static DateOnly date;
+        static string bookingBeforeUpdate;
+        static string bookingAfterUpdate;
 
         //Method Declaration
         static void MainMenu()
@@ -76,7 +79,7 @@ namespace MiniFlightManagementSystem
         }
 
         //Case 1 Methods
-        static void AddingPassengerName(ref bool validationFlag)
+        static void AddingPassengerName()
         {
             passengerName = Console.ReadLine();
             if(passengerName == null)
@@ -133,13 +136,11 @@ namespace MiniFlightManagementSystem
             Console.WriteLine($"There is {passengerNames.Count} passengers registered");
         }
         //Case 3 Methods:
-        static void CheckTicketAvailability(ref bool validationFlag)
+        static void CheckTicketAvailability(string ticketNum)
         {
-            Console.Write("Please Enter The Ticket Number: ");
-            ticketID = Console.ReadLine();
             foreach (string ticket in ticketNumbers)
             {
-                if (ticketID == ticket)
+                if (ticketNum == ticket)
                 {
                     check = true; 
                     break;
@@ -155,9 +156,9 @@ namespace MiniFlightManagementSystem
 
             }
         }
-        static void CheckTicketFromBookingRecord(ref bool validationFlag)
+        static void CheckTicketFromBookingRecord(string ticketNum)
         {
-            if (bookingRecord.Keys.Contains(ticketID))
+            if (bookingRecord.Keys.Contains(ticketNum))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("This ticket ID Already has a booking!!");
@@ -246,7 +247,12 @@ namespace MiniFlightManagementSystem
             }
         }
 
-
+        //Case 5 Methods: 
+        static void DisplayBookingDetails(string ticket)
+        {
+            Console.WriteLine($"Booking details for {ticket} Number:");
+            Console.WriteLine($"Flight Number: {bookingRecord[ticket].Split('|')[0]} Date: {bookingRecord[ticket].Split('|')[1]}");
+        }
 
         static void Main(string[] args)
         {
@@ -259,7 +265,7 @@ namespace MiniFlightManagementSystem
                     //Task 1 - Register New Passenger
                     case 1:
                         Console.Write("Please enter the full passenger name: ");
-                        AddingPassengerName(ref validationFlag);
+                        AddingPassengerName();
                         if (validationFlag)
                         {
                             validationFlag = false;
@@ -277,13 +283,15 @@ namespace MiniFlightManagementSystem
                         break;
                     //Task 3 - Book a Flight Ticket
                     case 3:
-                        CheckTicketAvailability(ref validationFlag);
+                        Console.Write("Please Enter The Ticket Number: ");
+                        ticketID = Console.ReadLine();
+                        CheckTicketAvailability(ticketID);
                         if (validationFlag)
                         {
                             validationFlag = false;
                             break;
                         }
-                        CheckTicketFromBookingRecord(ref validationFlag);
+                        CheckTicketFromBookingRecord(ticketID);
                         if (validationFlag)
                         {
                             validationFlag = false;
@@ -310,7 +318,9 @@ namespace MiniFlightManagementSystem
                         break;
                     //Task 4 - View Booking Details
                     case 4:
-                        CheckTicketAvailability(ref validationFlag);
+                        Console.Write("Please Enter The Ticket Number: ");
+                        ticketID = Console.ReadLine();
+                        CheckTicketAvailability(ticketID);
                         if (validationFlag)
                         {
                             validationFlag = false;
@@ -337,6 +347,122 @@ namespace MiniFlightManagementSystem
                         break;
                     //Task 5 - Update a Booking 
                     case 5:
+                        Console.Write("Please Enter The Ticket Number: ");
+                        ticketID = Console.ReadLine();
+                        CheckTicketAvailability(ticketID);
+                        if (validationFlag)
+                        {
+                            validationFlag = false;
+                            break;
+                        }
+                        CheckTicketCancellation(ticketID);
+                        if (validationFlag)
+                        {
+                            validationFlag = false;
+                            break;
+                        }
+                        CheckBooking(ticketID);
+                        if (validationFlag)
+                        {
+                            validationFlag = false;
+                            break;
+                        }
+                        DisplayBookingDetails(ticketID);
+                        updateFlag = true;
+                        while (updateFlag)
+                        {
+                            Console.WriteLine("""
+                                ========================================
+                                         Update Booking Details
+                                ========================================
+                                1.Change flight only.
+                                2.Change date only.
+                                3.Change both.
+                                0.Cancel update.
+                                ========================================
+                                Enter your choice:
+                                """);
+                            choice = Convert.ToInt32(Console.ReadLine());
+                            switch (choice)
+                            {
+                                //Updating Flight number only
+                                case 1:
+                                    DisplayAndChooseFlightNumber();
+                                    if (validationFlag)
+                                    {
+                                        validationFlag = false;
+                                        break;
+                                    }
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine("Flight number updated!!");
+                                    Console.Write($"The booking details updated from : {bookingRecord[ticketID]} ");
+                                    bookingAfterUpdate = flight + "|" + bookingRecord[ticketID].Split( '|')[1];
+                                    bookingRecord[ticketID]= bookingAfterUpdate;
+                                    Console.WriteLine($"To {bookingRecord[ticketID]}");
+                                    Console.ResetColor();
+                                    break;
+                                //Updating Date Only
+                                case 2:
+                                    DisplayAndChooseDate();
+                                    if (validationFlag)
+                                    {
+                                        validationFlag = false;
+                                        break;
+                                    }
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine("Date updated!!");
+                                    Console.Write($"The booking details updated from : {bookingRecord[ticketID]} ");
+                                    bookingAfterUpdate = bookingRecord[ticketID].Split('|')[0] + "|" + date.ToString("dd-MMM-yyyy");
+                                    bookingRecord[ticketID] = bookingAfterUpdate;
+                                    Console.WriteLine($"To {bookingRecord[ticketID]}");
+                                    Console.ResetColor();
+                                    break;
+                                //Updating Flight number and Date
+                                case 3:
+                                    bookingBeforeUpdate = bookingRecord[ticketID];
+                                    DisplayAndChooseFlightNumber();
+                                    if (validationFlag)
+                                    {
+                                        validationFlag = false;
+                                        break;
+                                    }
+                                    bookingAfterUpdate = flight + "|" + bookingRecord[ticketID].Split('|')[1];
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine("Flight number updated!!");
+                                    Console.ResetColor();
+                                    DisplayAndChooseDate();
+                                    if (validationFlag)
+                                    {
+                                        validationFlag = false;
+                                        break;
+                                    }
+                                    bookingAfterUpdate = bookingAfterUpdate.Split("|")[0] + "|" + date;
+                                    bookingRecord[ticketID] = bookingAfterUpdate;
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine("Date updated!!");
+                                    Console.Write($"The booking details updated from : {bookingBeforeUpdate} To:{bookingRecord[ticketID]} ");
+                                    Console.ResetColor();
+                                    
+
+                                    break;
+                                //Cancel
+                                case 0:
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Process Cancelled!!");
+                                    Console.ResetColor();
+                                    updateFlag = false;
+                                    break;
+                                default:
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Invalid Choice!!");
+                                    Console.ResetColor();
+                                    break;
+                            }
+                            Console.WriteLine("Please Enter any key to continue.... ");
+                            Console.ReadKey();
+                            Console.Clear();
+                        }
+
                         break;
                     //Task 6 - Cancel a Ticket
                     case 6:
