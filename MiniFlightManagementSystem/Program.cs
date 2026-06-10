@@ -1,5 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Text;
+using System.IO;
+using System.Linq;
 
 namespace MiniFlightManagementSystem
 {
@@ -22,7 +24,7 @@ namespace MiniFlightManagementSystem
         static Stack<string> reOrderStack = new Stack<string>();
 
         //Variables Declaration
-        static int choice;
+        static int choice = 111;
         static bool flag = true;
         static bool updateFlag;
         static string passengerName;
@@ -89,13 +91,33 @@ namespace MiniFlightManagementSystem
                     Enter your choice: 
                     """);
             Console.ResetColor();
-            choice = Convert.ToInt32(Console.ReadLine());
+            try
+            {
+                choice = Convert.ToInt32(Console.ReadLine());
+            }
+            catch (FormatException)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Invalid input! Please enter a valid number.");
+                Console.ResetColor();
+            }
         }
 
         
         static void AddingPassengerName()
         {
-            passengerName = Console.ReadLine();
+
+            try
+            {
+                passengerName = Console.ReadLine();
+            }
+            catch (FormatException)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Invalid input! Please enter a valid number.");
+                Console.ResetColor();
+            }
+            
             if(passengerName == null)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -189,8 +211,17 @@ namespace MiniFlightManagementSystem
                 Console.WriteLine($"Flight: {(i + 1)}  | Flight Number: {flightNumbers[i]}");
             }
             Console.Write("Enter a number from 1 to 6: " );
-            choice = Convert.ToInt32( Console.ReadLine() );
-            if( choice <= 0 || choice > flightNumbers.Length)
+            try
+            {
+                choice = Convert.ToInt32(Console.ReadLine());
+            }
+            catch (FormatException)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Invalid input! Please enter a valid number.");
+                Console.ResetColor();
+            }
+            if ( choice <= 0 || choice > flightNumbers.Length)
             {
                 Console.ForegroundColor= ConsoleColor.Red;
                 Console.WriteLine("You have to choose one of the above flights");
@@ -215,7 +246,16 @@ namespace MiniFlightManagementSystem
             }
 
             Console.Write($"Enter a number from 1 to {availableDates.Count}: ");
-            choice = Convert.ToInt32(Console.ReadLine());
+            try
+            {
+                choice = Convert.ToInt32(Console.ReadLine());
+            }
+            catch (FormatException)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Invalid input! Please enter a valid number.");
+                Console.ResetColor();
+            }
             if (choice <= 0 || choice > availableDates.Count)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -528,7 +568,17 @@ namespace MiniFlightManagementSystem
                     //Task 3 - Book a Flight Ticket
                     case 3:
                         Console.Write("Please Enter The Ticket Number: ");
-                        ticketID = Console.ReadLine();
+                        try
+                        {
+                            ticketID = Console.ReadLine();
+                        }
+                        catch (FormatException)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Invalid input! Please enter a valid number.");
+                            Console.ResetColor();
+                        }
+                        
                         CheckTicketAvailability(ticketID);
                         if (validationFlag)
                         {
@@ -563,7 +613,17 @@ namespace MiniFlightManagementSystem
                     //Task 4 - View Booking Details
                     case 4:
                         Console.Write("Please Enter The Ticket Number: ");
-                        ticketID = Console.ReadLine();
+                        try
+                        {
+                            ticketID = Console.ReadLine();
+                        }
+                        catch (FormatException)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Invalid input! Please enter a valid number.");
+                            Console.ResetColor();
+                        }
+                        
                         CheckTicketAvailability(ticketID);
                         if (validationFlag)
                         {
@@ -592,7 +652,17 @@ namespace MiniFlightManagementSystem
                     //Task 5 - Update a Booking 
                     case 5:
                         Console.Write("Please Enter The Ticket Number: ");
-                        ticketID = Console.ReadLine();
+                        try
+                        {
+                            ticketID = Console.ReadLine();
+                        }
+                        catch (FormatException)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Invalid input! Please enter a valid number.");
+                            Console.ResetColor();
+                        }
+
                         CheckTicketAvailability(ticketID);
                         if (validationFlag)
                         {
@@ -626,7 +696,16 @@ namespace MiniFlightManagementSystem
                                 ========================================
                                 Enter your choice:
                                 """);
-                            choice = Convert.ToInt32(Console.ReadLine());
+                            try
+                            {
+                                choice = Convert.ToInt32(Console.ReadLine());
+                            }
+                            catch (FormatException)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Invalid input! Please enter a valid number.");
+                                Console.ResetColor();
+                            }
                             switch (choice)
                             {
                                 //Updating Flight number only
@@ -708,7 +787,16 @@ namespace MiniFlightManagementSystem
                     //Task 6 - Cancel a Ticket
                     case 6:
                         Console.Write("Please Enter The Ticket Number You Want To Cancel: ");
-                        ticketID = Console.ReadLine();
+                        try
+                        {
+                            ticketID = Console.ReadLine();
+                        }
+                        catch (FormatException)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Invalid input! Please enter a valid number.");
+                            Console.ResetColor();
+                        }
                         CheckTicketAvailability(ticketID);
                         if (validationFlag)
                         {
@@ -763,14 +851,33 @@ namespace MiniFlightManagementSystem
                                 ========================================
                                 Enter your choice:
                                 """);
-                            choice = Convert.ToInt32(Console.ReadLine());
+                            try
+                            {
+                                choice = Convert.ToInt32(Console.ReadLine());
+                            }
+                            catch (FormatException)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Invalid input! Please enter a valid number.");
+                                Console.ResetColor();
+                            }
 
                             switch (choice) 
                             {
                                 //Check in a passenger
                                 case 1:
                                     Console.Write("Please Enter The Ticket Number: ");
-                                    ticketID = Console.ReadLine();
+                                    try
+                                    {
+                                        ticketID = Console.ReadLine();
+                                    }
+                                    catch (FormatException)
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine("Invalid input! Please enter a valid number.");
+                                        Console.ResetColor();
+                                    }
+
                                     CheckTicketAvailability(ticketID);
                                     if (validationFlag)
                                     {
@@ -836,7 +943,16 @@ namespace MiniFlightManagementSystem
                                 ========================================
                                 Enter your choice:
                                 """);
-                            choice = Convert.ToInt32(Console.ReadLine());
+                            try
+                            {
+                                choice = Convert.ToInt32(Console.ReadLine());
+                            }
+                            catch (FormatException)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Invalid input! Please enter a valid number.");
+                                Console.ResetColor();
+                            }
 
                             switch (choice) 
                             {
