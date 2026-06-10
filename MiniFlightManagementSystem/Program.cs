@@ -43,6 +43,9 @@ namespace MiniFlightManagementSystem
         static bool checkInFlag;
         static int counter;
         static bool boardFlag;
+        static int currentRow = 10;
+        static char currentSeatLetter = 'A';
+        static string assignedSeat;
 
         //Method Declaration
         static void MainMenu()
@@ -229,7 +232,6 @@ namespace MiniFlightManagementSystem
                 Console.ResetColor();
             }
         }
-
         
         static void CheckTicketCancellation(string ticket)
         {
@@ -257,8 +259,7 @@ namespace MiniFlightManagementSystem
                 return;
             }
         }
-
-        
+      
         static void DisplayBookingDetails(string ticket)
         {
             Console.WriteLine($"Booking details for {ticket} Number:");
@@ -438,7 +439,64 @@ namespace MiniFlightManagementSystem
         }
         static void BoardNextPassenger()
         {
+            if (boardingStack.Count == 0)
+            {
+                Console.WriteLine("No passengers left in the boarding stack.");
+                return;
+            }
 
+            if (currentRow > 40)
+            {
+                Console.WriteLine("Error: Airplane capacity reached (Rows 10-40 are completely full).");
+                return;
+            }
+
+            passengerName = boardingStack.Pop();
+            assignedSeat = $"{currentRow + currentSeatLetter}";
+            passengerSeatMap[passengerName] = assignedSeat;
+
+            Console.WriteLine($"Boarded: {passengerName} has been assigned to Seat {assignedSeat}.");
+            if (currentSeatLetter < 'F')
+            {
+                currentSeatLetter++; 
+            }
+            else
+            {
+                currentSeatLetter = 'A';
+                currentRow++;            
+            }
+
+
+        }
+        static void ViewBoardingStack()
+        {
+            if (boardingStack.Count == 0)
+            {
+                Console.WriteLine("The boarding stack is currently empty.");
+                return;
+            }
+
+            Console.WriteLine("---- BOARDING STACK ----");
+            counter = 1;
+            foreach (string passenger in boardingStack)
+            {
+                Console.WriteLine($"{counter}. {passenger}");
+                counter++;
+            }
+        }
+        static void DisplayBoardingLog()
+        {
+            if (passengerSeatMap.Count == 0)
+            {
+                Console.WriteLine("The boarding log is currently empty. No passengers have boarded yet.");
+                return;
+            }
+
+            Console.WriteLine("--- BOARDING LOG ---");
+            foreach(KeyValuePair<string,string> record in passengerSeatMap)
+            {
+                Console.WriteLine($"Passenger: {record.Key,-20} | Assigned Seat: {record.Value}");
+            }
         }
         static void Main(string[] args)
         {
@@ -782,17 +840,21 @@ namespace MiniFlightManagementSystem
 
                             switch (choice) 
                             {
+                                //Load boarding stack from check-in queue
                                 case 1:
                                     LoadBoardingStack();
                                     break;
-
+                                //Board next passenger
                                 case 2:
+                                    BoardNextPassenger();
                                     break;
-
+                                //View boarding stack
                                 case 3:
+                                    ViewBoardingStack();
                                     break;
-
+                                //View boarding log
                                 case 4:
+                                    DisplayBoardingLog();
                                     break;
 
                                 case 0:
