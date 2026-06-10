@@ -119,7 +119,20 @@ namespace MiniFlightManagementSystem
                 Console.ResetColor();
             }
         }
-        
+
+        static void ReadFile(string path, ref Stack<string> stackString)
+        {
+            if (File.Exists(path))
+            {
+                stackString = new Stack<string>(File.ReadAllLines(path));
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("File not found");
+                Console.ResetColor();
+            }
+        }
 
         static void WriteFile(string path, string value)
         {
