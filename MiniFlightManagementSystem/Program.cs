@@ -24,7 +24,7 @@ namespace MiniFlightManagementSystem
         static Stack<string> reOrderStack = new Stack<string>();
 
         //Variables Declaration
-        static int choice = 111;
+        static int choice = 99;
         static bool flag = true;
         static bool updateFlag;
         static string passengerName;
@@ -95,10 +95,10 @@ namespace MiniFlightManagementSystem
             {
                 choice = Convert.ToInt32(Console.ReadLine());
             }
-            catch (FormatException)
+            catch (FormatException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Invalid input! Please enter a valid number.");
+                Console.WriteLine("Error: " + ex.Message);
                 Console.ResetColor();
             }
         }
@@ -111,10 +111,10 @@ namespace MiniFlightManagementSystem
             {
                 passengerName = Console.ReadLine();
             }
-            catch (FormatException)
+            catch (FormatException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Invalid input! Please enter a valid number.");
+                Console.WriteLine("Error: " + ex.Message);
                 Console.ResetColor();
             }
             
@@ -215,10 +215,10 @@ namespace MiniFlightManagementSystem
             {
                 choice = Convert.ToInt32(Console.ReadLine());
             }
-            catch (FormatException)
+            catch (FormatException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Invalid input! Please enter a valid number.");
+                Console.WriteLine("Error: " + ex.Message);
                 Console.ResetColor();
             }
             if ( choice <= 0 || choice > flightNumbers.Length)
@@ -250,10 +250,10 @@ namespace MiniFlightManagementSystem
             {
                 choice = Convert.ToInt32(Console.ReadLine());
             }
-            catch (FormatException)
+            catch (FormatException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Invalid input! Please enter a valid number.");
+                Console.WriteLine("Error: " + ex.Message);
                 Console.ResetColor();
             }
             if (choice <= 0 || choice > availableDates.Count)
@@ -572,10 +572,10 @@ namespace MiniFlightManagementSystem
                         {
                             ticketID = Console.ReadLine();
                         }
-                        catch (FormatException)
+                        catch (FormatException ex)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Invalid input! Please enter a valid number.");
+                            Console.WriteLine("Error: " + ex.Message);
                             Console.ResetColor();
                         }
                         
@@ -617,10 +617,10 @@ namespace MiniFlightManagementSystem
                         {
                             ticketID = Console.ReadLine();
                         }
-                        catch (FormatException)
+                        catch (FormatException ex)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Invalid input! Please enter a valid number.");
+                            Console.WriteLine("Error: " + ex.Message);
                             Console.ResetColor();
                         }
                         
@@ -656,10 +656,10 @@ namespace MiniFlightManagementSystem
                         {
                             ticketID = Console.ReadLine();
                         }
-                        catch (FormatException)
+                        catch (FormatException ex)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Invalid input! Please enter a valid number.");
+                            Console.WriteLine("Error: " + ex.Message);
                             Console.ResetColor();
                         }
 
@@ -700,10 +700,10 @@ namespace MiniFlightManagementSystem
                             {
                                 choice = Convert.ToInt32(Console.ReadLine());
                             }
-                            catch (FormatException)
+                            catch (FormatException ex)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Invalid input! Please enter a valid number.");
+                                Console.WriteLine("Error: " + ex.Message);
                                 Console.ResetColor();
                             }
                             switch (choice)
@@ -791,10 +791,10 @@ namespace MiniFlightManagementSystem
                         {
                             ticketID = Console.ReadLine();
                         }
-                        catch (FormatException)
+                        catch (FormatException ex)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Invalid input! Please enter a valid number.");
+                            Console.WriteLine("Error: " + ex.Message);
                             Console.ResetColor();
                         }
                         CheckTicketAvailability(ticketID);
@@ -855,10 +855,10 @@ namespace MiniFlightManagementSystem
                             {
                                 choice = Convert.ToInt32(Console.ReadLine());
                             }
-                            catch (FormatException)
+                            catch (FormatException ex)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Invalid input! Please enter a valid number.");
+                                Console.WriteLine("Error: " + ex.Message);
                                 Console.ResetColor();
                             }
 
@@ -871,10 +871,10 @@ namespace MiniFlightManagementSystem
                                     {
                                         ticketID = Console.ReadLine();
                                     }
-                                    catch (FormatException)
+                                    catch (FormatException ex)
                                     {
                                         Console.ForegroundColor = ConsoleColor.Red;
-                                        Console.WriteLine("Invalid input! Please enter a valid number.");
+                                        Console.WriteLine("Error: " + ex.Message);
                                         Console.ResetColor();
                                     }
 
@@ -947,10 +947,10 @@ namespace MiniFlightManagementSystem
                             {
                                 choice = Convert.ToInt32(Console.ReadLine());
                             }
-                            catch (FormatException)
+                            catch (FormatException ex)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Invalid input! Please enter a valid number.");
+                                Console.WriteLine("Error: " + ex.Message);
                                 Console.ResetColor();
                             }
 
