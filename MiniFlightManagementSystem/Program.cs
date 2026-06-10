@@ -20,8 +20,8 @@ namespace MiniFlightManagementSystem
         static string waitlistQueuePath = @"../../../DataCollection/waitlistQueue.txt";
 
         //Collection Declaration
-        static List<string> passengerNames;
-        static List<string> ticketNumbers;
+        static List<string> passengerNames = new List<string>();
+        static List<string> ticketNumbers = new List<string>();
         static string[] flightNumbers = new string[6];
         static List<DateOnly> availableDates;
         static Dictionary<string,string> bookingRecord = new Dictionary<string, string>();
@@ -59,21 +59,28 @@ namespace MiniFlightManagementSystem
         static int currentRow = 10;
         static char currentSeatLetter = 'A';
         static string assignedSeat;
-        static string path;
 
         //Method Declaration
-        static void ReadFile(string path)
+        static void ReadFile(string path, List<string> listString)
         {
             if (File.Exists(path))
             {
-                StreamReader r = new StreamReader(path);
-                r.ReadToEnd();
+                listString = File.ReadAllLines(path).ToList();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("File not found");
+                Console.ResetColor();
             }
         }
         static void WriteFile(string path, string value)
         {
-            StreamWriter w = new StreamWriter(path);
-            w.WriteLine(value);
+           using (StreamWriter w = new StreamWriter(path, true))
+            {
+                w.WriteLine(value);
+            }
+            
         }
 
         static void MainMenu()
@@ -163,8 +170,8 @@ namespace MiniFlightManagementSystem
                 }
             }
             
-            WriteFile(path, passengerName);
-            //passengerNames.Add(passengerName);
+            WriteFile(passengerNamesPath, passengerName);
+            
 
         }
         static void AutoGenerateTicketID()
@@ -570,8 +577,9 @@ namespace MiniFlightManagementSystem
         {
             while (flag) 
             {
+                ReadFile(passengerNamesPath, passengerNames);
                 MainMenu();
-
+                
                 switch (choice) 
                 {
                     //Task 1 - Register New Passenger
