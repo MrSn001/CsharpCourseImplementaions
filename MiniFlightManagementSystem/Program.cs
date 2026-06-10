@@ -133,6 +133,22 @@ namespace MiniFlightManagementSystem
                 Console.ResetColor();
             }
         }
+        static void ReadFile(string path, ref Dictionary<string, string> dictionaryString)
+        {
+            if (File.Exists(path))
+            {
+                dictionaryString = File.ReadAllLines(path)
+                                 .Where(line => line.Contains(","))
+                                 .Select(line => line.Split(','))
+                                 .ToDictionary(parts => parts[0].Trim(), parts => parts[1].Trim());
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("File not found");
+                Console.ResetColor();
+            }
+        }
 
         static void WriteFile(string path, string value)
         {
@@ -142,7 +158,7 @@ namespace MiniFlightManagementSystem
             }
             
         }
-
+        
         static void MainMenu()
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -644,6 +660,9 @@ namespace MiniFlightManagementSystem
                 ReadFile(flightNumbersPath,ref flightNumbers);
                 ReadFile(checkedInQueuePath,ref checkedInQueue);
                 ReadFile(waitlistQueuePath, ref waitlistQueue);
+                ReadFile(boardingStackPath,ref boardingStack);
+                ReadFile(bookingRecordPath,ref bookingRecord);
+                ReadFile(passengerSeatMapPath,ref passengerSeatMap);
 
                 MainMenu();
                 
