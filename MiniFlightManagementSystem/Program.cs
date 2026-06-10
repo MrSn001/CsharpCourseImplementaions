@@ -60,6 +60,7 @@ namespace MiniFlightManagementSystem
         static int currentRow = 10;
         static char currentSeatLetter = 'A';
         static string assignedSeat;
+        static KeyValuePair<string,string> fullBookingInfo;
 
         //Method Declaration
         static void ReadFile(string path, ref List<string> listString)
@@ -75,7 +76,6 @@ namespace MiniFlightManagementSystem
                 Console.ResetColor();
             }
         }
-
         static void ReadFile(string path,ref List<DateOnly> listDate)
         {
             if (File.Exists(path))
@@ -92,7 +92,6 @@ namespace MiniFlightManagementSystem
                 Console.ResetColor();
             }
         }
-
         static void ReadFile(string path, ref string[] arrayString)
         {
             if (File.Exists(path))
@@ -119,7 +118,6 @@ namespace MiniFlightManagementSystem
                 Console.ResetColor();
             }
         }
-
         static void ReadFile(string path, ref Stack<string> stackString)
         {
             if (File.Exists(path))
@@ -138,8 +136,8 @@ namespace MiniFlightManagementSystem
             if (File.Exists(path))
             {
                 dictionaryString = File.ReadAllLines(path)
-                                 .Where(line => line.Contains(","))
-                                 .Select(line => line.Split(','))
+                                 .Where(line => line.Contains(":"))
+                                 .Select(line => line.Split(':'))
                                  .ToDictionary(parts => parts[0].Trim(), parts => parts[1].Trim());
             }
             else
@@ -149,12 +147,11 @@ namespace MiniFlightManagementSystem
                 Console.ResetColor();
             }
         }
-
         static void WriteFile(string path, string value)
         {
            using (StreamWriter w = new StreamWriter(path, true))
             {
-                w.WriteLine(value);
+                w.Write("\n" + value);
             }
             
         }
@@ -255,6 +252,7 @@ namespace MiniFlightManagementSystem
             nextNum = ticketNumbers.Count + 1;
             ticketID = $"TKT-{nextNum:D3}";
             ticketNumbers.Add(ticketID);
+            WriteFile(ticketNumbersPath, ticketID);
         }
         
         static void CheckPassengerAvailability()
@@ -462,6 +460,7 @@ namespace MiniFlightManagementSystem
             {
                 
                 checkedInQueue.Enqueue(tempQueue.Dequeue());
+
             }
            
         }
@@ -726,7 +725,9 @@ namespace MiniFlightManagementSystem
                             break;
                         }
 
-                        bookingRecord.Add(ticketID,flight + "|" + date.ToString("dd-MMM-yyyy"));
+                        booking = ticketID + ":" + flight + "|" + date.ToString("dd-MMM-yyyy");
+                        bookingRecord.Add(ticketID, ":" + flight + "|" + date.ToString("dd-MMM-yyyy"));
+                        WriteFile(bookingRecordPath,booking);
                         Console.WriteLine("");
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine($"Ticket ID : {ticketID} | Passenger Name {passengerNames[ticketNumbers.IndexOf(ticketID)]} | Flight Number: {flight} | Date: {date.ToString("dd-MMM-yyyy")}" );
@@ -945,6 +946,7 @@ namespace MiniFlightManagementSystem
                             break;
                         }
                         cancelledTickets.Add(ticketID);
+                        WriteFile(cancelledTicketsPath, ticketID);
                         CheckedInQueueRebuild(passengerName);
                         BoardingStackRebuild(passengerName);
                         Console.WriteLine($"""
