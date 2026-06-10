@@ -76,11 +76,11 @@ namespace MiniFlightManagementSystem
             }
         }
 
-        static void ReadFile(string path,ref List<DateOnly> listString)
+        static void ReadFile(string path,ref List<DateOnly> listDate)
         {
             if (File.Exists(path))
             {
-                listString = File.ReadAllLines(path)
+                listDate = File.ReadAllLines(path)
                                  .Where(line => !string.IsNullOrWhiteSpace(line))
                                  .Select(line => DateOnly.ParseExact(line.Trim(), "d-MMM-yyyy", CultureInfo.InvariantCulture))
                                  .ToList();     
@@ -93,11 +93,11 @@ namespace MiniFlightManagementSystem
             }
         }
 
-        static void ReadFile(string path, ref string[] listString)
+        static void ReadFile(string path, ref string[] arrayString)
         {
             if (File.Exists(path))
             {
-                listString = File.ReadAllLines(path);
+                arrayString = File.ReadAllLines(path);
             }
             else
             {
@@ -106,6 +106,20 @@ namespace MiniFlightManagementSystem
                 Console.ResetColor();
             }
         }
+        static void ReadFile(string path, ref Queue<string> queueString)
+        {
+            if (File.Exists(path))
+            {
+                queueString = new Queue<string>(File.ReadAllLines(path));
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("File not found");
+                Console.ResetColor();
+            }
+        }
+        
 
         static void WriteFile(string path, string value)
         {
@@ -615,6 +629,8 @@ namespace MiniFlightManagementSystem
                 ReadFile(availableDatesPath, ref availableDates);
                 ReadFile(cancelledTicketsPath,ref cancelledTickets);
                 ReadFile(flightNumbersPath,ref flightNumbers);
+                ReadFile(checkedInQueuePath,ref checkedInQueue);
+                ReadFile(waitlistQueuePath, ref waitlistQueue);
 
                 MainMenu();
                 
