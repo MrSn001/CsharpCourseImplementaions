@@ -93,6 +93,20 @@ namespace MiniFlightManagementSystem
             }
         }
 
+        static void ReadFile(string path, ref string[] listString)
+        {
+            if (File.Exists(path))
+            {
+                listString = File.ReadAllLines(path);
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("File not found");
+                Console.ResetColor();
+            }
+        }
+
         static void WriteFile(string path, string value)
         {
            using (StreamWriter w = new StreamWriter(path, true))
@@ -600,6 +614,7 @@ namespace MiniFlightManagementSystem
                 ReadFile(ticketNumbersPath,ref ticketNumbers);
                 ReadFile(availableDatesPath, ref availableDates);
                 ReadFile(cancelledTicketsPath,ref cancelledTickets);
+                ReadFile(flightNumbersPath,ref flightNumbers);
 
                 MainMenu();
                 
