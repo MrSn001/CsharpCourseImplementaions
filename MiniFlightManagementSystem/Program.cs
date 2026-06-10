@@ -9,10 +9,10 @@ namespace MiniFlightManagementSystem
     {
 
         //Collection Declaration
-        static List<string> passengerNames = new List<string>() { "Shaheen Al-Amri", "Shakir Al-Amri", "Shihab Al-Amri", "Said Mohammed", "Rashid Ali" };
-        static List<string> ticketNumbers = new List<string>() {"TKT-001", "TKT-002", "TKT-003", "TKT-004", "TKT-005"};
-        static string[] flightNumbers = new string[6] { "OA101", "OA102", "OA103", "OA104", "OA105","OA106"};
-        static List<DateOnly> availableDates = [new DateOnly(2026,06,10), new DateOnly(2026, 06, 15), new DateOnly(2026, 06, 16), new DateOnly(2026, 06, 20)];
+        static List<string> passengerNames;
+        static List<string> ticketNumbers;
+        static string[] flightNumbers = new string[6];
+        static List<DateOnly> availableDates;
         static Dictionary<string,string> bookingRecord = new Dictionary<string, string>();
         static Queue<string> checkedInQueue = new Queue<string>();
         static Stack<string> boardingStack = new Stack<string>();
@@ -48,8 +48,19 @@ namespace MiniFlightManagementSystem
         static int currentRow = 10;
         static char currentSeatLetter = 'A';
         static string assignedSeat;
+        static string path;
 
         //Method Declaration
+        static void ReadPassengerNamesFile()
+        {
+
+        }
+        static void WriteFile(string path, string value)
+        {
+            StreamWriter w = new StreamWriter(path);
+            w.WriteLine(value);
+        }
+
         static void MainMenu()
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -136,7 +147,9 @@ namespace MiniFlightManagementSystem
                     return;
                 }
             }
-            passengerNames.Add(passengerName);
+            path = "C:\\Users\\Codeline\\Documents\\CsharpCourseImplementaions\\MiniFlightManagementSystem\\DataCollection\\passengerNames";
+            WriteFile(path, passengerName);
+            //passengerNames.Add(passengerName);
 
         }
         static void AutoGenerateTicketID()
