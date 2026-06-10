@@ -7,6 +7,17 @@ namespace MiniFlightManagementSystem
 {
     internal class Program
     {
+        //Files Path Variables
+        static string passengerNamesPath = @"../../../DataCollection/passengerNames.txt";
+        static string ticketNumbersPath = @"../../../DataCollection/ticketNumbers.txt";
+        static string flightNumbersPath = @"../../../DataCollection/flightNumbers.txt";
+        static string availableDatesPath = @"../../../DataCollection/availableDates.txt";
+        static string bookingRecordPath = @"../../../DataCollection/bookingRecord.txt";
+        static string checkedInQueuePath = @"../../../DataCollection/checkedInQueue.txt";
+        static string boardingStackPath = @"../../../DataCollection/boardingStack.txt";
+        static string cancelledTicketsPath = @"../../../DataCollection/cancelledTickets.txt";
+        static string passengerSeatMapPath = @"../../../DataCollection/passengerSeatMap.txt";
+        static string waitlistQueuePath = @"../../../DataCollection/waitlistQueue.txt";
 
         //Collection Declaration
         static List<string> passengerNames;
@@ -51,9 +62,13 @@ namespace MiniFlightManagementSystem
         static string path;
 
         //Method Declaration
-        static void ReadPassengerNamesFile()
+        static void ReadFile(string path)
         {
-
+            if (File.Exists(path))
+            {
+                StreamReader r = new StreamReader(path);
+                r.ReadToEnd();
+            }
         }
         static void WriteFile(string path, string value)
         {
@@ -147,7 +162,7 @@ namespace MiniFlightManagementSystem
                     return;
                 }
             }
-            path = "C:\\Users\\Codeline\\Documents\\CsharpCourseImplementaions\\MiniFlightManagementSystem\\DataCollection\\passengerNames";
+            
             WriteFile(path, passengerName);
             //passengerNames.Add(passengerName);
 
