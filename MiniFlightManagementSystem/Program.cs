@@ -1,7 +1,8 @@
-﻿using System.Net.Sockets;
-using System.Text;
+﻿using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
+using System.Text;
 
 namespace MiniFlightManagementSystem
 {
@@ -61,7 +62,7 @@ namespace MiniFlightManagementSystem
         static string assignedSeat;
 
         //Method Declaration
-        static void ReadFile(string path, List<string> listString)
+        static void ReadFile(string path, ref List<string> listString)
         {
             if (File.Exists(path))
             {
@@ -74,6 +75,24 @@ namespace MiniFlightManagementSystem
                 Console.ResetColor();
             }
         }
+
+        static void ReadFile(string path,ref List<DateOnly> listString)
+        {
+            if (File.Exists(path))
+            {
+                listString = File.ReadAllLines(path)
+                                 .Where(line => !string.IsNullOrWhiteSpace(line))
+                                 .Select(line => DateOnly.ParseExact(line.Trim(), "d-MMM-yyyy", CultureInfo.InvariantCulture))
+                                 .ToList();     
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("File not found");
+                Console.ResetColor();
+            }
+        }
+
         static void WriteFile(string path, string value)
         {
            using (StreamWriter w = new StreamWriter(path, true))
@@ -577,7 +596,11 @@ namespace MiniFlightManagementSystem
         {
             while (flag) 
             {
-                ReadFile(passengerNamesPath, passengerNames);
+                ReadFile(passengerNamesPath,ref passengerNames);
+                ReadFile(ticketNumbersPath,ref ticketNumbers);
+                ReadFile(availableDatesPath, ref availableDates);
+                ReadFile(cancelledTicketsPath,ref cancelledTickets);
+
                 MainMenu();
                 
                 switch (choice) 
